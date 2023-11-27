@@ -1,0 +1,36 @@
+This image is a photo of two women sitting on a hospital bed. The woman on the left is wearing a yellow shirt and a black skirt, and the woman on the right is wearing a black shirt and a grey skirt. They are both smiling at the camera. In the background, there is a window and a white wall. It appears to be a hospital room.
+
+The two women are likely patients or family members in a hospital setting. Their relationship to each other is not clear from the image alone, but they seem to be comfortable with each other.
+
+There is a chart on the right side of the image, which is not clearly visible. It is not possible to determine the content or purpose of the chart from the image alone.
+
+The title of the image is "UU青姐" and it is posted on Weibo by @UU青姐. It is not clear what this means or what it refers to.
+
+nodes = [
+	Node('two women', 'entity'),
+	Node('hospital bed', 'entity'),
+    Node('yellow shirt and black skirt', 'entity'),
+    Node('black shirt and grey skirt', 'entity'),
+	Node('smiling', 'event'),
+    Node('camera', 'entity'),
+	Node('window and white wall', 'entity'),
+	Node('hospital room', 'entity'),
+    Node('chart', 'entity'),
+	Node('right side of the image', 'entity'),
+	Node('UU青姐', 'entity'),
+	Node('Weibo', 'entity'),
+	Node('image', 'entity')
+]
+
+relationships = [
+	Relationship(nodes[0], nodes[1], 'sitting on'),
+    Relationship(nodes[0], nodes[2], 'wearing'),
+    Relationship(nodes[0], nodes[3], 'wearing'),
+    Relationship(nodes[0], nodes[4], 'action'),
+    Relationship(nodes[0], nodes[5], 'looking at'),
+    Relationship(nodes[1], nodes[6], 'location in'),
+    Relationship(nodes[1], nodes[7], 'in'),
+    Relationship(nodes[8], nodes[9], 'located at'),
+    Relationship(nodes[12], nodes[10], 'titled'),
+    Relationship(nodes[12], nodes[11], 'posted on')
+]
