@@ -1,8 +1,10 @@
 import openai
 import os
 from openai import OpenAI
-
+from config import OPENAI_KEY
 openai.api_key = os.getenv("OPENAI_API_KEY")
+# openai.api_key = OPENAI_KEY
+
 client = OpenAI()
 
 

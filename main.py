@@ -6,7 +6,7 @@ from kg_generate_and_compare import kg_generate_and_compare
 
 if __name__ == '__main__':
     # Open the JSON file
-    with open('exampleinput.json') as file:
+    with open('test.json') as file:
         data = json.load(file)
 
     results = []

@@ -31,7 +31,7 @@ import json
 #     stopwords = [line.strip() for line in open(filepath, 'r', encoding='utf-8').readlines()]
 #     return stopwords
 
-def stopwordslist(filepath='../Data/weibo/stop_words.txt'):
+def stopwordslist(filepath='../nlp-project/Data/weibo/stop_words.txt'):
     stopwords = {}
     with open(filepath, 'r', encoding='utf-8') as file:
         for line in file.readlines():
@@ -48,7 +48,7 @@ def clean_str_sst(string):
 
 def read_image():
     image_list = {}
-    file_list = ['../Data/weibo/nonrumor_images/', '../Data/weibo/rumor_images/']
+    file_list = ['../nlp-project/Data/weibo/nonrumor_images/', '../nlp-project/Data/weibo/rumor_images/']
     for path in file_list:
         data_transforms = transforms.Compose([
             transforms.Resize(256),
@@ -71,7 +71,7 @@ def read_image():
     return image_list
 
 def write_txt(data):
-    f = open("../Data/weibo/top_n_data.txt", 'wb')
+    f = open("../nlp-project/Data/weibo/top_n_data.txt", 'wb')
     for line in data:
         for l in line:
             f.write(l+"\n")
@@ -84,15 +84,15 @@ def write_data(flag, image, text_only=False):
 
     def read_post(flag):
         stop_words = stopwordslist()
-        pre_path = "../Data/weibo/tweets/"
+        pre_path = "../nlp-project/Data/weibo/tweets/"
         file_list = [pre_path + "test_nonrumor.txt", pre_path + "test_rumor.txt", \
                          pre_path + "train_nonrumor.txt", pre_path + "train_rumor.txt"]
         if flag == "train":
-            id = pickle.load(open("../Data/weibo/train_id.pickle", 'rb'))
+            id = pickle.load(open("../nlp-project/Data/weibo/train_id.pickle", 'rb'))
         elif flag == "validate":
-            id = pickle.load(open("../Data/weibo/validate_id.pickle", 'rb'))
+            id = pickle.load(open("../nlp-project/Data/weibo/validate_id.pickle", 'rb'))
         elif flag == "test":
-            id = pickle.load(open("../Data/weibo/test_id.pickle", 'rb'))
+            id = pickle.load(open("../nlp-project/Data/weibo/test_id.pickle", 'rb'))
 
         post_content = []
         labels = []
@@ -431,10 +431,10 @@ class NumpyEncoder(json.JSONEncoder):
         return super(NumpyEncoder, self).default(obj)
 
 if __name__ == "__main__":
-    rumor_img_dir = "../Data/weibo/nonrumor_images/"
+    rumor_img_dir = "../nlp-project/Data/weibo/nonrumor_images/"
     rumor_img_dir = os.path.abspath(rumor_img_dir)
 
-    non_rumor_img_dir = "../Data/weibo/rumor_images/"
+    non_rumor_img_dir = "../nlp-project/Data/weibo/rumor_images/"
     non_rumor_img_dir = os.path.abspath(non_rumor_img_dir)
 
     rumor_img_id = []

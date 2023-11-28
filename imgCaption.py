@@ -1,7 +1,9 @@
 from openai import OpenAI
 import openai
+from config import OPENAI_KEY
 import os
 openai.api_key = os.getenv("OPENAI_API_KEY")
+# openai.api_key = OPENAI_KEY
 
 client = OpenAI()
 
@@ -32,6 +34,7 @@ def img2txt(url):
       import requests
 
       # OpenAI API Key
+      # api_key = OPENAI_KEY
       api_key = os.getenv("OPENAI_API_KEY")
 
       # Function to encode the image
