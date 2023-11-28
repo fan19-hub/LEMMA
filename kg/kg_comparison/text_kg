@@ -1,0 +1,30 @@
+Grateful for the Beijing volunteer Jiajia! Today, both she and her boyfriend Xiaotian came to the hospital to visit me! They helped me purchase a lot of diapers and daily necessities! Jiajia is a very kind person! She is a late-stage stomach cancer patient, and despite her own health challenges with chemotherapy, she is coming to the hospital tomorrow to support and take care of me during my surgery! Gratitude to those who have helped me! I will always remember everyone's kindness! I wish all the kind-hearted people a lifetime of peace and safety! - Posted at Beijing Rehabilitation Center.
+
+nodes = [
+    Node('Beijing volunteer Jiajia', 'entity', 1),
+    Node('boyfriend Xiaotian', 'entity', 0.7),
+    Node('hospital visit', 'event', 0.8),
+    Node('diapers and daily necessities', 'entity', 0.6),
+    Node('kind person', 'entity', 0.8),
+    Node('late-stage stomach cancer patient', 'entity', 1),
+    Node('chemotherapy', 'event', 0.7),
+    Node('support during surgery', 'event', 0.9),
+    Node('Beijing Rehabilitation Center', 'entity', 0.9),
+    Node('gratitude', 'entity', 0.7),
+    Node('kind-hearted people', 'entity', 0.8),
+    Node('peace and safety', 'entity', 0.6)
+]
+
+relationships = [
+    Relationship(nodes[0], nodes[2], 'visitor', 1),
+    Relationship(nodes[1], nodes[2], 'visitor', 0.7),
+    Relationship(nodes[0], nodes[3], 'provider', 0.6),
+    Relationship(nodes[0], nodes[4], 'is', 1),
+    Relationship(nodes[0], nodes[5], 'is', 1),
+    Relationship(nodes[0], nodes[6], 'undergoing', 0.7),
+    Relationship(nodes[0], nodes[7], 'provider', 0.9),
+    Relationship(nodes[7], nodes[8], 'location', 0.9),
+    Relationship(nodes[8], nodes[9], 'extended', 0.7),
+    Relationship(nodes[9], nodes[10], 'directed', 0.8),
+    Relationship(nodes[10], nodes[11], 'wishing', 0.6),
+]

@@ -1,0 +1,42 @@
+**Knowledge graph code output**
+
+```python
+nodes = [
+    Node('image', 'entity', 0.6),
+    Node('two women', 'entity', 0.9),
+    Node('hospital bed', 'entity', 0.8),
+    Node('yellow shirt', 'entity', 0.4),
+	Node('black skirt', 'entity', 0.4),
+    Node('black shirt', 'entity', 0.4),
+    Node('grey skirt', 'entity', 0.4),
+    Node('camera', 'entity', 0.5),
+    Node('window', 'entity', 0.3),
+    Node('white wall', 'entity', 0.3),
+    Node('hospital room', 'entity', 0.6),
+    Node('chart', 'entity', 0.4),
+	Node('UU青姐', 'entity', 0.1),
+    Node('Weibo', 'entity', 0.3),
+	Node('sitting', 'event', 0.7),
+    Node('wearing', 'event', 0.7),
+    Node('smiling', 'event', 0.7), 
+	Node('posted', 'event', 0.6)
+]
+
+relationships = [
+    Relationship(nodes[1], nodes[0], 'in_photo', 0.8),
+    Relationship(nodes[1], nodes[14], 'action', 0.7),
+	Relationship(nodes[1], nodes[15], 'action', 0.7),
+    Relationship(nodes[1], nodes[16], 'action', 0.7),
+    Relationship(nodes[1], nodes[2], 'location', 0.8),
+    Relationship(nodes[10], nodes[0], 'background', 0.6),
+    Relationship(nodes[8], nodes[10], 'in', 0.5),
+	Relationship(nodes[9], nodes[10], 'part of', 0.4),
+    Relationship(nodes[11], nodes[0], 'in_photo', 0.5),
+	Relationship(nodes[12], nodes[0], 'title', 0.3),
+    Relationship(nodes[17], nodes[0], 'action', 0.7),
+    Relationship(nodes[12], nodes[17], 'actor', 0.4),
+    Relationship(nodes[13], nodes[17], 'platform', 0.6)
+]
+```
+
+In this case, the code representation of the knowledge graph includes entities and events present in the news report. Each entity and event is represented as a separate Node, and we define Relationships between these nodes. The node weights reflect the perceived importance of the nodes in the context of the report, and similarly for the relationship weights.
