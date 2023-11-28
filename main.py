@@ -19,6 +19,7 @@ if __name__ == '__main__':
         text = item["original_post"]
         label = item["label"]
         # image captioning
+        
         image_text = img2txt(url)
         # KG generation and compare
         kg, pred_label, explain = kg_generate_and_compare(text, image_text)
@@ -27,7 +28,7 @@ if __name__ == '__main__':
         labels.append(label)
         if view:
             print(explain)
-            with open('kg_final_output', 'w', encoding='utf-8') as f:
+            with open('kg_final_output', 'a', encoding='utf-8') as f:
                 f.write('KG:\n' + kg + '\n' + 'Prediction:\n' + explain)
 
     # calculate accuracy

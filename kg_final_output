@@ -1,0 +1,103 @@
+KG:
+```python
+# Knowledge graph code for News Input 1
+
+# Entities
+dog_meat = Node('Dog Meat', 'entity', 0.9)
+china_national_food_drug_administration = Node('China National Food and Drug Administration', 'entity', 0.8)
+reporting_hotline = Node('Reporting Hotline 12331', 'entity', 0.8)
+animal_lovers = Node('Animal Lovers', 'entity', 0.7)
+dog_owners = Node('Dog Owners', 'entity', 0.7)
+lomapet = Node('Lomapet', 'entity', 0.6)
+
+# Events
+ban_on_dog_meat_sales = Node('Ban On Dog Meat Sales', 'event', 1.0)
+reporting_event = Node('Call To Report', 'event', 0.8)
+social_spread = Node('Call For Social Spread', 'event', 0.7)
+opposition_to_animal_trade_and_killing = Node('Opposition To Animal Trade And Killing', 'event', 0.7)
+
+# Constructing the list of nodes
+node1 = [
+    dog_meat,
+    china_national_food_drug_administration,
+    reporting_hotline,
+    animal_lovers,
+    dog_owners,
+    lomapet,
+    ban_on_dog_meat_sales,
+    reporting_event,
+    social_spread,
+    opposition_to_animal_trade_and_killing
+]
+
+# Relationships
+legal_action_relationship = Relationship(china_national_food_drug_administration, ban_on_dog_meat_sales, 'initiated', 0.9)
+reporting_relationship = Relationship(reporting_hotline, reporting_event, 'is for', 0.8)
+advocacy_relationship = Relationship(animal_lovers, social_spread, 'engages in', 0.7)
+owners_advocacy_relationship = Relationship(dog_owners, social_spread, 'engages in', 0.6)
+oppose_trade_relationship = Relationship(animal_lovers, opposition_to_animal_trade_and_killing, 'supports', 0.7)
+lomapet_advocacy = Relationship(lomapet, social_spread, 'participates in', 0.6)
+
+# Constructing the list of relationships
+relationship1 = [
+    legal_action_relationship,
+    reporting_relationship,
+    advocacy_relationship,
+    owners_advocacy_relationship,
+    oppose_trade_relationship,
+    lomapet_advocacy
+]
+```
+
+```python
+# Knowledge graph code for News Input 2
+
+# Entities
+child = Node('Young Child', 'entity', 0.8)
+dog = Node('Large Dog', 'entity', 0.8)
+labrador_retriever = Node('Labrador Retriever', 'entity', 0.7)
+indoor_setting = Node('Indoor Setting', 'entity', 0.6)
+
+# Events
+bonding_moment = Node('Bonding Moment', 'event', 0.9)
+expression_of_love = Node('Expression Of Love', 'event', 0.9)
+emotional_development = Node('Emotional Development Of Child', 'event', 0.7)
+pet_wellbeing = Node('Well-Being Of Pet', 'event', 0.7)
+
+# Constructing the list of nodes
+node2 = [
+    child,
+    dog,
+    labrador_retriever,
+    indoor_setting,
+    bonding_moment,
+    expression_of_love,
+    emotional_development,
+    pet_wellbeing
+]
+
+# Relationships
+companionship_relationship = Relationship(child, dog, 'companionship', 0.9)
+mutual_affection_relationship = Relationship(child, dog, 'mutual affection', 0.9)
+breed_identification = Relationship(dog, labrador_retriever, 'is a', 0.7)
+child_development_relationship = Relationship(child, emotional_development, 'contributes to', 0.8)
+pet_comfort_relationship = Relationship(dog, pet_wellbeing, 'enhances', 0.8)
+setting_relationship = Relationship(bonding_moment, indoor_setting, 'occurs in', 0.6)
+
+# Constructing the list of relationships
+relationship2 = [
+    companionship_relationship,
+    mutual_affection_relationship,
+    breed_identification,
+    child_development_relationship,
+    pet_comfort_relationship,
+    setting_relationship
+]
+```
+Prediction:
+0
+Misinformation likely exists between the text and image content. The first KG, derived from the text, focuses on the ban of dog meat sales, the role of the China National Food and Drug Administration, a reporting hotline for violations, and a call for social advocacy against the trade and killing of animals. It also mentions an entity called Lomapet, which seems to be involved in the advocacy against animal cruelty.
+
+In contrast, the second KG, derived from the image, depicts a bonding moment between a young child and a large dog, likely a Labrador Retriever, in an indoor setting. It emphasizes the emotional development of the child, the well-being of the pet, and the mutual affection between them.
+
+The content of the text and the image are fundamentally different. The text discusses a legal and social issue regarding animal rights and dog meat consumption, while the image shows a personal and emotional moment between a child and a dog. The high-weight nodes and relationships in the first KG, such as the ban on dog meat sales (weight 1.0) and the China National Food and Drug Administration's involvement (weight 0.9), are not represented at all in the second KG. This discrepancy suggests that the text and image do not match, indicating the presence of misinformation when considering the post as a whole.
