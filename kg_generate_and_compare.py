@@ -1,9 +1,10 @@
-
 import openai
 import os
-openai.api_key = os.getenv("OPENAI_API_KEY")
 from openai import OpenAI
+
+openai.api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI()
+
 
 def kg_generate_and_compare(text, image_text, kg_generate_prompt_path='kg_gen_prompt.md',
                             kg_compare_prompt_path='kg_comp_prompt.md'):
@@ -12,45 +13,28 @@ def kg_generate_and_compare(text, image_text, kg_generate_prompt_path='kg_gen_pr
     with open(kg_compare_prompt_path, 'r', encoding='utf-8') as f:
         comp_prompt = f.read()
 
-
-    print('Generating Text KG...')
+    print('Generating KG...')
     completion = client.chat.completions.create(
         model="gpt-4-1106-preview",
         messages=[
-            {"role": "system",
-             "content": "You are an expert in Knowledge Graph generation"},
-            {"role": "user", "content": gen_prompt + '\n' + text + '\nKnowledge Graph Output:\n'}
+            {"role": "system", "content": "You are an expert in Knowledge Graph generation"},
+            {"role": "user",
+             "content": gen_prompt.format(TEXT=text, IMAGETEXT=image_text)}
         ]
     )
-    text_kg = completion.choices[0].message.content
-
-    print('Generating Image KG...')
-    completion =client.chat.completions.create(
-        model="gpt-4-1106-preview",
-        messages=[
-            {"role": "system",
-             "content": "You are an expert in Knowledge Graph generation"},
-            {"role": "user", "content": gen_prompt + '\n' + image_text + '\nKnowledge Graph Output:\n'}
-        ]
-    )
-    image_kg = completion.choices[0].message.content
+    kg = completion.choices[0].message.content
 
     print('Comparing...')
+    original_text = 'Original text for the first KG:\n' + text + '\nOriginal text for the second KG:\n' + image_text + '\n'
     completion = client.chat.completions.create(
         model="gpt-4-1106-preview",
         messages=[
             {"role": "system",
              "content": "You are an expert in Knowledge Graph comparison"},
             {"role": "user",
-             "content": '{}\nfirst KG:\n{}\n{}\nSecond KG:\n{}\n{}\nYour Prediction:\n'.format(comp_prompt,
-                                                                                               text,
-                                                                                               text_kg,
-                                                                                               image_text,
-                                                                                               image_kg)}
+             "content": comp_prompt.format(KG=kg, ORIGINALTEXT=original_text)}
         ],
-        temperature=0.1,
+        temperature=0.05,
     )
-    return text_kg, image_kg, completion.choices[0].message.content
-
-
-
+    predicted_label = int(completion.choices[0].message.content.split('\n')[0].strip())
+    return kg, predicted_label, completion.choices[0].message.content

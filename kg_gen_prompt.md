@@ -53,8 +53,20 @@ relationships = [
 ]
 ```
 
+Now convert the following 2 pieces of text into code representation of knowledge graph, respectively. You should output 2 pieces of code.
 
+The first piece of code should be able to represent the first text, with node and relationship stored in `node1` and `relationship1` respectively.
 
-Now convert the following text into code representation of knowledge graph.
+The second piece of code should be able to represent the second text, with node and relationship stored in `node2` and `relationship2` respectively.
 
-**News input**
+Only output the code, do not output anything else.
+
+**News Input 1**
+
+{TEXT}
+
+**News Input 2**
+
+{IMAGETEXT}
+
+**Knowledge graph code output**
