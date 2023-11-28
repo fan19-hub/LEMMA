@@ -29,3 +29,10 @@ if __name__ == '__main__':
             print(explain)
             with open('kg_final_output', 'w', encoding='utf-8') as f:
                 f.write('KG:\n' + kg + '\n' + 'Prediction:\n' + explain)
+
+    # calculate accuracy
+    correct = 0
+    for i in range(len(labels)):
+        if labels[i] == pred_labels[i]:
+            correct += 1
+    print('Accuracy: ', correct / len(labels))
