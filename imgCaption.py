@@ -32,13 +32,28 @@ def img2txt(url):
   else:
       import base64
       import requests
-
       # OpenAI API Key
       # api_key = OPENAI_KEY
       api_key = os.getenv("OPENAI_API_KEY")
 
       # Function to encode the image
       def encode_image(image_path):
+        rumor_img_dir = "../nlp-project/Data/weibo/nonrumor_images/"
+        rumor_img_dir = os.path.abspath(rumor_img_dir)
+
+        non_rumor_img_dir = "../nlp-project/Data/weibo/rumor_images/"
+        non_rumor_img_dir = os.path.abspath(non_rumor_img_dir)       
+
+        for filename in os.listdir(rumor_img_dir):
+          if filename == image_path:
+            image_path = rumor_img_dir + "/" + image_path
+            break
+
+        for filename in os.listdir(non_rumor_img_dir): 
+          if filename == image_path:
+            image_path = non_rumor_img_dir + "/" + image_path
+            break  
+        
         with open(image_path, "rb") as image_file:
           return base64.b64encode(image_file.read()).decode('utf-8')
 

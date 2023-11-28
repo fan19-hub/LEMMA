@@ -466,9 +466,9 @@ if __name__ == "__main__":
     test_image_urls = []
     for id in image_id:
         if id in rumor_img_id:
-            test_image_urls.append(rumor_img_dir + id + ".jpg")
+            test_image_urls.append(id + ".jpg")
         elif id in non_rumor_img_id:
-            test_image_urls.append(non_rumor_img_dir + id + ".jpg")
+            test_image_urls.append(id + ".jpg")
 
     # print(test_image_urls)
 
