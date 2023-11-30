@@ -1,0 +1,12 @@
+Labels:
+[1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1]
+Predictions:
+[1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1]
+True positives: 7
+False positives: 4
+False negatives: 2
+True negatives: 11
+Precision: 0.6363636363636364
+Recall: 0.7777777777777778
+Accuracy: 0.75
+F1 Score: 0.7000000000000001

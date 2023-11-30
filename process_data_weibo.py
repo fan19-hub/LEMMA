@@ -80,6 +80,7 @@ def write_txt(data):
     f.close()
 
 text_dict = {}
+
 def write_data(flag, image, text_only=False):
 
     def read_post(flag):
@@ -197,20 +198,21 @@ def write_data(flag, image, text_only=False):
 
         image_id = ""
         for i, id in enumerate(post['post_id']):
+           
             for image_id in post.iloc[i]['image_id'].split('|'):
                 image_id = image_id.split("/")[-1].split(".")[0]
                 if image_id in image:
                     break
 
-            if text_only or image_id in image:
+            if image_id in image:
                 if not text_only:
                     image_name = image_id
                     image_id_list.append(image_name)
                     ordered_image.append(image[image_name])
-                ordered_text.append(post.iloc[i]['original_post'])
-                ordered_post.append(post.iloc[i]['post_text'])
-                ordered_event.append(post.iloc[i]['event_label'])
-                post_id.append(id)
+                    ordered_text.append(post.iloc[i]['original_post'])
+                    ordered_post.append(post.iloc[i]['post_text'])
+                    ordered_event.append(post.iloc[i]['event_label'])
+                    post_id.append(id)
 
                 label.append(post.iloc[i]['label'])
 
@@ -431,11 +433,11 @@ class NumpyEncoder(json.JSONEncoder):
         return super(NumpyEncoder, self).default(obj)
 
 if __name__ == "__main__":
-    rumor_img_dir = "../nlp-project/Data/weibo/nonrumor_images/"
-    rumor_img_dir = os.path.abspath(rumor_img_dir)
-
-    non_rumor_img_dir = "../nlp-project/Data/weibo/rumor_images/"
+    non_rumor_img_dir = "../nlp-project/Data/weibo/nonrumor_images/"
     non_rumor_img_dir = os.path.abspath(non_rumor_img_dir)
+
+    rumor_img_dir = "../nlp-project/Data/weibo/rumor_images/"
+    rumor_img_dir = os.path.abspath(rumor_img_dir)
 
     rumor_img_id = []
     non_rumor_img_id = []
@@ -482,7 +484,6 @@ if __name__ == "__main__":
         }
         data.append(entry)
 
-    print(data[0])
     # Write the list of dictionaries to a JSON file
     json_file_path = "test.json"
     with open(json_file_path, 'w', encoding='utf-8') as json_file:
