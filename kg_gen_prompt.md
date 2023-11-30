@@ -59,6 +59,29 @@ The first piece of code should be able to represent the first text, with node an
 
 The second piece of code should be able to represent the second text, with node and relationship stored in `node2` and `relationship2` respectively.
 
+**Use the mark '---' to separate the two pieces of code.**
+
+An example of the output format is shown below:
+
+```python
+nodes1 = [
+    ...
+]
+
+relationships1 = [
+    ...
+]
+```
+---
+```python
+nodes2 = [
+    ...
+]
+
+relationships2 = [
+    ...
+]
+```
 Only output the code, do not output anything else.
 
 **News Input 1**

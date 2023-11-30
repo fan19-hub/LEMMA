@@ -25,6 +25,8 @@ def kg_generate_and_compare(text, image_text, kg_generate_prompt_path='kg_gen_pr
         ]
     )
     kg = completion.choices[0].message.content
+    kg1 = kg.split('---')[0]
+    kg2 = kg.split('---')[1]
 
     print('Comparing...')
     original_text = 'Original text for the first KG:\n' + text + '\nOriginal text for the second KG:\n' + image_text + '\n'
@@ -38,5 +40,5 @@ def kg_generate_and_compare(text, image_text, kg_generate_prompt_path='kg_gen_pr
         ],
         temperature=0.05,
     )
-    predicted_label = int(completion.choices[0].message.content.split('\n')[0].strip())
-    return kg, predicted_label, completion.choices[0].message.content
+    predicted_label = float(completion.choices[0].message.content.split('\n')[0].strip())
+    return kg1, kg2, predicted_label, completion.choices[0].message.content
