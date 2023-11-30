@@ -18,7 +18,7 @@ Original text:
 
 {ORIGINALTEXT}
 
-Output your prediction and explanation. In the first line of the output, use a single binary value 0 or 1 to indicate whether misinformation exists. 1 for no misinformation. 0 for misinformation do exist. In the second line or more lines, output your explanation.
+Output your prediction and explanation. In the first line of the output, use a single binary value 0 or 1 to indicate whether misinformation exists. 0 for no misinformation. 1 for misinformation do exist. In the second line or more lines, output your explanation.
 
 Your Prediction:
 
