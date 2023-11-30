@@ -8,7 +8,7 @@ from tool_learning import search
 view = True
 
 # automatic resume
-resume = False
+resume = True
 
 # using image caption cache
 using_cache = True
@@ -17,18 +17,19 @@ using_cache = True
 max_retry = 2
 
 # tool learning
-tool_learning = True
+tool_learning = False
 
 # image caption cache file name
 image_caption_cache_name = 'image_captioning_cache.json'
 tool_learning_cache_name = 'tool_learning_cache.json'
 
 # input data file name
-input_file = 'test_19.json'
+input_file = 'test.json'
 
 # output file names
 output_score = 'results'
 output_result = 'kg_final_output'
+
 
 if __name__ == '__main__':
     # Open the JSON file
@@ -146,8 +147,8 @@ if __name__ == '__main__':
         # kg
         for i in range(max_retry):
             try:
-                kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
-                # kg1, kg2, kg3, prob, explain = zero_shot(text, image_text, tool_learning_text)
+                # kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
+                kg1, kg2, kg3, prob, explain = zero_shot(text, image_text, tool_learning_text)
                 break
             except:
                 print('KG error, retrying...')
@@ -155,7 +156,7 @@ if __name__ == '__main__':
             print('KG error, skipping...')
             continue
 
-        if prob < 0.5:
+        if prob < 0.6:
             pred_label = 0
         else:
             pred_label = 1
