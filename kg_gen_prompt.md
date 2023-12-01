@@ -53,15 +53,17 @@ relationships = [
 ]
 ```
 
-Now convert the following 2 pieces of text into code representation of knowledge graph, respectively. You should output 2 pieces of code.
+Now convert the following 2 or 3 pieces of text into code representation of knowledge graph, respectively. You should output 2 or 3 pieces of code.
 
 The first piece of code should be able to represent the first text, with node and relationship stored in `node1` and `relationship1` respectively.
 
 The second piece of code should be able to represent the second text, with node and relationship stored in `node2` and `relationship2` respectively.
 
-**Use the mark '---' to separate the two pieces of code.**
+If the third piece of text is provided, use `node3` and `relationship3` to represent the third KG.
 
-An example of the output format is shown below:
+**Use the mark '---' to separate the code.**
+
+An example of the output format is shown below (if there are 3 pieces of text):
 
 ```python
 nodes1 = [
@@ -82,6 +84,16 @@ relationships2 = [
     ...
 ]
 ```
+---
+```python
+nodes3 = [
+    ...
+]
+
+relationships3 = [
+    ...
+]
+```
 Only output the code, do not output anything else.
 
 **News Input 1**
@@ -91,5 +103,9 @@ Only output the code, do not output anything else.
 **News Input 2**
 
 {IMAGETEXT}
+
+**News Input 3**
+
+{TOOL}
 
 **Knowledge graph code output**

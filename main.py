@@ -2,12 +2,13 @@ import json
 from imgCaption import img2txt
 from kg_generate_and_compare import kg_generate_and_compare
 from zero_shot_prediction import zero_shot
+from tool_learning import search
 
 # print the result
 view = True
 
 # automatic resume
-resume = True
+resume = False
 
 # using image caption cache
 using_cache = True
@@ -15,11 +16,15 @@ using_cache = True
 # max retry times
 max_retry = 2
 
+# tool learning
+tool_learning = True
+
 # image caption cache file name
-cache_name = 'image_captioning_cache.json'
+image_caption_cache_name = 'image_captioning_cache.json'
+tool_learning_cache_name = 'tool_learning_cache.json'
 
 # input data file name
-input_file = 'test_200.json'
+input_file = 'test_19.json'
 
 # output file names
 output_score = 'results'
@@ -31,18 +36,26 @@ if __name__ == '__main__':
           .format(view, resume, using_cache, max_retry, input_file, output_score, output_result))
 
     with open(input_file, encoding='utf-8') as file:
-        data = json.load(file)
+        data = json.load(file)[-1:]
 
     image_captioning_cache = {}
+    tool_learning_cache = {}
 
     if using_cache:
         try:
-            with open(cache_name, encoding='utf-8') as f:
+            with open(image_caption_cache_name, encoding='utf-8') as f:
                 image_captioning_cache = json.load(f)
             print('Using image captioning cache')
         except FileNotFoundError:
             image_captioning_cache = {}
             print('No image captioning cache found')
+        try:
+            with open(tool_learning_cache_name, encoding='utf-8') as f:
+                tool_learning_cache = json.load(f)
+            print('Using tool learning cache')
+        except FileNotFoundError:
+            tool_learning_cache = {}
+            print('No tool learning cache found')
 
     if resume:
         with open(output_score, 'r', encoding='utf-8') as f:
@@ -75,25 +88,48 @@ if __name__ == '__main__':
         text = item["original_post"]
         label = item["label"]
 
-        # convert label to correct 0/1
-        if label == 0:
-            label = 1
+        # tool learning
+        if tool_learning:
+            print('Tool learning...')
+            use_cache_flag = False
+            if using_cache:
+                if text in tool_learning_cache:
+                    tool_learning_text = tool_learning_cache[text]
+                    use_cache_flag = True
+
+            if not use_cache_flag:
+                for i in range(max_retry):
+                    try:
+                        tool_learning_text = search(text)
+                        if tool_learning_text is None:
+                            print('Tool learning error, retrying...')
+                            continue
+                        break
+                    except:
+                        print('Tool learning error, retrying...')
+                else:
+                    print('Tool learning error, skipping...')
+                    continue
+                if using_cache:
+                    tool_learning_cache[text] = tool_learning_text
+                    with open(tool_learning_cache_name, 'w', encoding='utf-8') as f:
+                        json.dump(tool_learning_cache, f, ensure_ascii=False)
         else:
-            label = 0
+            tool_learning_text = None
 
         use_cache_flag = False
         # image captioning
         if using_cache:
             if url in image_captioning_cache:
                 image_text = image_captioning_cache[url]
-                if 'sorry' not in image_text:
+                if 'sorry' not in image_text and 'Sorry' not in image_text:
                     use_cache_flag = True
 
         if not use_cache_flag:
             for i in range(max_retry):
                 try:
                     image_text = img2txt(url)
-                    if 'sorry' in image_text and 'assist' in image_text:
+                    if 'sorry' in image_text.lower():
                         print('Image captioning error, retrying...')
                         continue
                     break
@@ -104,13 +140,14 @@ if __name__ == '__main__':
                 continue
             if using_cache:
                 image_captioning_cache[url] = image_text
-                with open(cache_name, 'w', encoding='utf-8') as f:
+                with open(image_caption_cache_name, 'w', encoding='utf-8') as f:
                     json.dump(image_captioning_cache, f)
 
         # kg
         for i in range(max_retry):
             try:
-                kg1, kg2, prob, explain = kg_generate_and_compare(text, image_text)
+                kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
+                # kg1, kg2, kg3, prob, explain = zero_shot(text, image_text, tool_learning_text)
                 break
             except:
                 print('KG error, retrying...')
@@ -128,14 +165,14 @@ if __name__ == '__main__':
         labels.append(label)
 
         if view:
-            print('Text:\n{}\nImage:\n{}\nKG1:\n{}\nKG2:\n{}\nLabel: {}\nPrediction: {}\n\n'
-                  .format(text, image_text, kg1, kg2, label, explain))
+            print('Text:\n{}\nImage:\n{}\nTool:\n{}\nKG1:\n{}\nKG2:\n{}\nKG3:\n{}\nLabel: {}\nPrediction: {}\n'
+                  .format(text, image_text, tool_learning_text, kg1, kg2, kg3, label, explain))
 
         with open(output_score, 'w', encoding='utf-8') as f:
             f.write('Labels:\n{}\nPredictions:\n{}\n'.format(labels, pred_labels))
         with open(output_result, 'a', encoding='utf-8') as f:
-            f.write('Text:\n{}\nImage:\n{}\nKG1:\n{}\nKG2:\n{}\nLabel: {}\nPrediction: {}\n\n'
-                    .format(text, image_text, kg1, kg2, label, explain))
+            f.write('Text:\n{}\nImage:\n{}\nTool:\n{}\nKG1:\n{}\nKG2:\n{}\nKG3:\n{}\nLabel: {}\nPrediction: {}\n'
+                    .format(text, image_text, tool_learning_text, kg1, kg2, kg3, label, explain))
 
     print('Labels:', labels)
     print('Predictions:', pred_labels)

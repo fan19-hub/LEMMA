@@ -6,7 +6,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI()
 
 
-def zero_shot(text, image_text, prompt_path='zero_shot.md'):
+def zero_shot(text, image_text, tool=None, prompt_path='zero_shot.md'):
 
     with open(prompt_path, 'r', encoding='utf-8') as f:
         prompt = f.read()
@@ -23,4 +23,4 @@ def zero_shot(text, image_text, prompt_path='zero_shot.md'):
         temperature=0.1,
     )
     predicted_label = int(completion.choices[0].message.content.split('\n')[0].strip())
-    return None, predicted_label, completion.choices[0].message.content
+    return None, None, None, predicted_label, completion.choices[0].message.content

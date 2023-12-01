@@ -1,0 +1,8 @@
+*.json
+/data
+
+test19/results
+test19/kg_final_output
+
+/__pychache__
+/.idea
