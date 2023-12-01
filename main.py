@@ -36,7 +36,7 @@ if __name__ == '__main__':
           .format(view, resume, using_cache, max_retry, input_file, output_score, output_result))
 
     with open(input_file, encoding='utf-8') as file:
-        data = json.load(file)[-1:]
+        data = json.load(file)
 
     image_captioning_cache = {}
     tool_learning_cache = {}
