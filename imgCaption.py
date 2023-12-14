@@ -7,7 +7,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 client = OpenAI()
 
-def img2txt(url):
+def img2txt(url, data_name="weibo"):
   print("Generating Image Captioning...")
   if "http:" in url:
       response = client.chat.completions.create(
@@ -38,24 +38,37 @@ def img2txt(url):
 
       # Function to encode the image
       def encode_image(image_path):
-        rumor_img_dir = "../nlp-project/Data/weibo/nonrumor_images/"
-        rumor_img_dir = os.path.abspath(rumor_img_dir)
+        if data_name == "weibo":
+          rumor_img_dir = "../nlp-project/Data/weibo/nonrumor_images/"
+          rumor_img_dir = os.path.abspath(rumor_img_dir)
 
-        non_rumor_img_dir = "../nlp-project/Data/weibo/rumor_images/"
-        non_rumor_img_dir = os.path.abspath(non_rumor_img_dir)       
+          non_rumor_img_dir = "../nlp-project/Data/weibo/rumor_images/"
+          non_rumor_img_dir = os.path.abspath(non_rumor_img_dir)       
 
-        for filename in os.listdir(rumor_img_dir):
-          if filename == image_path:
-            image_path = rumor_img_dir + "/" + image_path
-            break
+          for filename in os.listdir(rumor_img_dir):
+            if filename == image_path:
+              image_path = rumor_img_dir + "/" + image_path
+              break
 
-        for filename in os.listdir(non_rumor_img_dir): 
-          if filename == image_path:
-            image_path = non_rumor_img_dir + "/" + image_path
-            break  
-        
-        with open(image_path, "rb") as image_file:
-          return base64.b64encode(image_file.read()).decode('utf-8')
+          for filename in os.listdir(non_rumor_img_dir): 
+            if filename == image_path:
+              image_path = non_rumor_img_dir + "/" + image_path
+              break  
+          
+          with open(image_path, "rb") as image_file:
+            return base64.b64encode(image_file.read()).decode('utf-8')
+          
+        elif data_name == "twitter":
+          img_dir = "../nlp-project/Data/twitter/Mediaeval2016_TestSet_Images"
+
+          for filename in os.listdir(img_dir):
+            if filename == image_path:
+              image_path = img_dir + "/" + image_path
+              break
+
+          with open(image_path, "rb") as image_file:
+            return base64.b64encode(image_file.read()).decode('utf-8')
+
 
       # Path to your image
       image_path = url

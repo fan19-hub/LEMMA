@@ -4,11 +4,17 @@ from kg_generate_and_compare import kg_generate_and_compare
 from zero_shot_prediction import zero_shot
 from tool_learning import search
 
+# mode
+zero_shot_mode = True
+
 # print the result
 view = True
 
 # automatic resume
 resume = True
+
+# dataset (twitter or weibo)
+data_name = 'twitter'
 
 # using image caption cache
 using_cache = True
@@ -24,7 +30,10 @@ image_caption_cache_name = 'image_captioning_cache.json'
 tool_learning_cache_name = 'tool_learning_cache.json'
 
 # input data file name
-input_file = 'test.json'
+if data_name == 'twitter':
+    input_file = 'test_twitter.json'
+elif data_name == 'weibo':
+    input_file = 'test.json'
 
 # output file names
 output_score = 'results'
@@ -129,7 +138,7 @@ if __name__ == '__main__':
         if not use_cache_flag:
             for i in range(max_retry):
                 try:
-                    image_text = img2txt(url)
+                    image_text = img2txt(url, data_name)
                     if 'sorry' in image_text.lower():
                         print('Image captioning error, retrying...')
                         continue
@@ -147,8 +156,10 @@ if __name__ == '__main__':
         # kg
         for i in range(max_retry):
             try:
-                # kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
-                kg1, kg2, kg3, prob, explain = zero_shot(text, image_text, tool_learning_text)
+                if zero_shot_mode:
+                    kg1, kg2, kg3, prob, explain = zero_shot(text, image_text, tool_learning_text)
+                else:
+                    kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
                 break
             except:
                 print('KG error, retrying...')
