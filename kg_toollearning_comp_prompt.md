@@ -10,7 +10,7 @@ Here are some techniques that you should use to determine whether text and image
 
 - Are there common features in the two KGs? 
 - Although the first (second) KG have nodes and relationships that the second (first) KG not have, can there be any possibilities that they are correlated?
-- Does the first two KGs contains nodes and relationships that are totally contradicted to the third (fact) KG? Be careful to make decisions, unless you are 100% sure.
+- Does the first two KGs contains nodes and relationships that are totally contradicted to the third (fact) KG? Note that if some nodes and relationships of the first two KGs are not exists in the third KG or the third KG contains nodes and relationships that are not in the first two KGs, this is not necessarily a contradict. Contradiction means some nodes in the first two KGs and the nodes in the fact KG are expressing exactly the different logic.
 
 The KGs are represented by a list of nodes and relationships between nodes. Each node has a name and a type that can be either 'entity' or 'event'. Each relationship is between two nodes and also have a name. Both node and entity have a weight between 0 and 1. This weight indicate the importance of the node or the entity. The first KG (generated from text) are represented by `node1` and `relationship1`, the second KG (generated from image) are represented by `node2` and `relationship2`, and so on. 
 
