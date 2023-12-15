@@ -62,8 +62,8 @@ def img2txt(url, data_name="weibo"):
           img_dir = "../nlp-project/Data/twitter/Mediaeval2016_TestSet_Images"
 
           for filename in os.listdir(img_dir):
-            if filename == image_path:
-              image_path = img_dir + "/" + image_path
+            if filename[:-4] == image_path:
+              image_path = img_dir + "/" + image_path + ".jpg"
               break
 
           with open(image_path, "rb") as image_file:
