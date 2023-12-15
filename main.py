@@ -39,7 +39,6 @@ elif data_name == 'weibo':
 output_score = 'results'
 output_result = 'kg_final_output'
 
-
 if __name__ == '__main__':
     # Open the JSON file
     print('View:{}\nResume:{}\nUsing cache:{}\nMax retry:{}\nInput file:{}\nOutput score:{}\nOutput result:{}\n'
@@ -189,28 +188,55 @@ if __name__ == '__main__':
     print('Labels:', labels)
     print('Predictions:', pred_labels)
 
-    true_positives = sum((l == 1 and p == 1) for l, p in zip(labels, pred_labels))
-    false_positives = sum((l == 0 and p == 1) for l, p in zip(labels, pred_labels))
-    false_negatives = sum((l == 1 and p == 0) for l, p in zip(labels, pred_labels))
-    true_negatives = sum((l == 0 and p == 0) for l, p in zip(labels, pred_labels))
+    # overall accuracy
+    accuracy = sum((l == p) for l, p in zip(labels, pred_labels)) / len(labels)
+    print('Accuracy:', accuracy)
 
-    precision = true_positives / (true_positives + false_positives) if (true_positives + false_positives) != 0 else 0
-    recall = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) != 0 else 0
-    accuracy = (true_positives + true_negatives) / len(labels) if len(labels) != 0 else 0
-    f1_score = (2 * precision * recall) / (precision + recall) if (precision + recall) != 0 else 0
+    # rumor version
+    rumor_labels = labels
+    rumor_pred_labels = pred_labels
 
-    print("Precision:", precision)
-    print("Recall:", recall)
-    print("Accuracy:", accuracy)
-    print("F1 Score:", f1_score)
+    # non-rumor version
+    non_rumor_labels = [1 - l for l in labels]
+    non_rumor_pred_labels = [1 - p for p in pred_labels]
+
+    rumor_true_positives = sum((l == 1 and p == 1) for l, p in zip(rumor_labels, rumor_pred_labels))
+    rumor_false_positives = sum((l == 0 and p == 1) for l, p in zip(rumor_labels, rumor_pred_labels))
+    rumor_false_negatives = sum((l == 1 and p == 0) for l, p in zip(rumor_labels, rumor_pred_labels))
+    rumor_true_negatives = sum((l == 0 and p == 0) for l, p in zip(rumor_labels, rumor_pred_labels))
+
+    rumor_precision = rumor_true_positives / (rumor_true_positives + rumor_false_positives)
+    rumor_recall = rumor_true_positives / (rumor_true_positives + rumor_false_negatives)
+    rumor_f1 = 2 * rumor_precision * rumor_recall / (rumor_precision + rumor_recall)
+
+    non_rumor_true_positives = sum((l == 1 and p == 1) for l, p in zip(non_rumor_labels, non_rumor_pred_labels))
+    non_rumor_false_positives = sum((l == 0 and p == 1) for l, p in zip(non_rumor_labels, non_rumor_pred_labels))
+    non_rumor_false_negatives = sum((l == 1 and p == 0) for l, p in zip(non_rumor_labels, non_rumor_pred_labels))
+    non_rumor_true_negatives = sum((l == 0 and p == 0) for l, p in zip(non_rumor_labels, non_rumor_pred_labels))
+
+    non_rumor_precision = non_rumor_true_positives / (non_rumor_true_positives + non_rumor_false_positives)
+    non_rumor_recall = non_rumor_true_positives / (non_rumor_true_positives + non_rumor_false_negatives)
+    non_rumor_f1 = 2 * non_rumor_precision * non_rumor_recall / (non_rumor_precision + non_rumor_recall)
 
     with open(output_score, 'w', encoding='utf-8') as f:
-        f.write('Labels:\n{}\nPredictions:\n{}\n'.format(labels, pred_labels))
-        f.write('True positives: {}\n'.format(true_positives))
-        f.write('False positives: {}\n'.format(false_positives))
-        f.write('False negatives: {}\n'.format(false_negatives))
-        f.write('True negatives: {}\n'.format(true_negatives))
-        f.write('Precision: {}\n'.format(precision))
-        f.write('Recall: {}\n'.format(recall))
-        f.write('Accuracy: {}\n'.format(accuracy))
-        f.write('F1 Score: {}\n'.format(f1_score))
+        f.write('Labels:\n{}\nPredictions:\n{}\n\n'.format(labels, pred_labels))
+
+        f.write('Accuracy: {}\n\n'.format(accuracy))
+
+        f.write('Rumor Section:\n')
+        f.write('True positives: {}\n'.format(rumor_true_positives))
+        f.write('False positives: {}\n'.format(rumor_false_positives))
+        f.write('False negatives: {}\n'.format(rumor_false_negatives))
+        f.write('True negatives: {}\n'.format(rumor_true_negatives))
+        f.write('Precision: {}\n'.format(rumor_precision))
+        f.write('Recall: {}\n'.format(rumor_recall))
+        f.write('F1 Score: {}\n\n'.format(rumor_f1))
+
+        f.write('Non-rumor Section:\n')
+        f.write('True positives: {}\n'.format(non_rumor_true_positives))
+        f.write('False positives: {}\n'.format(non_rumor_false_positives))
+        f.write('False negatives: {}\n'.format(non_rumor_false_negatives))
+        f.write('True negatives: {}\n'.format(non_rumor_true_negatives))
+        f.write('Precision: {}\n'.format(non_rumor_precision))
+        f.write('Recall: {}\n'.format(non_rumor_recall))
+        f.write('F1 Score: {}\n\n'.format(non_rumor_f1))
