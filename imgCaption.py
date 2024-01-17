@@ -1,22 +1,30 @@
-from openai import OpenAI
-import openai
-from config import OPENAI_KEY
 import os
+import openai
+from openai import OpenAI
+import base64
+import requests
 openai.api_key = os.getenv("OPENAI_API_KEY")
-# openai.api_key = OPENAI_KEY
+from config import data_root, prompts_root
+
+
 
 client = OpenAI()
+with open(prompts_root+"img_caption.md","r") as f:
+    prompt=f.read()
 
-def img2txt(url, data_name="weibo"):
+
+def img2txt(url, data_name=data_root+"weibo"):
+  global prompt
   print("Generating Image Captioning...")
-  if "http:" in url:
+
+  if "http" in url:
       response = client.chat.completions.create(
         model="gpt-4-vision-preview",
         messages=[
           {
             "role": "user",
             "content": [
-              {"type": "text", "text": "Let's think step by step. First, extract all the text in the image (OCR). Then, describe this picture. If it is a photo, how many characters are in this pic? what are they doing? what are their relations. what is the background? what activity is this? If it is a chart, what kind of chart it is? what interesting data does it have? what is the title or purpose of this chart? use 200 words to answer"},
+              {"type": "text", "text": prompt},
               {
                 "type": "image_url",
                 "image_url": {
@@ -30,10 +38,7 @@ def img2txt(url, data_name="weibo"):
       )
       return response.choices[0].message.content
   else:
-      import base64
-      import requests
       # OpenAI API Key
-      # api_key = OPENAI_KEY
       api_key = os.getenv("OPENAI_API_KEY")
 
       # Function to encode the image
@@ -89,7 +94,7 @@ def img2txt(url, data_name="weibo"):
             "content": [
               {
                 "type": "text",
-                "text": "Let's think step by step. First, extract all the text in the image (OCR). Then, describe this picture. If it is a photo, how many characters are in this pic? what are they doing? what are their relations. what is the background? what activity is this? If it is a chart, what kind of chart it is? what interesting data does it have? what is the title or purpose of this chart? use 200 words to answer"
+                "text": prompt
               },
               {
                 "type": "image_url",

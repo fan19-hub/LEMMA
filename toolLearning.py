@@ -5,10 +5,12 @@ from duckduckgo_search import ddg, ddg_translate
 from openai import OpenAI
 import os
 import numpy as np
+from config import prompts_root
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI()
-
+with open(prompts_root+'keyword_prompt.md', 'r', encoding='utf-8') as f:
+        keyword_prompts = f.read()
 
 def cosine_similarity(a, b):
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
@@ -69,8 +71,6 @@ def display_search_results(google_findings, links):
 
 
 def generate_keywords(text):
-    with open('keyword_prompt.md', 'r', encoding='utf-8') as f:
-        keyword_prompts = f.read()
     completion = client.chat.completions.create(
         model="gpt-4-1106-preview",
         # model="gpt-3.5-turbo",

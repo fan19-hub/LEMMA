@@ -1,0 +1,25 @@
+Labels:
+[1]
+Predictions:
+[1]
+
+Accuracy: 1.0
+
+Rumor Section:
+True positives: 1
+False positives: 0
+False negatives: 0
+True negatives: 0
+Precision: 1.0
+Recall: 1.0
+F1 Score: 1.0
+
+Non-rumor Section:
+True positives: 0
+False positives: 0
+False negatives: 0
+True negatives: 1
+Precision: 0.0
+Recall: 0.0
+F1 Score: 0.0
+

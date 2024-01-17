@@ -1,20 +1,23 @@
 import json
 from imgCaption import img2txt
-from kg_generate_and_compare import kg_generate_and_compare
+from KGprocess import kg_generate_and_compare
 from zero_shot_prediction import zero_shot
-from tool_learning import search
+from toolLearning import search
+from config import data_root,out_root
+
+
 
 # mode
-zero_shot_mode = True
+zero_shot_mode = False
 
 # print the result
 view = True
 
 # automatic resume
-resume = True
+resume = False
 
 # dataset (twitter or weibo)
-data_name = 'twitter'
+data_name = 'weibo'
 
 # using image caption cache
 using_cache = True
@@ -26,18 +29,19 @@ max_retry = 2
 tool_learning = False
 
 # image caption cache file name
-image_caption_cache_name = 'image_captioning_cache.json'
-tool_learning_cache_name = 'tool_learning_cache.json'
+image_caption_cache_name = data_root+'image_captioning_cache.json'
+tool_learning_cache_name = data_root+'tool_learning_cache.json'
 
 # input data file name
 if data_name == 'twitter':
-    input_file = 'test_twitter.json'
+    input_file = data_root+'test_twitter.json'
 elif data_name == 'weibo':
-    input_file = 'test.json'
+    input_file = data_root+'test.json'
+input_file=data_root+"exampleinput.json"
 
 # output file names
-output_score = 'results'
-output_result = 'kg_final_output'
+output_score = out_root+'results'
+output_result = out_root+'kg_final_output'
 
 if __name__ == '__main__':
     # Open the JSON file
@@ -97,6 +101,7 @@ if __name__ == '__main__':
         text = item["original_post"]
         label = item["label"]
 
+
         # tool learning
         if tool_learning:
             print('Tool learning...')
@@ -114,8 +119,10 @@ if __name__ == '__main__':
                             print('Tool learning error, retrying...')
                             continue
                         break
-                    except:
-                        print('Tool learning error, retrying...')
+                    except Exception as e:
+                        print('Tool learning error: ', end="")
+                        print(e)
+                        print(",retrying...")
                 else:
                     print('Tool learning error, skipping...')
                     continue
@@ -126,8 +133,9 @@ if __name__ == '__main__':
         else:
             tool_learning_text = None
 
-        use_cache_flag = False
+        
         # image captioning
+        use_cache_flag = False
         if using_cache:
             if url in image_captioning_cache:
                 image_text = image_captioning_cache[url]
@@ -142,8 +150,10 @@ if __name__ == '__main__':
                         print('Image captioning error, retrying...')
                         continue
                     break
-                except:
-                    print('Image captioning error, retrying...')
+                except Exception as e:
+                    print('Image captioning error:',end="")
+                    print(e,end="")
+                    print(",retrying...")
             else:
                 print('Image captioning error, skipping...')
                 continue
@@ -160,8 +170,10 @@ if __name__ == '__main__':
                 else:
                     kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
                 break
-            except:
-                print('KG error, retrying...')
+            except Exception as e:
+                print('KG error: ',end="")
+                print(e,end="")
+                print(",retrying...")
         else:
             print('KG error, skipping...')
             continue
@@ -214,9 +226,9 @@ if __name__ == '__main__':
     non_rumor_false_negatives = sum((l == 1 and p == 0) for l, p in zip(non_rumor_labels, non_rumor_pred_labels))
     non_rumor_true_negatives = sum((l == 0 and p == 0) for l, p in zip(non_rumor_labels, non_rumor_pred_labels))
 
-    non_rumor_precision = non_rumor_true_positives / (non_rumor_true_positives + non_rumor_false_positives)
-    non_rumor_recall = non_rumor_true_positives / (non_rumor_true_positives + non_rumor_false_negatives)
-    non_rumor_f1 = 2 * non_rumor_precision * non_rumor_recall / (non_rumor_precision + non_rumor_recall)
+    non_rumor_precision = non_rumor_true_positives / (non_rumor_true_positives + non_rumor_false_positives+1e-10)
+    non_rumor_recall = non_rumor_true_positives / (non_rumor_true_positives + non_rumor_false_negatives+1e-10)
+    non_rumor_f1 = 2 * non_rumor_precision * non_rumor_recall / (non_rumor_precision + non_rumor_recall+1e-10)
 
     with open(output_score, 'w', encoding='utf-8') as f:
         f.write('Labels:\n{}\nPredictions:\n{}\n\n'.format(labels, pred_labels))

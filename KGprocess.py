@@ -3,19 +3,30 @@ import os
 from openai import OpenAI
 from config import OPENAI_KEY
 openai.api_key = os.getenv("OPENAI_API_KEY")
-# openai.api_key = OPENAI_KEY
+from config import prompts_root
+
 
 client = OpenAI()
 
-def kg_generate_and_compare(text, image_text, tool_learning_text=None, kg_generate_prompt_path='kg_gen_prompt.md',
-                            kg_compare_prompt_path='kg_comp_prompt.md', kg_tool_comp_prompt_path='kg_toollearning_comp_prompt.md'):
-    with open(kg_generate_prompt_path, 'r', encoding='utf-8') as f:
-        gen_prompt = f.read()
-    with open(kg_compare_prompt_path, 'r', encoding='utf-8') as f:
-        comp_prompt = f.read()
-    with open(kg_tool_comp_prompt_path, 'r', encoding='utf-8') as f:
-        tool_comp_prompt = f.read()
+kg_generate_prompt_path=prompts_root+'kg_gen_prompt.md'
+kg_compare_prompt_path=prompts_root+'kg_comp_prompt.md'
+kg_tool_comp_prompt_path=prompts_root+'kg_toollearning_comp_prompt.md'
+kg_verify_text_prompt_path=prompts_root+'kg_verify_text_prompt.md'
+# kg_common_prompt_path=prompts_root+'kg_common_feature_prompt.md'
+with open(kg_generate_prompt_path, 'r', encoding='utf-8') as f:
+    gen_prompt = f.read()
+with open(kg_compare_prompt_path, 'r', encoding='utf-8') as f:
+    comp_prompt = f.read()
+with open(kg_tool_comp_prompt_path, 'r', encoding='utf-8') as f:
+    tool_comp_prompt = f.read()
+# with open(kg_common_prompt_path, 'r', encoding='utf-8') as f:
+    # common_prompt = f.read()
+with open(kg_verify_text_prompt_path, 'r', encoding='utf-8') as f:
+    ver_prompt = f.read()
 
+
+
+def kg_generate_and_compare(text, image_text, tool_learning_text=None):
     print('Generating KG...')
     completion = client.chat.completions.create(
         model="gpt-4-1106-preview",
@@ -59,17 +70,15 @@ def kg_generate_and_compare(text, image_text, tool_learning_text=None, kg_genera
     )
     try:
         predicted_label = float(completion.choices[0].message.content.split('\n')[0].strip())
-        return kg1, kg2, predicted_label, completion.choices[0].message.content
+        return kg1, kg2,kg3, predicted_label, completion.choices[0].message.content
 
     except:
-        return kg_generate_and_compare(text, image_text, kg_generate_prompt_path='kg_gen_prompt.md',
-                            kg_compare_prompt_path='kg_comp_prompt.md')
+        return kg_generate_and_compare(text, image_text)
+
+
 
 ## aims to check whether image generated kg's entity and relation can be relected in text
-def kg_verification_text(kg, text, 
-                         kg_verify_text_prompt_path='kg_verify_text_prompt.md'):
-    with open(kg_verify_text_prompt_path, 'r', encoding='utf-8') as f:
-        ver_prompt = f.read()
+def kg_verification_text(kg, text):
     print('Verifying Image KG...')
     completion = client.chat.completions.create(
         model="gpt-4-1106-preview",
@@ -86,16 +95,14 @@ def kg_verification_text(kg, text,
     return reasoning
 
 ## aims to check whether any common features between two kg
-def find_common_feature(kg, kg_common_prompt_path='kg_common_feature_prompt.md'):
-    with open(kg_common_prompt_path, 'r', encoding='utf-8') as f:
-        ver_prompt = f.read()
+def find_common_feature(kg):
     print('Verifying Image KG...')
     completion = client.chat.completions.create(
         model="gpt-4-1106-preview",
         messages=[
             {"role": "system", "content": "You are an expert in Knowledge Graph entity and relation verification"},
             {"role": "user",
-             "content": ver_prompt.format(KG = kg, ORIGINALTEXT = text)}
+             "content": common_prompt.format(KG = kg, ORIGINALTEXT = text)}
         ],
         temperature=0.05,
     )
