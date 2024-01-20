@@ -98,7 +98,7 @@ if __name__ == '__main__':
         print('Processing index {}/{}'.format(len(labels), len(data)))
         # read
         url = item["image_url"]
-        text = item["original_post"]
+        text = item["post_text"]
         label = item["label"]
 
 

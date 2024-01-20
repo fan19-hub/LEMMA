@@ -41,15 +41,20 @@ prefix_list = get_jpg_prefixes(folder_path)
 print("Number of prefixes:", len(prefix_list))
 
 
-
 def corpus(prefix_list, output_file='./posts_groundtruth_filtered.json'):
     with open('./testset/posts_groundtruth.json', 'r', encoding='utf-8') as file:
         # Load JSON data from the file
         json_data = json.load(file)
 
     # Filter json_data based on the 'image_id' key
-    filtered_data = [data for data in json_data if data['image_id'] in prefix_list]
-    print(len(filtered_data))
+    filtered_data = [data for data in json_data if data['image_id'] in prefix_list if len(data['post_text']) > 100]
+    count = len([data for data in filtered_data if data['label'] == 'real'])
+    for i,d in enumerate(filtered_data):
+        if d['label'] == 'real':
+            d['label'] = 0
+        else:
+            d['label'] = 1
+
 
     # Write the filtered data to the output file
     with open(output_file, 'w', encoding='utf-8') as output_file:
