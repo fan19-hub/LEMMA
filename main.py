@@ -5,8 +5,6 @@ from zero_shot_prediction import zero_shot
 from toolLearning import search
 from config import data_root,out_root
 
-
-
 # mode
 zero_shot_mode = False
 
@@ -16,7 +14,7 @@ view = True
 # automatic resume
 resume = False
 
-# dataset (twitter or weibo)
+# dataset (twitter or weibo or fakereddit or ticnn)
 data_name = 'weibo'
 
 # using image caption cache
@@ -34,10 +32,14 @@ tool_learning_cache_name = data_root+'tool_learning_cache.json'
 
 # input data file name
 if data_name == 'twitter':
-    input_file = data_root+'test_twitter.json'
+    input_file = data_root+'twitter/twitter.json'
 elif data_name == 'weibo':
     input_file = data_root+'test.json'
-input_file=data_root+"exampleinput.json"
+elif data_name == 'fakereddit':
+    input_file = data_root+'fakereddit/FAKEDDIT.json'
+elif data_name == 'ticnn':
+    input_file = data_root+'ticnn/ticnn.json'
+# input_file=data_root+"exampleinput.json"
 
 # output file names
 output_score = out_root+'results'
@@ -98,7 +100,7 @@ if __name__ == '__main__':
         print('Processing index {}/{}'.format(len(labels), len(data)))
         # read
         url = item["image_url"]
-        text = item["post_text"]
+        text = item["original_post"]
         label = item["label"]
 
 
