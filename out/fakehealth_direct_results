@@ -1,0 +1,25 @@
+Labels:
+[True, False, False, True, False, False, False, True, False, False, False, False, False, False, True, False, False, False, True, False, False, False, False, True, False, True, False, True, False, False, False, False, False, False, False, False, False, False, False, False, False, False, True, True, False, False, False, False, True, False, False, True, True, False, False, False, True, False, False, False, False, False, False, True, False, False, False, True, True, False, False, True, False, False, False, False, False, False, False, False, False, False, False, False, False, True, True, False, False, True, False, False, False, False, True, False, False, False, True, False, False, True, True, False, False, True, True, True, False, False, False, False, False]
+Predictions:
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+Accuracy: 0.7168141592920354
+
+Rumor Section:
+True positives: 1
+False positives: 5
+False negatives: 27
+True negatives: 80
+Precision: 0.16666666666666666
+Recall: 0.03571428571428571
+F1 Score: 0.058823529411764705
+
+Non-rumor Section:
+True positives: 80
+False positives: 27
+False negatives: 5
+True negatives: 1
+Precision: 0.7476635514011704
+Recall: 0.9411764705871281
+F1 Score: 0.8333333332831218
+

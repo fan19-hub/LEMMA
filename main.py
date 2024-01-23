@@ -1,30 +1,34 @@
 import json
 from imgCaption import img2txt
 from KGprocess import kg_generate_and_compare
-from zero_shot_prediction import zero_shot
+from cot import cot
+from zero_shot import zero_shot
 from toolLearning import search
 from config import data_root,out_root
 
-# mode
-zero_shot_mode = False
+# mode ('direct' or 'cot' or 'cot+kg' or 'cot+fact' or 'lemma')
+#### EXPLAINATION ####
+# direct: directly use the text and image as input
+# cot: use chain of thought method 
+# cot+kg: use chain of thought method and knowledge graph based reasoning
+# cot+fact: use chain of thought method and fact check
+# lemma: our method
+mode = 'direct'
 
 # print the result
-view = True
+view = False
 
 # automatic resume
 resume = False
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'weibo'
+data_name = 'twitter'
 
 # using image caption cache
 using_cache = True
 
 # max retry times
 max_retry = 2
-
-# tool learning
-tool_learning = False
 
 # image caption cache file name
 image_caption_cache_name = data_root+'image_captioning_cache.json'
@@ -39,11 +43,14 @@ elif data_name == 'fakereddit':
     input_file = data_root+'fakereddit/FAKEDDIT.json'
 elif data_name == 'ticnn':
     input_file = data_root+'ticnn/ticnn.json'
+elif data_name == 'fakehealth':
+    input_file = data_root+'fakehealth/fakehealth.json'
+
 # input_file=data_root+"exampleinput.json"
 
 # output file names
-output_score = out_root+'results'
-output_result = out_root+'kg_final_output'
+output_score = out_root + data_name + '_' + mode + '_' + 'results'
+output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output'
 
 if __name__ == '__main__':
     # Open the JSON file
@@ -103,9 +110,8 @@ if __name__ == '__main__':
         text = item["original_post"]
         label = item["label"]
 
-
         # tool learning
-        if tool_learning:
+        if mode == 'lemma' or mode == 'cot+fact':
             print('Tool learning...')
             use_cache_flag = False
             if using_cache:
@@ -137,38 +143,45 @@ if __name__ == '__main__':
 
         
         # image captioning
-        use_cache_flag = False
-        if using_cache:
-            if url in image_captioning_cache:
-                image_text = image_captioning_cache[url]
-                if 'sorry' not in image_text and 'Sorry' not in image_text:
-                    use_cache_flag = True
-
-        if not use_cache_flag:
-            for i in range(max_retry):
-                try:
-                    image_text = img2txt(url, data_name)
-                    if 'sorry' in image_text.lower():
-                        print('Image captioning error, retrying...')
-                        continue
-                    break
-                except Exception as e:
-                    print('Image captioning error:',end="")
-                    print(e,end="")
-                    print(",retrying...")
-            else:
-                print('Image captioning error, skipping...')
-                continue
+        if mode != 'direct':
+            use_cache_flag = False
             if using_cache:
-                image_captioning_cache[url] = image_text
-                with open(image_caption_cache_name, 'w', encoding='utf-8') as f:
-                    json.dump(image_captioning_cache, f)
+                if url in image_captioning_cache:
+                    image_text = image_captioning_cache[url]
+                    if 'sorry' not in image_text and 'Sorry' not in image_text:
+                        use_cache_flag = True
+
+            if not use_cache_flag:
+                for i in range(max_retry):
+                    try:
+                        image_text = img2txt(url, data_name)
+                        if 'sorry' in image_text.lower():
+                            print('Image captioning error, retrying...')
+                            continue
+                        break
+                    except Exception as e:
+                        print('Image captioning error:',end="")
+                        print(e,end="")
+                        print(",retrying...")
+                else:
+                    print('Image captioning error, skipping...')
+                    continue
+                if using_cache:
+                    image_captioning_cache[url] = image_text
+                    with open(image_caption_cache_name, 'w', encoding='utf-8') as f:
+                        json.dump(image_captioning_cache, f)
+        else:
+            image_text = None
 
         # kg
         for i in range(max_retry):
             try:
-                if zero_shot_mode:
-                    kg1, kg2, kg3, prob, explain = zero_shot(text, image_text, tool_learning_text)
+                if mode == 'direct':
+                    kg1, kg2, kg3, prob, explain = zero_shot(text, url)
+                elif mode == 'cot':
+                    kg1, kg2, kg3, prob, explain = cot(text, image_text, tool_learning_text)
+                elif mode == 'cot':
+                    pass
                 else:
                     kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
                 break

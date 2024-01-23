@@ -1,5 +1,7 @@
-OPENAI_KEY = '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'
+import os
 prompts_root="prompts/"
 data_root="data/"
 scripts_root="scripts"
 out_root="out/"
+imgbed_root="https://raw.githubusercontent.com/fan19-hub/nlp-project/main/data/"
+OPENAI_KEY = os.getenv("OPENAI_API_KEY")

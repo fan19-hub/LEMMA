@@ -32,23 +32,33 @@ def get_jpg_prefixes(folder_path):
 
     # Extract prefixes from .jpg files
     jpg_prefixes = [os.path.splitext(file)[0] for file in files if file.lower().endswith('.jpg')]
-
+   
     return jpg_prefixes
 
 folder_path = "./Mediaeval2016_TestSet_Images"
 prefix_list = get_jpg_prefixes(folder_path)
 
+# for i,prefix in enumerate(prefix_list):
+#     prefix_list[i] = './Mediaeval2016_TestSet_Images' + prefix + '.jpg'
+
+
+
 print("Number of prefixes:", len(prefix_list))
 
 
-def corpus(prefix_list, output_file='./posts_groundtruth_filtered.json'):
+def corpus(prefix_list, output_file='./twitter.json'):
     with open('./testset/posts_groundtruth.json', 'r', encoding='utf-8') as file:
         # Load JSON data from the file
         json_data = json.load(file)
 
-    # Filter json_data based on the 'image_id' key
-    filtered_data = [data for data in json_data if data['image_id'] in prefix_list if len(data['post_text']) > 100]
-    count = len([data for data in filtered_data if data['label'] == 'real'])
+    # Filter json_data based on the 'image_url' key
+    filtered_data = []
+    for data in json_data:
+        if data['image_url'] in prefix_list and len(data['original_post']) > 100:
+            data['image_url'] = 'twitter/Mediaeval2016_TestSet_Images/' + data['image_url'] + '.jpg'
+            filtered_data.append(data)
+
+
     for i,d in enumerate(filtered_data):
         if d['label'] == 'real':
             d['label'] = 0
