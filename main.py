@@ -13,7 +13,7 @@ from config import data_root,out_root
 # cot+kg: use chain of thought method and knowledge graph based reasoning
 # cot+fact: use chain of thought method and fact check
 # lemma: our method
-mode = 'direct'
+mode = 'cot'
 
 # print the result
 view = False
@@ -22,7 +22,7 @@ view = False
 resume = False
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'twitter'
+data_name = 'fakereddit'
 
 # using image caption cache
 using_cache = True
@@ -143,7 +143,7 @@ if __name__ == '__main__':
 
         
         # image captioning
-        if mode != 'direct':
+        if mode != 'direct' and mode != 'cot':
             use_cache_flag = False
             if using_cache:
                 if url in image_captioning_cache:
@@ -179,8 +179,8 @@ if __name__ == '__main__':
                 if mode == 'direct':
                     kg1, kg2, kg3, prob, explain = zero_shot(text, url)
                 elif mode == 'cot':
-                    kg1, kg2, kg3, prob, explain = cot(text, image_text, tool_learning_text)
-                elif mode == 'cot':
+                    kg1, kg2, kg3, prob, explain = cot(text, url)
+                elif mode == 'cot+fact':
                     pass
                 else:
                     kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
