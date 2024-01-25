@@ -5,7 +5,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 from config import prompts_root
 
 client = OpenAI()
-prompt_path=prompts_root+'zero_shot.md'
+prompt_path=prompts_root+'cot.md'
 with open(prompt_path, 'r', encoding='utf-8') as f:
         prompt = f.read()
 
