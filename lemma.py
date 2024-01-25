@@ -50,7 +50,7 @@ def lemma(text, url, image_text, tool):
                  ],
                  }
             ],
-            max_tokens=300,
+            max_tokens=1000,
             temperature=0.1
         )
         info = response.choices[0].message.content
@@ -94,13 +94,14 @@ def lemma(text, url, image_text, tool):
                     ]
                 }
             ],
-            "max_tokens": 300,
+            "max_tokens": 1000,
             "temperature": 0.1
         }
         response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
         info = eval(response.text)["choices"][0]["message"]["content"]
 
     info_list = info.split("\n")
+    print(info_list)
     final_label = int(info_list[-1].strip())
     explanation = "\n".join(info_list[:-1])
     print(pred_label, final_label, explanation)

@@ -26,7 +26,7 @@ def onlineImg_process(url, text):
                     ],
                 }
                 ],
-        max_tokens=300,
+        max_tokens=1000,
         temperature=0.1
     )
     info=response.choices[0].message.content
@@ -72,7 +72,7 @@ def offlineImg_process(image_path,text):
           ]
         }
       ],
-      "max_tokens": 300,
+      "max_tokens": 1000,
       "temperature":0.1
     }
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
