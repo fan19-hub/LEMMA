@@ -9,5 +9,5 @@ You are given a piece of **Input Text** and an image. Your task is to predict wh
 
 {TEXT}
 
-# Your Reponse:
+# Your Response:
 Let's think step by step, 

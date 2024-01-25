@@ -31,8 +31,8 @@ def onlineImg_process(url, text):
     )
     info=response.choices[0].message.content
     info_list=info.split("\n")
-    label=int(info_list[0].strip())
-    explanation="\n".join(info_list[1:])
+    label=int(info_list[-1].strip())
+    explanation="\n".join(info_list[:-1])
     return label,explanation
 
 
@@ -78,8 +78,8 @@ def offlineImg_process(image_path,text):
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     info= eval(response.text)["choices"][0]["message"]["content"]
     info_list=info.split("\n")
-    label=int(info_list[0].strip())
-    explanation="\n".join(info_list[1:])
+    label=int(info_list[-1].strip())
+    explanation="\n".join(info_list[:-1])
     return label,explanation
 
 
