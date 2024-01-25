@@ -19,10 +19,10 @@ mode = 'cot'
 view = False
 
 # automatic resume
-resume = False
+resume = True
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'fakereddit'
+data_name = 'twitter'
 
 # using image caption cache
 using_cache = True
