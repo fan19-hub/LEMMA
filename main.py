@@ -23,7 +23,7 @@ view = False
 resume = False
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'ticnn'
+data_name = 'fakereddit'
 
 # using image caption cache
 using_cache = True
@@ -51,7 +51,7 @@ elif data_name == 'fakehealth':
 
 # output file names
 output_score = out_root + data_name + '_' + mode + '_' + 'results'
-output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output'
+output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output.json'
 
 if __name__ == '__main__':
     # Open the JSON file
@@ -63,6 +63,8 @@ if __name__ == '__main__':
 
     image_captioning_cache = {}
     tool_learning_cache = {}
+
+    all_results = []
 
     if using_cache:
         try:
@@ -91,11 +93,11 @@ if __name__ == '__main__':
             for char in lines[3]:
                 if char.isdigit():
                     pred_labels.append(int(char))
-        results = []
+        with open(output_result, 'r', encoding='utf-8') as f:
+            all_results = json.load(f)
         data = data[len(labels):]
         print('Resuming from index', len(labels))
     else:
-        results = []
         pred_labels = []
         labels = []
         print('Starting from index 0')
@@ -202,8 +204,20 @@ if __name__ == '__main__':
             pred_label = 1
 
         pred_labels.append(pred_label)
-        results.append(explain)
         labels.append(label)
+
+        all_results.append({
+            'text': text,
+            'image': url,
+            'image_text': image_text,
+            'tool_learning_text': tool_learning_text,
+            'text_kg': kg1,
+            'image_kg': kg2,
+            'tool_kg': kg3,
+            'label': label,
+            'prediction': pred_label,
+            'explain': explain
+        })
 
         if view:
             print('Text:\n{}\nImage:\n{}\nTool:\n{}\nKG1:\n{}\nKG2:\n{}\nKG3:\n{}\nLabel: {}\nPrediction: {}\n'
@@ -211,9 +225,8 @@ if __name__ == '__main__':
 
         with open(output_score, 'w', encoding='utf-8') as f:
             f.write('Labels:\n{}\nPredictions:\n{}\n'.format(labels, pred_labels))
-        with open(output_result, 'a', encoding='utf-8') as f:
-            f.write('Text:\n{}\nImage:\n{}\nTool:\n{}\nKG1:\n{}\nKG2:\n{}\nKG3:\n{}\nLabel: {}\nPrediction: {}\n'
-                    .format(text, image_text, tool_learning_text, kg1, kg2, kg3, label, explain))
+        with open(output_result, 'w', encoding='utf-8') as f:
+            json.dump(all_results, f, ensure_ascii=False, indent=4)
 
     print('Labels:', labels)
     print('Predictions:', pred_labels)
