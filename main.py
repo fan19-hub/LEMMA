@@ -4,6 +4,7 @@ from KGprocess import kg_generate_and_compare
 from cot import cot
 from zero_shot import zero_shot
 from toolLearning import search
+from lemma import lemma
 from config import data_root,out_root
 
 # mode ('direct' or 'cot' or 'cot+kg' or 'cot+fact' or 'lemma')
@@ -13,16 +14,16 @@ from config import data_root,out_root
 # cot+kg: use chain of thought method and knowledge graph based reasoning
 # cot+fact: use chain of thought method and fact check
 # lemma: our method
-mode = 'cot'
+mode = 'lemma'
 
 # print the result
 view = False
 
 # automatic resume
-resume = True
+resume = False
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'twitter'
+data_name = 'ticnn'
 
 # using image caption cache
 using_cache = True
@@ -42,7 +43,7 @@ elif data_name == 'weibo':
 elif data_name == 'fakereddit':
     input_file = data_root+'fakereddit/FAKEDDIT.json'
 elif data_name == 'ticnn':
-    input_file = data_root+'ticnn/ticnn.json'
+    input_file = data_root+'ticnn/ticnn_sample.json'
 elif data_name == 'fakehealth':
     input_file = data_root+'fakehealth/fakehealth.json'
 
@@ -182,6 +183,8 @@ if __name__ == '__main__':
                     kg1, kg2, kg3, prob, explain = cot(text, url)
                 elif mode == 'cot+fact':
                     pass
+                elif mode == 'lemma':
+                    kg1, kg2, kg3, prob, explain = lemma(text, url, image_text, tool_learning_text)
                 else:
                     kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
                 break

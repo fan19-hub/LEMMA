@@ -1,0 +1,56 @@
+from zero_shot import zero_shot
+from config import prompts_root
+from openai import OpenAI
+
+
+def lemma(text, url, image_text, tool):
+    _, _, _, prob, _ = zero_shot(text, url)
+    pred_label = int(prob)
+
+    client = OpenAI()
+
+    kg_generate_prompt_path = prompts_root + 'kg_gen_prompt.md'
+    lemma_prompt_path = prompts_root + 'lemma.md'
+
+    with open(kg_generate_prompt_path, 'r', encoding='utf-8') as f:
+        gen_prompt = f.read()
+
+    with open(lemma_prompt_path, 'r', encoding='utf-8') as f:
+        lemma_prompt = f.read()
+
+    completion = client.chat.completions.create(
+        model="gpt-4-1106-preview",
+        messages=[
+            {"role": "system", "content": "You are an expert in Knowledge Graph generation"},
+            {"role": "user",
+             "content": gen_prompt.format(TEXT=text, IMAGETEXT=image_text, TOOL='No third text. Please ignore.')}
+        ]
+    )
+
+    kg = completion.choices[0].message.content
+    kg1 = kg.split('---')[0]
+    kg2 = kg.split('---')[1]
+
+    response = client.chat.completions.create(
+        model="gpt-4-vision-preview",
+        messages=[
+            {"role": "user",
+             "content": [
+                 {"type": "text", "text": lemma_prompt.format(TEXT=text,
+                                                              PREDICTION=pred_label,
+                                                              TEXT_KG=kg1,
+                                                              IMAGE_KG=kg2,
+                                                              TOOLLEARNING=tool)},
+                 {"type": "image_url", "image_url": {"url": f"{url}", }, },
+             ],
+             }
+        ],
+        max_tokens=300,
+        temperature=0.1
+    )
+    info = response.choices[0].message.content
+    info_list = info.split("\n")
+    final_label = int(info_list[-1].strip())
+    explanation = "\n".join(info_list[:-1])
+    print(pred_label, final_label, explanation)
+    return kg1, kg2, None, final_label, explanation
