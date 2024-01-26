@@ -92,3 +92,4 @@ def img2txt(source= data_root+"weibo", is_url=True):
       return offlineImg_process(source)
 
 
+print(img2txt(source= "https://pbs.twimg.com/media/ByGXet8IYAA6kdh?format=jpg&name=small", is_url=True))
