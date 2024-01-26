@@ -33,6 +33,9 @@ def lemma(text, url, image_text, tool, pred_label):
     kg1 = kg.split('---')[0]
     kg2 = kg.split('---')[1]
 
+    if "http" not in url:
+        url = imgbed_root + url
+        
     if 'http' in url:
         response = client.chat.completions.create(
             model="gpt-4-vision-preview",

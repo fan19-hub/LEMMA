@@ -23,7 +23,7 @@ view = False
 resume = False
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'fakereddit'
+data_name = 'twitter'
 
 # using image caption cache
 using_cache = True
@@ -37,7 +37,7 @@ tool_learning_cache_name = data_root+'tool_learning_cache.json'
 
 # input data file name
 if data_name == 'twitter':
-    input_file = data_root+'twitter/twitter.json'
+    input_file = data_root+'twitter/twitter_s_30.json'
 elif data_name == 'weibo':
     input_file = data_root+'test.json'
 elif data_name == 'fakereddit':
@@ -50,8 +50,8 @@ elif data_name == 'fakehealth':
 # input_file=data_root+"exampleinput.json"
 
 # output file names
-output_score = out_root + data_name + '_' + mode + '_' + 'results'
-output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output.json'
+output_score = out_root + data_name + '_' + mode + '_' + 'results_30'
+output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_30.json'
 
 if __name__ == '__main__':
     # Open the JSON file
