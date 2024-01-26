@@ -1,0 +1,25 @@
+Labels:
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+Predictions:
+[0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0]
+
+Accuracy: 0.3157894736842105
+
+Rumor Section:
+True positives: 6
+False positives: 0
+False negatives: 13
+True negatives: 0
+Precision: 1.0
+Recall: 0.3157894736842105
+F1 Score: 0.4799999999999999
+
+Non-rumor Section:
+True positives: 0
+False positives: 13
+False negatives: 0
+True negatives: 6
+Precision: 0.0
+Recall: 0.0
+F1 Score: 0.0
+
