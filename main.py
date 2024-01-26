@@ -29,7 +29,7 @@ data_name = 'fakereddit'
 using_cache = True
 
 # max retry times
-max_retry = 2
+max_retry = 5
 
 # image caption cache file name
 image_caption_cache_name = data_root+'image_captioning_cache.json'
@@ -177,6 +177,7 @@ if __name__ == '__main__':
             image_text = None
 
         # kg
+        zero_shot_pred = None
         for i in range(max_retry):
             try:
                 if mode == 'direct':
@@ -186,7 +187,8 @@ if __name__ == '__main__':
                 elif mode == 'cot+fact':
                     pass
                 elif mode == 'lemma':
-                    kg1, kg2, kg3, prob, explain = lemma(text, url, image_text, tool_learning_text)
+                    _, _, _, zero_shot_pred, _ = zero_shot(text, url)
+                    kg1, kg2, kg3, prob, explain = lemma(text, url, image_text, tool_learning_text, zero_shot_pred)
                 else:
                     kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
                 break
@@ -216,7 +218,8 @@ if __name__ == '__main__':
             'tool_kg': kg3,
             'label': label,
             'prediction': pred_label,
-            'explain': explain
+            'explain': explain,
+            'direct': zero_shot_pred
         })
 
         if view:

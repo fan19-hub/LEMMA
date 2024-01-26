@@ -3,13 +3,11 @@ import os
 import requests
 
 from zero_shot import zero_shot
-from config import prompts_root
+from config import prompts_root, imgbed_root
 from openai import OpenAI
 
 
-def lemma(text, url, image_text, tool):
-    _, _, _, prob, _ = zero_shot(text, url)
-    pred_label = int(prob)
+def lemma(text, url, image_text, tool, pred_label):
 
     client = OpenAI()
 
