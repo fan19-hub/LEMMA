@@ -1,6 +1,6 @@
 import openai
 import pandas as pd
-from duckduckgo_search import ddg, ddg_translate
+from duckduckgo_search import DDGS
 # from openai.embeddings_utils import get_embedding, cosine_similarity
 from openai import OpenAI
 import os
@@ -39,7 +39,9 @@ def find_top_similar_results(df: pd.DataFrame, query: str, n: int):
 
 
 def ddg_search(query: str):
-    results = ddg(query, region="wt-wt", safesearch="off", max_results=15)
+    with DDGS() as ddgs:
+        results=list(ddgs.text('live free or die', region='wt-wt', safesearch='off', timelimit='y', max_results=10))
+    # results = ddg(query, region="wt-wt", safesearch="off", max_results=15)
     # query=ddg_translate(query, to = "en")["translated"]
     # results += ddg(query, region="wt-wt", safesearch="off",max_results=10)
     if results == None or results == []:
@@ -78,7 +80,8 @@ def generate_keywords(text):
             {"role": "system",
              "content": "You are an professional in optimizing the keywords for search engine"},
             {"role": "user", "content": keyword_prompts + '\n' + text + '\nKeywords Output:\n'}
-        ]
+        ],
+        temperature=0.1
     )
     response = completion.choices[0].message.content
     # return response
@@ -101,4 +104,19 @@ def search(text):
 
 
 if __name__ == '__main__':
-    print(search("【 特大好消息！】 卖狗肉违法了！国家食品药品监督局11月1日开始集中受理狗肉馆举报，举报电话：12331 ．大家扩散出去啊！爱狗狗爱动物！养狗的爱狗的请果断转发。见一次我举报十次！ O网页链接"))
+    print(search('''A Holocaust denier arrested in a Scottish fishing village after two years on the run has lost an extradition battle.
+
+Vincent Reynouard, 54, from France, was caught in Anstruther, Fife, and was remanded in custody while French authorities launched an extradition bid.
+
+They cited videos where he allegedly denied the existence of gas chambers in concentration camps.
+
+A 70-Year-Old Engineer Designed This Boots For Elderly Women All Over The World
+A 70-Year-Old Engineer Designed This Boots For Elderly Women All Over The World
+Ad
+Dotmalls
+He was arrested in November 2022 on a domestic warrant issued by a French court regarding seven videos made between September 2019 and April 2020.
+
+Fullscreen button
+His application against extradition was rejected by the Court of Appeal (Picture: UNPIXS)
+His application against extradition was rejected by the Court of Appeal (Picture: UNPIXS)
+© Provided by Metro'''))
