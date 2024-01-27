@@ -34,7 +34,10 @@ Begin of external resources:
 
 End of external resources.
 
-Finally, based on the KGs and external resources, you will now decide whether or not to modify your original prediction. 1) Be confident. Your original prediction already have a 76% accuracy. I am not interrogating you, forcing you to modify your prediction. 2) Also be rational. Don't hesitate to modify your prediction if you find some evidence in the KGs and external sources.
+Finally, suppose your original predictions have already achieved quite good performance, based on the KGs and external resources, you will now decide whether or not to modify your original prediction. Therefore, please firstly tell whether the evidence is persuasive or not and choose one of the three cases:
+1. if evidence is persuasive and the view of evidence is aligned with original prediction, please keep your original answer.
+2. if evidence is not persuasive, please keep your original answer.
+3. if evidence is persuasive and the view of evidence is contradict to the original prediction, please modify your original answer.
 
 In one or more paragraphs, output your reasoning steps. In the final line, use a single binary value (0 or 1) to indicate whether misinformation exists. 0 for no misinformation. 1 for the presence of misinformation. Please don't output any other words except for the binary label on the last line.
 
