@@ -48,7 +48,7 @@ elif data_name == 'ticnn':
 elif data_name == 'fakehealth':
     input_file = data_root+'fakehealth/fakehealth.json'
 
-input_file=data_root+"exampleinput.json"
+# input_file=data_root+"exampleinput.json"
 
 # output file names
 output_score = out_root + data_name + '_' + mode + '_' + 'results_50'
