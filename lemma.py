@@ -1,18 +1,17 @@
 import base64
 import os
 import requests
-
-from zero_shot import zero_shot
 from config import prompts_root, imgbed_root
 from openai import OpenAI
 
+lemma_prompt_method = 'lemma_test'
+
 
 def lemma(text, url, image_text, tool, pred_label):
-
     client = OpenAI()
 
     kg_generate_prompt_path = prompts_root + 'kg_gen_prompt.md'
-    lemma_prompt_path = prompts_root + 'lemma.md'
+    lemma_prompt_path = prompts_root + lemma_prompt_method + '.md'
 
     with open(kg_generate_prompt_path, 'r', encoding='utf-8') as f:
         gen_prompt = f.read()
@@ -35,7 +34,7 @@ def lemma(text, url, image_text, tool, pred_label):
 
     if "http" not in url:
         url = imgbed_root + url
-        
+
     if 'http' in url:
         response = client.chat.completions.create(
             model="gpt-4-vision-preview",

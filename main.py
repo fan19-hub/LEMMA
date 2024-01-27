@@ -6,6 +6,7 @@ from zero_shot import zero_shot
 from toolLearning import search
 from lemma import lemma
 from config import data_root,out_root
+from utils import metric, write_metric_result
 
 # mode ('direct' or 'cot' or 'cot+kg' or 'cot+fact' or 'lemma')
 #### EXPLAINATION ####
@@ -47,7 +48,7 @@ elif data_name == 'ticnn':
 elif data_name == 'fakehealth':
     input_file = data_root+'fakehealth/fakehealth.json'
 
-# input_file=data_root+"exampleinput.json"
+input_file=data_root+"exampleinput.json"
 
 # output file names
 output_score = out_root + data_name + '_' + mode + '_' + 'results_50'
@@ -105,6 +106,9 @@ if __name__ == '__main__':
             f.write('Labels:\n{}\nPredictions:\n{}\n'.format(labels, pred_labels))
         with open(output_result, 'w', encoding='utf-8') as f:
             f.write('')
+
+    if mode == 'lemma':
+        zero_shot_labels = []
 
     for item in data:
         print('Processing index {}/{}'.format(len(labels), len(data)))
@@ -207,6 +211,8 @@ if __name__ == '__main__':
 
         pred_labels.append(pred_label)
         labels.append(label)
+        if zero_shot_pred is not None:
+            zero_shot_labels.append(zero_shot_pred)
 
         all_results.append({
             'text': text,
@@ -231,111 +237,11 @@ if __name__ == '__main__':
         with open(output_result, 'w', encoding='utf-8') as f:
             json.dump(all_results, f, ensure_ascii=False, indent=4)
 
-    print('Labels:', labels)
-    print('Predictions:', pred_labels)
+    evaluation_result = metric(labels, pred_labels)
+    print('Evaluation result:', evaluation_result)
+    write_metric_result(output_score, evaluation_result)
 
-    # overall accuracy
-    zero_accuracy = sum((l == p) for l, p in zip(labels, zero_shot_pred)) / len(labels)
-    print('Zero-shot Accuracy:', zero_accuracy)
-    lemma_accuracy = sum((l == p) for l, p in zip(labels, pred_labels)) / len(labels)
-    print('LEMMa Accuracy:', lemma_accuracy)
-
-
-    # rumor version
-    rumor_labels = labels
-    rumor_pred_labels = pred_labels
-
-    # non-rumor version
-    non_rumor_labels = [1 - l for l in labels]
-    non_rumor_pred_labels = [1 - p for p in pred_labels]
-
-    rumor_true_positives = sum((l == 1 and p == 1) for l, p in zip(rumor_labels, rumor_pred_labels))
-    rumor_false_positives = sum((l == 0 and p == 1) for l, p in zip(rumor_labels, rumor_pred_labels))
-    rumor_false_negatives = sum((l == 1 and p == 0) for l, p in zip(rumor_labels, rumor_pred_labels))
-    rumor_true_negatives = sum((l == 0 and p == 0) for l, p in zip(rumor_labels, rumor_pred_labels))
-
-    rumor_precision = rumor_true_positives / (rumor_true_positives + rumor_false_positives)
-    rumor_recall = rumor_true_positives / (rumor_true_positives + rumor_false_negatives)
-    rumor_f1 = 2 * rumor_precision * rumor_recall / (rumor_precision + rumor_recall)
-
-    non_rumor_true_positives = sum((l == 1 and p == 1) for l, p in zip(non_rumor_labels, non_rumor_pred_labels))
-    non_rumor_false_positives = sum((l == 0 and p == 1) for l, p in zip(non_rumor_labels, non_rumor_pred_labels))
-    non_rumor_false_negatives = sum((l == 1 and p == 0) for l, p in zip(non_rumor_labels, non_rumor_pred_labels))
-    non_rumor_true_negatives = sum((l == 0 and p == 0) for l, p in zip(non_rumor_labels, non_rumor_pred_labels))
-
-    non_rumor_precision = non_rumor_true_positives / (non_rumor_true_positives + non_rumor_false_positives+1e-10)
-    non_rumor_recall = non_rumor_true_positives / (non_rumor_true_positives + non_rumor_false_negatives+1e-10)
-    non_rumor_f1 = 2 * non_rumor_precision * non_rumor_recall / (non_rumor_precision + non_rumor_recall+1e-10)
-
-    with open(output_score, 'w', encoding='utf-8') as f:
-        f.write('Labels:\n{}\nPredictions:\n{}\n\n'.format(labels, pred_labels))
-
-        f.write('Lemma Accuracy: {}\n\n'.format(lemma_accuracy))
-
-        f.write('Rumor Section:\n')
-        f.write('True positives: {}\n'.format(rumor_true_positives))
-        f.write('False positives: {}\n'.format(rumor_false_positives))
-        f.write('False negatives: {}\n'.format(rumor_false_negatives))
-        f.write('True negatives: {}\n'.format(rumor_true_negatives))
-        f.write('Precision: {}\n'.format(rumor_precision))
-        f.write('Recall: {}\n'.format(rumor_recall))
-        f.write('F1 Score: {}\n\n'.format(rumor_f1))
-
-        f.write('Non-rumor Section:\n')
-        f.write('True positives: {}\n'.format(non_rumor_true_positives))
-        f.write('False positives: {}\n'.format(non_rumor_false_positives))
-        f.write('False negatives: {}\n'.format(non_rumor_false_negatives))
-        f.write('True negatives: {}\n'.format(non_rumor_true_negatives))
-        f.write('Precision: {}\n'.format(non_rumor_precision))
-        f.write('Recall: {}\n'.format(non_rumor_recall))
-        f.write('F1 Score: {}\n\n'.format(non_rumor_f1))
-
-
-    # rumor version
-    rumor_labels = labels
-    rumor_pred_labels = zero_shot_pred
-
-    # non-rumor version
-    non_rumor_labels = [1 - l for l in labels]
-    non_rumor_pred_labels = [1 - p for p in zero_shot_pred]
-
-    rumor_true_positives = sum((l == 1 and p == 1) for l, p in zip(rumor_labels, rumor_pred_labels))
-    rumor_false_positives = sum((l == 0 and p == 1) for l, p in zip(rumor_labels, rumor_pred_labels))
-    rumor_false_negatives = sum((l == 1 and p == 0) for l, p in zip(rumor_labels, rumor_pred_labels))
-    rumor_true_negatives = sum((l == 0 and p == 0) for l, p in zip(rumor_labels, rumor_pred_labels))
-
-    rumor_precision = rumor_true_positives / (rumor_true_positives + rumor_false_positives)
-    rumor_recall = rumor_true_positives / (rumor_true_positives + rumor_false_negatives)
-    rumor_f1 = 2 * rumor_precision * rumor_recall / (rumor_precision + rumor_recall)
-
-    non_rumor_true_positives = sum((l == 1 and p == 1) for l, p in zip(non_rumor_labels, non_rumor_pred_labels))
-    non_rumor_false_positives = sum((l == 0 and p == 1) for l, p in zip(non_rumor_labels, non_rumor_pred_labels))
-    non_rumor_false_negatives = sum((l == 1 and p == 0) for l, p in zip(non_rumor_labels, non_rumor_pred_labels))
-    non_rumor_true_negatives = sum((l == 0 and p == 0) for l, p in zip(non_rumor_labels, non_rumor_pred_labels))
-
-    non_rumor_precision = non_rumor_true_positives / (non_rumor_true_positives + non_rumor_false_positives+1e-10)
-    non_rumor_recall = non_rumor_true_positives / (non_rumor_true_positives + non_rumor_false_negatives+1e-10)
-    non_rumor_f1 = 2 * non_rumor_precision * non_rumor_recall / (non_rumor_precision + non_rumor_recall+1e-10)
-
-    with open(output_score, 'w', encoding='utf-8') as f:
-        f.write('Labels:\n{}\nPredictions:\n{}\n\n'.format(labels, zero_shot_pred))
-
-        f.write('Zero-shot Accuracy: {}\n\n'.format(zero_accuracy))
-
-        f.write('Rumor Section:\n')
-        f.write('True positives: {}\n'.format(rumor_true_positives))
-        f.write('False positives: {}\n'.format(rumor_false_positives))
-        f.write('False negatives: {}\n'.format(rumor_false_negatives))
-        f.write('True negatives: {}\n'.format(rumor_true_negatives))
-        f.write('Precision: {}\n'.format(rumor_precision))
-        f.write('Recall: {}\n'.format(rumor_recall))
-        f.write('F1 Score: {}\n\n'.format(rumor_f1))
-
-        f.write('Non-rumor Section:\n')
-        f.write('True positives: {}\n'.format(non_rumor_true_positives))
-        f.write('False positives: {}\n'.format(non_rumor_false_positives))
-        f.write('False negatives: {}\n'.format(non_rumor_false_negatives))
-        f.write('True negatives: {}\n'.format(non_rumor_true_negatives))
-        f.write('Precision: {}\n'.format(non_rumor_precision))
-        f.write('Recall: {}\n'.format(non_rumor_recall))
-        f.write('F1 Score: {}\n\n'.format(non_rumor_f1))
+    if mode == 'lemma':
+        evaluation_result = metric(labels, zero_shot_labels)
+        print('Zero-shot evaluation result:', evaluation_result)
+        write_metric_result(output_score, evaluation_result, 'a', prefix='zero shot section')
