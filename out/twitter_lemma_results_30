@@ -1,4 +1,25 @@
 Labels:
-[0]
+[0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 Predictions:
-[0]
+[0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0]
+
+Accuracy: 0.5454545454545454
+
+Rumor Section:
+True positives: 6
+False positives: 0
+False negatives: 10
+True negatives: 6
+Precision: 1.0
+Recall: 0.375
+F1 Score: 0.5454545454545454
+
+Non-rumor Section:
+True positives: 6
+False positives: 10
+False negatives: 0
+True negatives: 6
+Precision: 0.3749999999976563
+Recall: 0.9999999999833333
+F1 Score: 0.5454545454099174
+
