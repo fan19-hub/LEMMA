@@ -16,16 +16,16 @@ from utils import metric, write_metric_result
 # cot+kg: use chain of thought method and knowledge graph based reasoning
 # cot+fact: use chain of thought method and fact check
 # lemma: our method
-mode = 'lemma'
+mode = 'lemma_base'
 
 # print the result
 view = False
 
 # automatic resume
-resume = False
+resume = True
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'fakereddit'
+data_name = 'ticnn'
 
 # using image caption cache
 using_cache = True
@@ -52,8 +52,8 @@ elif data_name == 'fakehealth':
 # input_file=data_root+"exampleinput.json"
 
 # output file names
-output_score = out_root + data_name + '_' + mode + '_' + 'results_50_new'
-output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_50_new.json'
+output_score = out_root + data_name + '_' + mode + '_' + 'results_40'
+output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_40.json'
 
 if __name__ == '__main__':
     # Open the JSON file
@@ -191,11 +191,11 @@ if __name__ == '__main__':
                     kg1, kg2, kg3, prob, explain = cot(text, url)
                 elif mode == 'cot+fact':
                     pass
-                elif mode == 'lemma':
+                elif mode.startswith('lemma'):
                     _, _, _, zero_shot_pred, _ = zero_shot(text, url)
-                    questions = question_gen(text, url, zero_shot_pred)
-                    print(questions)
-                    kg1, kg2, kg3, prob, explain = lemma(text, url, image_text, tool_learning_text, zero_shot_pred)
+                    # questions = question_gen(text, url, zero_shot_pred)
+                    # print(questions)
+                    kg1, kg2, kg3, prob, explain = lemma(text, url, image_text, tool_learning_text, zero_shot_pred, mode)
                 else:
                     kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
                 break

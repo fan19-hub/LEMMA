@@ -4,14 +4,12 @@ import requests
 from config import prompts_root, imgbed_root
 from openai import OpenAI
 
-lemma_prompt_method = 'lemma_test'
 
-
-def lemma(text, url, image_text, tool, pred_label):
+def lemma(text, url, image_text, tool, pred_label, method):
     client = OpenAI()
 
     kg_generate_prompt_path = prompts_root + 'kg_gen_prompt.md'
-    lemma_prompt_path = prompts_root + lemma_prompt_method + '.md'
+    lemma_prompt_path = prompts_root + method + '.md'
 
     with open(kg_generate_prompt_path, 'r', encoding='utf-8') as f:
         gen_prompt = f.read()
