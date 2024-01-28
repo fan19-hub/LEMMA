@@ -1,3 +1,6 @@
+import json
+
+
 def metric(labels, pred_labels):
 
     def confusion_matrix(truth, pred):
@@ -73,3 +76,68 @@ def write_metric_result(file_name, data, mode='w', prefix=''):
         f.write('Precision: {}\n'.format(data['non_rumor']['precision']))
         f.write('Recall: {}\n'.format(data['non_rumor']['recall']))
         f.write('F1 Score: {}\n\n'.format(data['non_rumor']['f1']))
+
+
+def stats(data_path):
+    with open(data_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+
+    num_items = len(data)
+    total_correct = 0
+    total_incorrect = 0
+    zero_shot_correct = 0
+    zero_shot_incorrect = 0
+    total_modified = 0
+    total_modified_0_to_1 = 0
+    total_modified_0_to_1_correct = 0
+    total_modified_0_to_1_incorrect = 0
+    total_modified_1_to_0 = 0
+    total_modified_1_to_0_correct = 0
+    total_modified_1_to_0_incorrect = 0
+    total_unmodified = 0
+    total_modified_correct = 0
+    total_modified_incorrect = 0
+
+    for item in data:
+        if item['label'] == item['direct']:
+            if item['prediction'] != item['label']:
+                total_incorrect += 1
+                zero_shot_correct += 1
+                total_modified += 1
+                if item['direct'] == 0:
+                    total_modified_0_to_1 += 1
+                    total_modified_0_to_1_incorrect += 1
+                else:
+                    total_modified_1_to_0 += 1
+                    total_modified_1_to_0_incorrect += 1
+                total_modified_incorrect += 1
+            else:
+                total_correct += 1
+                zero_shot_correct += 1
+                total_unmodified += 1
+        else:
+            if item['prediction'] == item['label']:
+                total_correct += 1
+                zero_shot_incorrect += 1
+                total_modified += 1
+                if item['direct'] == 0:
+                    total_modified_0_to_1 += 1
+                    total_modified_0_to_1_correct += 1
+                else:
+                    total_modified_1_to_0 += 1
+                    total_modified_1_to_0_correct += 1
+                total_modified_correct += 1
+            else:
+                total_incorrect += 1
+                zero_shot_incorrect += 1
+                total_unmodified += 1
+
+    print('Total items: {}'.format(num_items))
+    print('Total correct: {}'.format(total_correct))
+    print('Total incorrect: {}'.format(total_incorrect))
+    print('Zero-shot correct: {}'.format(zero_shot_correct))
+    print('Zero-shot incorrect: {}'.format(zero_shot_incorrect))
+    print('Total modified: {}\n\t| 0 -> 1: {}\n\t\t| Correct: {}\n\t\t| Incorrect : {}\n\t| 1-> 0: {}\n\t\t| Correct: {}\n\t\t| Incorrect : {}'.format(total_modified, total_modified_0_to_1, total_modified_0_to_1_correct, total_modified_0_to_1_incorrect, total_modified_1_to_0, total_modified_1_to_0_correct, total_modified_1_to_0_incorrect))
+    print('Total unmodified: {}'.format(total_unmodified))
+    print('Total modified correct: {}'.format(total_modified_correct))
+    print('Total modified incorrect: {}'.format(total_modified_incorrect))
