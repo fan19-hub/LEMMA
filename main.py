@@ -2,8 +2,9 @@ import json
 from imgCaption import img2txt
 from KGprocess import kg_generate_and_compare
 from cot import cot
+from question_gen import question_gen
 from zero_shot import zero_shot
-from toolLearning import search
+from toolLearning import text_search
 from lemma import lemma
 from config import data_root,out_root
 from utils import metric, write_metric_result
@@ -24,7 +25,7 @@ view = False
 resume = False
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'twitter'
+data_name = 'fakereddit'
 
 # using image caption cache
 using_cache = True
@@ -42,7 +43,7 @@ if data_name == 'twitter':
 elif data_name == 'weibo':
     input_file = data_root+'test.json'
 elif data_name == 'fakereddit':
-    input_file = data_root+'fakereddit/FAKEDDIT.json'
+    input_file = data_root+'fakereddit/FAKEDDIT_50.json'
 elif data_name == 'ticnn':
     input_file = data_root+'ticnn/ticnn_sample.json'
 elif data_name == 'fakehealth':
@@ -51,8 +52,8 @@ elif data_name == 'fakehealth':
 # input_file=data_root+"exampleinput.json"
 
 # output file names
-output_score = out_root + data_name + '_' + mode + '_' + 'results_50'
-output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_50.json'
+output_score = out_root + data_name + '_' + mode + '_' + 'results_50_new'
+output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_50_new.json'
 
 if __name__ == '__main__':
     # Open the JSON file
@@ -129,7 +130,7 @@ if __name__ == '__main__':
             if not use_cache_flag:
                 for i in range(max_retry):
                     try:
-                        tool_learning_text = search(text)
+                        tool_learning_text = text_search(text)
                         if tool_learning_text is None:
                             print('Tool learning error, retrying...')
                             continue
@@ -192,6 +193,8 @@ if __name__ == '__main__':
                     pass
                 elif mode == 'lemma':
                     _, _, _, zero_shot_pred, _ = zero_shot(text, url)
+                    questions = question_gen(text, url, zero_shot_pred)
+                    print(questions)
                     kg1, kg2, kg3, prob, explain = lemma(text, url, image_text, tool_learning_text, zero_shot_pred)
                 else:
                     kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
