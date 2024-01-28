@@ -12,6 +12,15 @@ with open(input_json_file, 'r', encoding='utf-8') as file:
 # Shuffle the data
 random.shuffle(data)
 
+for ele in data:
+    if ele['label'] == "0":
+        ele['label'] = 0
+        ele['image'] = ele['image'][:6] + 'nonrumor_images/' + ele['image'][6:]
+    elif ele['label'] == "1":
+        ele['label'] = 1
+        ele['image'] = ele['image'][:6] + 'rumor_images/' + ele['image'][6:]
+  
+
 # Save the shuffled data to a new JSON file
 with open(output_json_file, 'w', encoding='utf-8') as file:
     json.dump(data, file, ensure_ascii=False, indent=2)

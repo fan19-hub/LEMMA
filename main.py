@@ -41,7 +41,7 @@ tool_learning_cache_name = data_root+'tool_learning_cache.json'
 if data_name == 'twitter':
     input_file = data_root+'twitter/twitter_s_50.json'
 elif data_name == 'weibo':
-    input_file = data_root+'test.json'
+    input_file = data_root+'weibo/weibo_50.json'
 elif data_name == 'fakereddit':
     input_file = data_root+'fakereddit/FAKEDDIT_50.json'
 elif data_name == 'ticnn':
@@ -52,8 +52,8 @@ elif data_name == 'fakehealth':
 # input_file=data_root+"exampleinput.json"
 
 # output file names
-output_score = out_root + data_name + '_' + mode + '_' + 'results_40'
-output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_40.json'
+output_score = out_root + data_name + '_' + mode + '_' + 'results_50'
+output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_50.json'
 
 if __name__ == '__main__':
     # Open the JSON file
