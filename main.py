@@ -22,7 +22,7 @@ mode = 'lemma_base'
 view = False
 
 # automatic resume
-resume = True
+resume = False
 
 # dataset (twitter or weibo or fakereddit or ticnn)
 data_name = 'ticnn'
@@ -108,7 +108,7 @@ if __name__ == '__main__':
         with open(output_result, 'w', encoding='utf-8') as f:
             f.write('')
 
-    if mode == 'lemma':
+    if mode.startswith('lemma'):
         zero_shot_labels = []
 
     for item in data:
@@ -119,7 +119,7 @@ if __name__ == '__main__':
         label = item["label"]
 
         # tool learning
-        if mode == 'lemma' or mode == 'cot+fact':
+        if mode.startswith('lemma') or mode == 'cot+fact':
             print('Tool learning...')
             use_cache_flag = False
             if using_cache:
@@ -244,7 +244,7 @@ if __name__ == '__main__':
     print('Evaluation result:', evaluation_result)
     write_metric_result(output_score, evaluation_result)
 
-    if mode == 'lemma':
+    if mode.startswith('lemma'):
         evaluation_result = metric(labels, zero_shot_labels)
         print('Zero-shot evaluation result:', evaluation_result)
         write_metric_result(output_score, evaluation_result, 'a', prefix='zero shot section')
