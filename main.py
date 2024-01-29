@@ -118,6 +118,18 @@ if __name__ == '__main__':
         text = item["original_post"]
         label = item["label"]
 
+        if mode.startswith('lemma'):
+            for i in range(max_retry):
+                try:
+                    _, _, _, zero_shot_pred, _ = zero_shot(text, url)
+                    res = question_gen(text, url, zero_shot_pred)
+                    title = res['title']
+                    questions = res['questions']
+                except Exception as e:
+                    print('Zero shot error: ', end="")
+                    print(e)
+                    print(",retrying...")
+
         # tool learning
         if mode.startswith('lemma') or mode == 'cot+fact':
             print('Tool learning...')
@@ -131,6 +143,10 @@ if __name__ == '__main__':
                 for i in range(max_retry):
                     try:
                         tool_learning_text = text_search(text)
+                        if mode.startswith('lemma'):
+                            tool_learning_text += text_search(title)
+                            for question in questions:
+                                tool_learning_text += text_search(question)
                         if tool_learning_text is None:
                             print('Tool learning error, retrying...')
                             continue
@@ -192,9 +208,6 @@ if __name__ == '__main__':
                 elif mode == 'cot+fact':
                     pass
                 elif mode.startswith('lemma'):
-                    _, _, _, zero_shot_pred, _ = zero_shot(text, url)
-                    # questions = question_gen(text, url, zero_shot_pred)
-                    # print(questions)
                     kg1, kg2, kg3, prob, explain = lemma(text, url, image_text, tool_learning_text, zero_shot_pred, mode)
                 else:
                     kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
