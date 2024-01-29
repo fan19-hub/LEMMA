@@ -117,6 +117,7 @@ if __name__ == '__main__':
         url = item["image_url"]
         text = item["original_post"]
         label = item["label"]
+        zero_shot_pred = None
 
         if mode.startswith('lemma'):
             for i in range(max_retry):
@@ -198,7 +199,6 @@ if __name__ == '__main__':
             image_text = None
 
         # kg
-        zero_shot_pred = None
         for i in range(max_retry):
             try:
                 if mode == 'direct':
