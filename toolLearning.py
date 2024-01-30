@@ -31,6 +31,8 @@ def ddg_search(keywords, top_k=4):
     with DDGS() as ddgs:
         search_results=list(ddgs.text(keywords, region='us-en', safesearch='off', max_results=20))
         search_results=soure_filter(search_results)
+    if not search_results:
+        return ''
     search_results=search_results[:top_k]
     search_results_txt=""
     for result in search_results:
@@ -40,7 +42,7 @@ def ddg_search(keywords, top_k=4):
     return search_results_txt
 
 def text_search(text,max_len=2000):
-    search_result_txt = ddg_search("fake news"+text)
+    search_result_txt = ddg_search(text)
     return search_result_txt[:max_len]
 
 

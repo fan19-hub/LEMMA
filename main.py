@@ -25,7 +25,7 @@ view = False
 resume = False
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'ticnn'
+data_name = 'fakereddit'
 
 # using image caption cache
 using_cache = True
@@ -144,12 +144,15 @@ if __name__ == '__main__':
             if not use_cache_flag:
                 for i in range(max_retry):
                     try:
-                        tool_learning_text = text_search(text)
+                        tool_learning_text = text_search(text[:480])
+                        print(1, tool_learning_text)
                         # tool_learning_text += visual_search(url, text)
                         if mode.startswith('lemma'):
                             tool_learning_text += text_search(title)
+                            print(2, tool_learning_text)
                             for question in questions:
                                 tool_learning_text += text_search(question)
+                                print(3, tool_learning_text)
                         if tool_learning_text is None:
                             print('Tool learning error, retrying...')
                             continue
