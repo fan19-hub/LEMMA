@@ -4,7 +4,7 @@ from KGprocess import kg_generate_and_compare
 from cot import cot
 from question_gen import question_gen
 from zero_shot import zero_shot
-from toolLearning import text_search
+from toolLearning import text_search, visual_search
 from lemma import lemma
 from config import data_root,out_root
 from utils import metric, write_metric_result
@@ -126,6 +126,7 @@ if __name__ == '__main__':
                     res = question_gen(text, url, zero_shot_pred)
                     title = res['title']
                     questions = res['questions']
+                    break
                 except Exception as e:
                     print('Zero shot error: ', end="")
                     print(e)
@@ -144,6 +145,7 @@ if __name__ == '__main__':
                 for i in range(max_retry):
                     try:
                         tool_learning_text = text_search(text)
+                        # tool_learning_text += visual_search(url, text)
                         if mode.startswith('lemma'):
                             tool_learning_text += text_search(title)
                             for question in questions:
