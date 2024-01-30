@@ -4,8 +4,11 @@ import random
 # json2 = 'data/twitter/twitter.json'
 # output_json_path = 'data/twitter/twitter_50.json'
 
-json2 = 'data/weibo/weibo_shuffled.json'
-output_json_path = 'data/weibo/weibo_50.json'
+json2 = 'data/fakereddit/FAKEDDIT.json'
+output_json_path = 'data/fakereddit/FAKEDDIT_50.json'
+
+# json2 = 'data/weibo/weibo_shuffled.json'
+# output_json_path = 'data/weibo/weibo_50.json'
 
 with open(json2, 'r') as json_file:
     data2 = json.load(json_file)
