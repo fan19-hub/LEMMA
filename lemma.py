@@ -5,30 +5,13 @@ from config import prompts_root, imgbed_root
 from openai import OpenAI
 
 
-def lemma(text, url, image_text, tool, pred_label, method):
+def lemma(text, url, tool, kg1, kg2, pred_label, method):
     client = OpenAI()
 
-    kg_generate_prompt_path = prompts_root + 'kg_gen_prompt.md'
     lemma_prompt_path = prompts_root + method + '.md'
-
-    with open(kg_generate_prompt_path, 'r', encoding='utf-8') as f:
-        gen_prompt = f.read()
 
     with open(lemma_prompt_path, 'r', encoding='utf-8') as f:
         lemma_prompt = f.read()
-
-    completion = client.chat.completions.create(
-        model="gpt-4-1106-preview",
-        messages=[
-            {"role": "system", "content": "You are an expert in Knowledge Graph generation"},
-            {"role": "user",
-             "content": gen_prompt.format(TEXT=text, IMAGETEXT=image_text, TOOL='No third text. Please ignore.')}
-        ]
-    )
-
-    kg = completion.choices[0].message.content
-    kg1 = kg.split('---')[0]
-    kg2 = kg.split('---')[1]
 
     if "http" not in url:
         url = imgbed_root + url
@@ -101,5 +84,4 @@ def lemma(text, url, image_text, tool, pred_label, method):
     info_list = info.split("\n")
     final_label = int(info_list[-1].strip())
     explanation = "\n".join(info_list[:-1])
-    print(pred_label, final_label, explanation)
-    return kg1, kg2, None, final_label, explanation
+    return final_label, explanation

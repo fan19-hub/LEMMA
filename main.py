@@ -2,6 +2,7 @@ import json
 from imgCaption import img2txt
 from KGprocess import kg_generate_and_compare
 from cot import cot
+from kg import kg_gen
 from question_gen import question_gen
 from zero_shot import zero_shot
 from toolLearning import text_search, visual_search
@@ -19,7 +20,7 @@ from utils import metric, write_metric_result
 mode = 'lemma_base'
 
 # print the result
-view = False
+view = True
 
 # automatic resume
 resume = False
@@ -36,6 +37,7 @@ max_retry = 5
 # image caption cache file name
 image_caption_cache_name = data_root+'image_captioning_cache.json'
 tool_learning_cache_name = data_root+'tool_learning_cache.json'
+kg_cache_name = data_root+'kg_cache.json'
 
 # input data file name
 if data_name == 'twitter':
@@ -57,8 +59,8 @@ output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_50.js
 
 if __name__ == '__main__':
     # Open the JSON file
-    print('View:{}\nResume:{}\nUsing cache:{}\nMax retry:{}\nInput file:{}\nOutput score:{}\nOutput result:{}\n'
-          .format(view, resume, using_cache, max_retry, input_file, output_score, output_result))
+    print('Running LEMMa with mode: {}\nDataset: {}\nView:{}\nResume:{}\nUsing cache:{}\nMax retry:{}\nInput file:{}\nOutput score:{}\nOutput result:{}'
+          .format(mode, data_name, view, resume, using_cache, max_retry, input_file, output_score, output_result))
 
     with open(input_file, encoding='utf-8') as file:
         data = json.load(file)
@@ -83,6 +85,13 @@ if __name__ == '__main__':
         except FileNotFoundError:
             tool_learning_cache = {}
             print('No tool learning cache found')
+        try:
+            with open(kg_cache_name, encoding='utf-8') as f:
+                kg_cache = json.load(f)
+            print('Using kg cache')
+        except FileNotFoundError:
+            kg_cache = {}
+            print('No kg cache found')
 
     if resume:
         with open(output_score, 'r', encoding='utf-8') as f:
@@ -97,11 +106,13 @@ if __name__ == '__main__':
                     pred_labels.append(int(char))
         with open(output_result, 'r', encoding='utf-8') as f:
             all_results = json.load(f)
+        total_data_size = len(data)
         data = data[len(labels):]
         print('Resuming from index', len(labels))
     else:
         pred_labels = []
         labels = []
+        total_data_size = len(data)
         print('Starting from index 0')
         with open(output_score, 'w', encoding='utf-8') as f:
             f.write('Labels:\n{}\nPredictions:\n{}\n'.format(labels, pred_labels))
@@ -112,7 +123,7 @@ if __name__ == '__main__':
         zero_shot_labels = []
 
     for item in data:
-        print('Processing index {}/{}'.format(len(labels), len(data)))
+        print('Processing index {}/{}'.format(len(labels), total_data_size))
         # read
         url = item["image_url"]
         text = item["original_post"]
@@ -120,17 +131,26 @@ if __name__ == '__main__':
         zero_shot_pred = None
 
         if mode.startswith('lemma'):
-            for i in range(max_retry):
-                try:
-                    _, _, _, zero_shot_pred, _ = zero_shot(text, url)
-                    res = question_gen(text, url, zero_shot_pred)
-                    title = res['title']
-                    questions = res['questions']
-                    break
-                except Exception as e:
-                    print('Zero shot error: ', end="")
-                    print(e)
-                    print(",retrying...")
+            if using_cache:
+                if text in tool_learning_cache:
+                    pass
+                else:
+                    for i in range(max_retry):
+                        try:
+                            print('Zero shot...')
+                            _, _, _, zero_shot_pred, _ = zero_shot(text, url)
+                            print('Generating questions...')
+                            res = question_gen(text, url, zero_shot_pred)
+                            title = res['title']
+                            questions = res['questions']
+                            break
+                        except Exception as e:
+                            print('Zero shot error: ', end="")
+                            print(e, end="")
+                            print(", retrying...")
+                    else:
+                        print('Zero shot error, skipping...')
+                        continue
 
         # tool learning
         if mode.startswith('lemma') or mode == 'cot+fact':
@@ -140,27 +160,23 @@ if __name__ == '__main__':
                 if text in tool_learning_cache:
                     tool_learning_text = tool_learning_cache[text]
                     use_cache_flag = True
+                    print('Retrieved tool learning result from cache')
 
             if not use_cache_flag:
                 for i in range(max_retry):
                     try:
                         tool_learning_text = text_search(text[:480])
-                        print(1, tool_learning_text)
                         # tool_learning_text += visual_search(url, text)
                         if mode.startswith('lemma'):
                             tool_learning_text += text_search(title)
-                            print(2, tool_learning_text)
                             for question in questions:
                                 tool_learning_text += text_search(question)
-                                print(3, tool_learning_text)
                         if tool_learning_text is None:
                             print('Tool learning error, retrying...')
                             continue
                         break
                     except Exception as e:
-                        print('Tool learning error: ', end="")
-                        print(e)
-                        print(",retrying...")
+                        print(f'Tool learning error: {e}, retrying')
                 else:
                     print('Tool learning error, skipping...')
                     continue
@@ -174,25 +190,25 @@ if __name__ == '__main__':
         
         # image captioning
         if mode != 'direct' and mode != 'cot':
+            print("Generating Image Captioning...")
             use_cache_flag = False
             if using_cache:
                 if url in image_captioning_cache:
                     image_text = image_captioning_cache[url]
                     if 'sorry' not in image_text and 'Sorry' not in image_text:
                         use_cache_flag = True
+                        print('Retrieved image caption result from cache')
 
             if not use_cache_flag:
                 for i in range(max_retry):
                     try:
                         image_text = img2txt(url, data_name)
                         if 'sorry' in image_text.lower():
-                            print('Image captioning error, retrying...')
+                            print('Image captioning error: LLM Failed, retrying...')
                             continue
                         break
                     except Exception as e:
-                        print('Image captioning error:',end="")
-                        print(e,end="")
-                        print(",retrying...")
+                        print(f'Image caption error: {e}, retrying')
                 else:
                     print('Image captioning error, skipping...')
                     continue
@@ -203,8 +219,38 @@ if __name__ == '__main__':
         else:
             image_text = None
 
-        # kg
+        if mode.startswith('lemma'):
+            use_cache_flag = False
+
+            if using_cache:
+                if text in kg_cache:
+                    kg = kg_cache[text]
+                    print('Retrieved KG result from cache')
+                    use_cache_flag = True
+
+            if not use_cache_flag:
+                for i in range(max_retry):
+                    try:
+                        print('Generating KG...')
+                        kg = kg_gen(text, image_text)
+                        kg1 = kg.split('---')[0]
+                        kg2 = kg.split('---')[1]
+                        kg3 = None
+                        break
+                    except Exception as e:
+                        print(f'KG error: {e}, retrying...')
+                else:
+                    print('KG error, skipping...')
+                    continue
+
+                if using_cache:
+                    kg_cache[text] = kg
+                    with open(kg_cache_name, 'w', encoding='utf-8') as f:
+                        json.dump(kg_cache, f)
+
+        # final prediction
         for i in range(max_retry):
+            print('Final Prediction...')
             try:
                 if mode == 'direct':
                     kg1, kg2, kg3, prob, explain = zero_shot(text, url)
@@ -213,16 +259,14 @@ if __name__ == '__main__':
                 elif mode == 'cot+fact':
                     pass
                 elif mode.startswith('lemma'):
-                    kg1, kg2, kg3, prob, explain = lemma(text, url, image_text, tool_learning_text, zero_shot_pred, mode)
+                    prob, explain = lemma(text, url, tool_learning_text, kg1, kg2, zero_shot_pred, mode)
                 else:
                     kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
                 break
             except Exception as e:
-                print('KG error: ',end="")
-                print(e,end="")
-                print(",retrying...")
+                print(f'Final prediction error: {e}, retrying...')
         else:
-            print('KG error, skipping...')
+            print('Final prediction error, skipping...')
             continue
 
         if prob < 0.6:
@@ -250,8 +294,13 @@ if __name__ == '__main__':
         })
 
         if view:
-            print('Text:\n{}\nImage:\n{}\nTool:\n{}\nKG1:\n{}\nKG2:\n{}\nKG3:\n{}\nLabel: {}\nPrediction: {}\n'
-                  .format(text, image_text, tool_learning_text, kg1, kg2, kg3, label, explain))
+            print(
+                'Result of index {}/{}: \nLabel: {}\nZero-shot: {}\nFinal: {}\nFinal Reasoning: {}'.format(len(labels),
+                                                                                                            total_data_size,
+                                                                                                            label,
+                                                                                                            zero_shot_pred,
+                                                                                                            pred_label,
+                                                                                                            explain))
 
         with open(output_score, 'w', encoding='utf-8') as f:
             f.write('Labels:\n{}\nPredictions:\n{}\n'.format(labels, pred_labels))

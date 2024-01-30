@@ -83,7 +83,6 @@ def offlineImg_process(image_path):
 
 def img2txt(source= data_root+"weibo", is_url=True):
   global prompt
-  print("Generating Image Captioning...")
   if is_url:
     if "http" not in source: 
       source=imgbed_root+source

@@ -25,7 +25,7 @@ def soure_filter(results):
             results.remove(result)
     return results
 
-def ddg_search(keywords, top_k=4):
+def ddg_search(keywords, top_k=2):
     # query=ddg_translate(query, to = "en")["translated"]
     # Do the duckduckgo search
     with DDGS() as ddgs:

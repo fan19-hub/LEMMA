@@ -34,9 +34,7 @@ def onlineImg_process(url, text, zero_shot_pred):
 
 def question_gen(text, img_source, zero_shot_pred):
     global prompt
-    print('Generating questions...')
     if "http" not in img_source:
         img_source = imgbed_root + img_source
-    print(img_source)
     questions = onlineImg_process(img_source, text, zero_shot_pred)
     return questions

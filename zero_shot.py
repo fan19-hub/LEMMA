@@ -86,16 +86,12 @@ def offlineImg_process(image_path,text):
 
 def zero_shot(text, img_source, tool=None,is_url=True,):
     global prompt
-    print('Predicting...')
     if is_url:
         if "http" not in img_source: 
             img_source=imgbed_root+img_source
-        print(img_source)
         label, explanation=onlineImg_process(img_source,text) 
     else:
-        print(img_source)
         label, explanation= offlineImg_process(img_source,text)
-    print(label, explanation)
 
     return None, None, None, label, explanation
 
