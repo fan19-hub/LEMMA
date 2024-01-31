@@ -6,6 +6,8 @@ import openai
 import requests
 from openai import OpenAI
 
+from config import data_root
+
 
 def onlineImg_process(prompt, url, model="gpt-4-vision-preview", max_tokens=1000, temperature=0.1):
 
@@ -39,7 +41,7 @@ def offlineImg_process(prompt, image_path, model="gpt-4-vision-preview", max_tok
 
     # Encode function
     def encode_image(image_path):
-        with open(image_path, "rb") as image_file:
+        with open(data_root + image_path, "rb") as image_file:
             return base64.b64encode(image_file.read()).decode('utf-8')
 
     # Getting the base64 string
