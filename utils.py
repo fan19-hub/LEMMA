@@ -1,4 +1,81 @@
+import base64
 import json
+import os
+
+import openai
+import requests
+from openai import OpenAI
+
+
+def onlineImg_process(prompt, url, model="gpt-4-vision-preview", max_tokens=1000, temperature=0.1):
+
+    openai.api_key = os.getenv("OPENAI_API_KEY")
+    client = OpenAI()
+
+    response = client.chat.completions.create(
+        model=model,
+        messages=[
+          {
+            "role": "user",
+            "content": [
+              {"type": "text", "text": prompt},
+              {
+                "type": "image_url",
+                "image_url": {
+                  "url": f"{url}",
+                },
+              },
+            ],
+          }
+        ],
+        max_tokens=max_tokens,
+        temperature=temperature
+      )
+    return response.choices[0].message.content
+
+
+def offlineImg_process(prompt, image_path, model="gpt-4-vision-preview", max_tokens=1000, temperature=0.1):
+    api_key = os.getenv("OPENAI_API_KEY")
+
+    # Encode function
+    def encode_image(image_path):
+        with open(image_path, "rb") as image_file:
+            return base64.b64encode(image_file.read()).decode('utf-8')
+
+    # Getting the base64 string
+    base64_image = encode_image(image_path)
+
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}"
+    }
+
+    payload = {
+        "model": model,
+        "messages": [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": prompt
+                    },
+                    {
+                        "type": "image_url",
+                        "image_url": {
+                            "url": f"data:image/jpeg;base64,{base64_image}"
+                        }
+                    }
+                ]
+            }
+        ],
+        "max_tokens": max_tokens,
+        "temperature": temperature
+    }
+
+    response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+
+    return eval(response.text)["choices"][0]["message"]["content"]
 
 
 def metric(labels, pred_labels):
@@ -83,6 +160,9 @@ def stats(data_path):
         data = json.load(f)
 
     num_items = len(data)
+    labels = []
+    predictions = []
+    zero_shot_predictions = []
     total_correct = 0
     total_incorrect = 0
     zero_shot_correct = 0
@@ -99,6 +179,9 @@ def stats(data_path):
     total_modified_incorrect = 0
 
     for item in data:
+        labels.append(item['label'])
+        predictions.append(item['prediction'])
+        zero_shot_predictions.append(item['direct'])
         if item['label'] == item['direct']:
             if item['prediction'] != item['label']:
                 total_incorrect += 1
@@ -135,8 +218,10 @@ def stats(data_path):
     print('Total items: {}'.format(num_items))
     print('Total correct: {}'.format(total_correct))
     print('Total incorrect: {}'.format(total_incorrect))
+    print('Total Accuracy: {}'.format(total_correct / num_items))
     print('Zero-shot correct: {}'.format(zero_shot_correct))
     print('Zero-shot incorrect: {}'.format(zero_shot_incorrect))
+    print('Zero-shot Accuracy: {}'.format(zero_shot_correct / num_items))
     print('Total modified: {}\n\t| 0 -> 1: {}\n\t\t| Correct: {}\n\t\t| Incorrect : {}\n\t| 1-> 0: {}\n\t\t| Correct: {}\n\t\t| Incorrect : {}'.format(total_modified, total_modified_0_to_1, total_modified_0_to_1_correct, total_modified_0_to_1_incorrect, total_modified_1_to_0, total_modified_1_to_0_correct, total_modified_1_to_0_incorrect))
     print('Total unmodified: {}'.format(total_unmodified))
     print('Total modified correct: {}'.format(total_modified_correct))

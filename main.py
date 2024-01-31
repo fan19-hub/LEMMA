@@ -23,10 +23,10 @@ mode = 'lemma_base'
 view = True
 
 # automatic resume
-resume = False
+resume = True
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'fakereddit'
+data_name = 'weibo'
 
 # using image caption cache
 using_cache = True
@@ -42,16 +42,22 @@ kg_cache_name = data_root+'kg_cache.json'
 # input data file name
 if data_name == 'twitter':
     input_file = data_root+'twitter/twitter_s_50.json'
+    use_online_image = True
 elif data_name == 'weibo':
     input_file = data_root+'weibo/weibo_50.json'
+    use_online_image = False
 elif data_name == 'fakereddit':
     input_file = data_root+'fakereddit/FAKEDDIT_50.json'
+    use_online_image = True
 elif data_name == 'ticnn':
     input_file = data_root+'ticnn/ticnn_sample.json'
+    use_online_image = True
 elif data_name == 'fakehealth':
     input_file = data_root+'fakehealth/fakehealth.json'
+    use_online_image = True
 
 # input_file=data_root+"exampleinput.json"
+# use_online_image=True
 
 # output file names
 output_score = out_root + data_name + '_' + mode + '_' + 'results_50'
@@ -59,8 +65,21 @@ output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_50.js
 
 if __name__ == '__main__':
     # Open the JSON file
-    print('Running LEMMa with mode: {}\nDataset: {}\nView:{}\nResume:{}\nUsing cache:{}\nMax retry:{}\nInput file:{}\nOutput score:{}\nOutput result:{}'
-          .format(mode, data_name, view, resume, using_cache, max_retry, input_file, output_score, output_result))
+    configs = {
+        "Dataset": data_name,
+        "Image loading": "load from GitHub" if use_online_image else "load locally",
+        "View": view,
+        "Resume": resume,
+        "Max retry": max_retry,
+        "Input file": input_file,
+        "Output score": output_score,
+        "Output result": output_result,
+        "Using cache": using_cache
+    }
+    print("Running LEMMa with mode:", mode)
+    config_str = "\n".join([f" ├─ {k}: {v}" if k != "Using cache" else f" └─ Using cache: {v}"
+                            for k, v in configs.items()])
+    print(config_str)
 
     with open(input_file, encoding='utf-8') as file:
         data = json.load(file)
@@ -74,24 +93,24 @@ if __name__ == '__main__':
         try:
             with open(image_caption_cache_name, encoding='utf-8') as f:
                 image_captioning_cache = json.load(f)
-            print('Using image captioning cache')
+            print(f'\t├─ Using image captioning cache: {image_caption_cache_name}')
         except FileNotFoundError:
             image_captioning_cache = {}
-            print('No image captioning cache found')
+            print(f'\t├─ No image captioning cache found')
         try:
             with open(tool_learning_cache_name, encoding='utf-8') as f:
                 tool_learning_cache = json.load(f)
-            print('Using tool learning cache')
+            print(f'\t├─ Using tool learning cache: {tool_learning_cache_name}')
         except FileNotFoundError:
             tool_learning_cache = {}
-            print('No tool learning cache found')
+            print(f'\t├─ No tool learning cache found')
         try:
             with open(kg_cache_name, encoding='utf-8') as f:
                 kg_cache = json.load(f)
-            print('Using kg cache')
+            print(f'\t└─ Using kg cache: {kg_cache_name}\n')
         except FileNotFoundError:
             kg_cache = {}
-            print('No kg cache found')
+            print(f'\t└─ No kg cache found\n')
 
     if resume:
         with open(output_score, 'r', encoding='utf-8') as f:
@@ -138,9 +157,9 @@ if __name__ == '__main__':
                     for i in range(max_retry):
                         try:
                             print('Zero shot...')
-                            _, _, _, zero_shot_pred, _ = zero_shot(text, url)
+                            _, _, _, zero_shot_pred, _ = zero_shot(text, url, is_url=use_online_image)
                             print('Generating questions...')
-                            res = question_gen(text, url, zero_shot_pred)
+                            res = question_gen(text, url, zero_shot_pred, is_url=use_online_image)
                             title = res['title']
                             questions = res['questions']
                             break
@@ -225,6 +244,9 @@ if __name__ == '__main__':
             if using_cache:
                 if text in kg_cache:
                     kg = kg_cache[text]
+                    kg1 = kg.split('---')[0]
+                    kg2 = kg.split('---')[1]
+                    kg3 = None
                     print('Retrieved KG result from cache')
                     use_cache_flag = True
 
@@ -253,13 +275,13 @@ if __name__ == '__main__':
             print('Final Prediction...')
             try:
                 if mode == 'direct':
-                    kg1, kg2, kg3, prob, explain = zero_shot(text, url)
+                    kg1, kg2, kg3, prob, explain = zero_shot(text, url, is_url=use_online_image)
                 elif mode == 'cot':
-                    kg1, kg2, kg3, prob, explain = cot(text, url)
+                    kg1, kg2, kg3, prob, explain = cot(text, url, is_url=use_online_image)
                 elif mode == 'cot+fact':
                     pass
                 elif mode.startswith('lemma'):
-                    prob, explain = lemma(text, url, tool_learning_text, kg1, kg2, zero_shot_pred, mode)
+                    prob, explain = lemma(text, url, tool_learning_text, kg1, kg2, zero_shot_pred, mode, is_url=use_online_image)
                 else:
                     kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
                 break

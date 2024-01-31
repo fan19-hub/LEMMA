@@ -1,85 +1,27 @@
-import base64
-import os
-import requests
 from config import prompts_root, imgbed_root
-from openai import OpenAI
+from utils import onlineImg_process, offlineImg_process
 
 
-def lemma(text, url, tool, kg1, kg2, pred_label, method):
-    client = OpenAI()
-
+def lemma(text, url, tool, kg1, kg2, pred_label, method, is_url=True):
     lemma_prompt_path = prompts_root + method + '.md'
 
     with open(lemma_prompt_path, 'r', encoding='utf-8') as f:
         lemma_prompt = f.read()
 
-    if "http" not in url:
-        url = imgbed_root + url
-
-    if 'http' in url:
-        response = client.chat.completions.create(
-            model="gpt-4-vision-preview",
-            messages=[
-                {"role": "user",
-                 "content": [
-                     {"type": "text", "text": lemma_prompt.format(TEXT=text,
-                                                                  PREDICTION=pred_label,
-                                                                  TEXT_KG=kg1,
-                                                                  IMAGE_KG=kg2,
-                                                                  TOOLLEARNING=tool)},
-                     {"type": "image_url", "image_url": {"url": f"{url}", }, },
-                 ],
-                 }
-            ],
-            max_tokens=1000,
-            temperature=0.1
-        )
-        info = response.choices[0].message.content
-
+    if is_url:
+        if "http" not in url:
+            url = imgbed_root + url
+        info = onlineImg_process(lemma_prompt.format(TEXT=text,
+                                                     PREDICTION=pred_label,
+                                                     TEXT_KG=kg1,
+                                                     IMAGE_KG=kg2,
+                                                     TOOLLEARNING=tool), url, max_tokens=1000)
     else:
-        # Encode function
-        api_key = os.getenv("OPENAI_API_KEY")
-
-        def encode_image(image_path):
-            with open(image_path, "rb") as image_file:
-                return base64.b64encode(image_file.read()).decode('utf-8')
-
-        # Getting the base64 string
-        base64_image = encode_image(url)
-
-        headers = {
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {api_key}"
-        }
-
-        payload = {
-            "model": "gpt-4-vision-preview",
-            "messages": [
-                {
-                    "role": "user",
-                    "content": [
-                        {
-                            "type": "text",
-                            "text": lemma_prompt.format(TEXT=text,
-                                                        PREDICTION=pred_label,
-                                                        TEXT_KG=kg1,
-                                                        IMAGE_KG=kg2,
-                                                        TOOLLEARNING=tool)
-                        },
-                        {
-                            "type": "image_url",
-                            "image_url": {
-                                "url": f"data:image/jpeg;base64,{base64_image}"
-                            }
-                        }
-                    ]
-                }
-            ],
-            "max_tokens": 1000,
-            "temperature": 0.1
-        }
-        response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
-        info = eval(response.text)["choices"][0]["message"]["content"]
+        info = offlineImg_process(lemma_prompt.format(TEXT=text,
+                                                      PREDICTION=pred_label,
+                                                      TEXT_KG=kg1,
+                                                      IMAGE_KG=kg2,
+                                                      TOOLLEARNING=tool), url, max_tokens=1000)
 
     info_list = info.split("\n")
     final_label = int(info_list[-1].strip())
