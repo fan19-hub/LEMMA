@@ -26,7 +26,7 @@ Second KG (Converted from Image):
 
 ##### Second reference: External knowledge and facts.
 
-You are provided with external news/articles/post/wikis that are related to the provided news topics. You can trust the authenticity of these resources. You should use them as your reference. 
+You are provided with external news/articles/post/wikis that are related to the provided news topics. You can trust the authenticity of these resources and use them as your reference. 
 
 Begin of external resources:
 
@@ -34,7 +34,7 @@ Begin of external resources:
 
 End of external resources.
 
-Finally, based on the KGs and external resources, you will now decide whether or not to modify your original prediction. 1) Be confident. Your original prediction already have a 76% accuracy. I am not interrogating you, forcing you to modify your prediction. 2) Also be rational. Don't hesitate to modify your prediction if you find some evidence in the KGs and external sources.
+Finally, based on the KGs and external resources, you will now decide whether or not to modify your original prediction.
 
 In one or more paragraphs, output your reasoning steps. In the final line, use a single binary value (0 or 1) to indicate whether misinformation exists. 0 for no misinformation. 1 for the presence of misinformation. Please don't output any other words except for the binary label on the last line.
 

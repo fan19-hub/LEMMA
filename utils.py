@@ -141,3 +141,6 @@ def stats(data_path):
     print('Total unmodified: {}'.format(total_unmodified))
     print('Total modified correct: {}'.format(total_modified_correct))
     print('Total modified incorrect: {}'.format(total_modified_incorrect))
+
+if __name__ == '__main__':
+    stats('out/fakereddit_lemma_base_kg_final_output_50.json')
