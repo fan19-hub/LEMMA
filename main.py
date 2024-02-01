@@ -23,7 +23,7 @@ mode = 'lemma_base'
 view = True
 
 # automatic resume
-resume = True
+resume = False
 
 # dataset (twitter or weibo or fakereddit or ticnn)
 data_name = 'weibo'
@@ -150,25 +150,33 @@ if __name__ == '__main__':
         zero_shot_pred = None
 
         if mode.startswith('lemma'):
+            print('Zero shot...')
+            for i in range(max_retry):
+                try:
+                    _, _, _, zero_shot_pred, _ = zero_shot(text, url, is_url=use_online_image)
+                    break
+                except Exception as e:
+                    print(f'Zero shot error: {e}, retrying...')
+            else:
+                print('Zero shot error, skipping...')
+                continue
+
+        if mode.startswith('lemma'):
             if using_cache:
                 if text in tool_learning_cache:
                     pass
                 else:
+                    print('Generating Tool Learning Searching Questions...')
                     for i in range(max_retry):
                         try:
-                            print('Zero shot...')
-                            _, _, _, zero_shot_pred, _ = zero_shot(text, url, is_url=use_online_image)
-                            print('Generating questions...')
                             res = question_gen(text, url, zero_shot_pred, is_url=use_online_image)
                             title = res['title']
                             questions = res['questions']
                             break
                         except Exception as e:
-                            print('Zero shot error: ', end="")
-                            print(e, end="")
-                            print(", retrying...")
+                            print(f'Question gen error: {e}, retrying...')
                     else:
-                        print('Zero shot error, skipping...')
+                        print('Question gen error, skipping...')
                         continue
 
         # tool learning
