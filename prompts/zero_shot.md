@@ -1,11 +1,16 @@
 You are given a piece of **Input Text** and an image. Your task is to predict whether misinformation is present. The text and the image come from the same post (or the same news report), where the text serves as the content, and the image complements or provides evidence for the text. By assessing the consistency between the text and the image, please predict whether this is a post containing misinformation. Please follow the Rules below:
 
-# Rules:
-1. In the first line of the output, use a single binary value 0 or 1 to indicate whether misinformation exists. 0 for no misinformation. 1 for misinformation do exist. Please don't output any other words except for the binary label on the first line.
-2. In the second line or more lines, output your explanation.
+Rules:
+Generate a JSON object with two properties: 'label' and 'explanation'. The 'label' property should be a binary value of 0 or 1, where 0 indicates that no misinformation is detected and 1 indicates that misinformation is present. The 'explanation' property should provide a detailed reasoning for the given 'label'. No other words or elements should be included in the output apart from these two properties.
 
-# Input Text:
+Example output (JSON):
+{{
+    "label": 0,
+    "explanation": "The image shows a concert venue filled with people who appear to be enjoying a performance, which is consistent with the text's description of a photo taken at the start of a concert in Paris. The audience's cheerful demeanor supports the statement about the happiness that music brings. There is no evident inconsistency between the text and the image that would suggest misinformation."
+}}
+
+Input Text:
 
 {TEXT}
 
-# Your Response:
+Your Response:

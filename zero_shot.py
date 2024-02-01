@@ -1,8 +1,8 @@
 from config import prompts_root, imgbed_root
+from utils import onlineImg_process, offlineImg_process
+import json
 
 # Get the prompt
-from utils import onlineImg_process, offlineImg_process
-
 prompt_path = prompts_root + 'zero_shot.md'
 with open(prompt_path, 'r', encoding='utf-8') as f:
     prompt = f.read()
@@ -14,26 +14,19 @@ def zero_shot(text, img_source, tool=None, is_url=True):
         if "http" not in img_source:
             img_source = imgbed_root + img_source
         info = onlineImg_process(prompt.format(TEXT=text), img_source)
-        info_list = info.split("\n")
-        label = int(info_list[0].strip())
-        explanation = "\n".join(info_list[1:])
+        
     else:
         info = offlineImg_process(prompt.format(TEXT=text), img_source)
-        info_list = info.split("\n")
-        label = int(info_list[0].strip())
-        explanation = "\n".join(info_list[1:])
-
+    info_dict=json.loads(info)
+    label=info_dict['label']
+    if label not in [0,1]:
+        if label in ["0","1"]:
+            label = int(label)
+        else:
+            raise ValueError("The label is not 0 or 1")
+    explanation = info_dict['explanation']
     return None, None, None, label, explanation
 
-    # completion = client.chat.completions.create(
-    #     model="gpt-4-vision-preview",
-    #     messages=[
-    #         {"role": "system",
-    #          "content": "You are an expert in Misinformation Detection"},
-    #         {"role": "user",
-    #          "content": prompt.format(TEXT=text, IMAGE=image_url)}
-    #     ],
-    #     temperature=0.1,
-    # )
-    # predicted_label = int(completion.choices[0].message.content.split('\n')[0].strip())
-    # return None, None, None, predicted_label, completion.choices[0].message.content
+
+# if __name__=="__main__":
+#     print(zero_shot("Boston Marathon Bombing 'news' actor identified again! This man is an American soldier who lost his legs in Afghanistan. Live video may be arranged by the cameraman shot, the so-called bomb is only a smoke bomb, the damage to people is extremely limited, barely produced a smoke effect. @Beijing Youth Daily @New Weekly @Rui Chenggang @Huang Jianxiang @Internet forefront @Grotesque psychological behavior", "weibo/rumor_images/3b9c937bjw1e3rs645jowj.jpg",is_url= True))
