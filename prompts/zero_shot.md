@@ -1,7 +1,7 @@
 You are given a piece of **Input Text** and an image. Your task is to predict whether misinformation is present. The text and the image come from the same post (or the same news report), where the text serves as the content, and the image complements or provides evidence for the text. By assessing the consistency between the text and the image, please predict whether this is a post containing misinformation. Please follow the Rules below:
 
 Rules:
-Generate a JSON object with two properties: 'label' and 'explanation'. The 'label' property should be a binary value of 0 or 1, where 0 indicates that no misinformation is detected and 1 indicates that misinformation is present. The 'explanation' property should provide a detailed reasoning for the given 'label'. No other words or elements should be included in the output apart from these two properties.
+Generate a JSON object with two properties: 'label' and 'explanation'. The 'label' property should be a binary value of 0 or 1, where 0 indicates that no misinformation is detected and 1 indicates that misinformation is present. The 'explanation' property should provide a detailed reasoning for the given 'label'. No other words or elements should be included in the output apart from these two properties.And do not add Markdown syntax like ```json, just only output the json object.
 
 Example output (JSON):
 {{
