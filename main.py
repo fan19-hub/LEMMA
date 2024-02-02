@@ -13,7 +13,7 @@ from utils import metric, write_metric_result
 # mode ('direct' or 'cot' or 'cot+kg' or 'cot+fact' or 'lemma')
 #### EXPLAINATION ####
 # direct: directly use the text and image as input
-# cot: use chain of thought method 
+# cot: use chain of thought method
 # cot+kg: use chain of thought method and knowledge graph based reasoning
 # cot+fact: use chain of thought method and fact check
 # lemma: our method
@@ -162,22 +162,24 @@ if __name__ == '__main__':
                 continue
 
         if mode.startswith('lemma'):
+            use_cache_flag = False
             if using_cache:
                 if text in tool_learning_cache:
-                    pass
+                    use_cache_flag = True
+
+            if not use_cache_flag:
+                print('Generating Tool Learning Searching Questions...')
+                for i in range(max_retry):
+                    try:
+                        res = question_gen(text, url, zero_shot_pred, is_url=use_online_image)
+                        title = res['title']
+                        questions = res['questions']
+                        break
+                    except Exception as e:
+                        print(f'Question gen error: {e}, retrying...')
                 else:
-                    print('Generating Tool Learning Searching Questions...')
-                    for i in range(max_retry):
-                        try:
-                            res = question_gen(text, url, zero_shot_pred, is_url=use_online_image)
-                            title = res['title']
-                            questions = res['questions']
-                            break
-                        except Exception as e:
-                            print(f'Question gen error: {e}, retrying...')
-                    else:
-                        print('Question gen error, skipping...')
-                        continue
+                    print('Question gen error, skipping...')
+                    continue
 
         # tool learning
         if mode.startswith('lemma') or mode == 'cot+fact':
@@ -214,7 +216,7 @@ if __name__ == '__main__':
         else:
             tool_learning_text = None
 
-        
+
         # image captioning
         if mode != 'direct' and mode != 'cot':
             print("Generating Image Captioning...")
@@ -289,7 +291,10 @@ if __name__ == '__main__':
                 elif mode == 'cot+fact':
                     pass
                 elif mode.startswith('lemma'):
-                    prob, explain = lemma(text, url, tool_learning_text, kg1, kg2, zero_shot_pred, mode, is_url=use_online_image)
+                    if zero_shot_pred == 0:
+                        prob, explain = lemma(text, url, tool_learning_text, kg1, kg2, zero_shot_pred, mode, is_url=use_online_image)
+                    else:
+                        prob, explain = 1, 'Zero shot predicted as 1'
                 else:
                     kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
                 break
