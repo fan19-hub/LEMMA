@@ -42,7 +42,8 @@ def ddg_search(keywords, top_k=2):
     return search_results_txt
 
 def text_search(text,max_len=2000):
-    search_result_txt = ddg_search(text)
+    search_result_txt = ddg_search('fake_news ' + text)
+    print(search_result_txt)
     return search_result_txt[:max_len]
 
 
