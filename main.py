@@ -3,6 +3,7 @@ from imgCaption import img2txt
 from KGprocess import kg_generate_and_compare
 from cot import cot
 from kg import kg_gen
+from time import sleep
 from question_gen import question_gen
 from zero_shot import zero_shot
 from toolLearning import text_search, visual_search
@@ -192,7 +193,7 @@ if __name__ == '__main__':
                     print('Retrieved tool learning result from cache')
 
             if not use_cache_flag:
-                for i in range(max_retry):
+                for i in range(2):
                     try:
                         tool_learning_text = text_search(text[:480], fake_news_prefix=not zero_shot_pred)
                         # tool_learning_text += visual_search(url, text)
@@ -200,12 +201,15 @@ if __name__ == '__main__':
                             tool_learning_text += text_search(title, fake_news_prefix=not zero_shot_pred)
                             for question in questions:
                                 tool_learning_text += text_search(question, fake_news_prefix=not zero_shot_pred)
+                                sleep(5)
                         if tool_learning_text is None:
                             print('Tool learning error, retrying...')
+                            sleep(60)
                             continue
                         break
                     except Exception as e:
                         print(f'Tool learning error: {e}, retrying')
+                        sleep(60)
                 else:
                     print('Tool learning error, skipping...')
                     continue
@@ -213,6 +217,11 @@ if __name__ == '__main__':
                     tool_learning_cache[text] = tool_learning_text
                     with open(tool_learning_cache_name, 'w', encoding='utf-8') as f:
                         json.dump(tool_learning_cache, f, ensure_ascii=False)
+            try:
+                tool_learning_text+="\nThe exactly same image appears in the following web pages:\n"+visual_search(url, text)
+            except Exception as e:
+                print("Error in visual search",e)
+
         else:
             tool_learning_text = None
 
