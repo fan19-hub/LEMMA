@@ -5,7 +5,7 @@ import random
 # output_json_path = 'data/twitter/twitter_50.json'
 
 json2 = 'data/fakereddit/FAKEDDIT.json'
-output_json_path = 'data/fakereddit/FAKEDDIT_50.json'
+output_json_path = 'data/fakereddit/FAKEDDIT_50_2.json'
 
 # json2 = 'data/weibo/weibo_shuffled.json'
 # output_json_path = 'data/weibo/weibo_50.json'
@@ -20,12 +20,13 @@ indices = list(range(len(data2)))
 random.shuffle(indices)  # Shuffle the indices randomly
 
 for i in indices:
-    print(i)
-    sample.append(data2[i])
+    if data2[i]['label'] == 1:
+        sample.append(data2[i])
+        total -= 1
     
     if total == 0:
         break
-    total -= 1
+    
 
 with open(output_json_path, 'w') as json_file:
     json.dump(sample, json_file, indent=2)
