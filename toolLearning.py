@@ -7,12 +7,14 @@ import os
 import numpy as np
 from config import prompts_root,imgbed_root
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service as ChromeService
 from time import sleep
 import pyautogui
 # import html2text
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
-client = OpenAI()\
+client = OpenAI()
 
 def soure_filter(results):
     if results == None or results == []:
@@ -79,12 +81,14 @@ def visual_search(source,text, chrome_driver_path = 'chromedriver.exe', is_url=T
     # Initialize the Chrome webdriver and open the URL
     options = webdriver.ChromeOptions()
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    driver = webdriver.Chrome(executable_path=chrome_driver_path, options=options)
+    service = ChromeService(executable_path=chrome_driver_path)
+    driver = webdriver.Chrome(service=service, options=options)
+
 
     # Google Image Search Page
     driver.get('https://www.google.com/imghp')
     sleep(1)  
-    button = driver.find_element_by_css_selector("div.nDcEnd")
+    button = driver.find_element(By.CSS_SELECTOR, "div.nDcEnd")
     button.click()
     sleep(1) 
 
@@ -93,8 +97,8 @@ def visual_search(source,text, chrome_driver_path = 'chromedriver.exe', is_url=T
         # use the image url
         if "http" not in source: 
             source=imgbed_root+source
-        driver.find_element_by_css_selector("input.cB9M7").send_keys(source)
-        search_button=driver.find_element_by_css_selector("div.Qwbd3")
+        driver.find_element(By.CSS_SELECTOR, "input.cB9M7").send_keys(source)
+        search_button=driver.find_element(By.CSS_SELECTOR, "div.Qwbd3")
         search_button.click()       
     else:
         # upload the image
@@ -105,17 +109,17 @@ def visual_search(source,text, chrome_driver_path = 'chromedriver.exe', is_url=T
         pyautogui.press('enter')
         sleep(5)  
         driver.find_element_by_name('file').send_keys(r"D:\test\xuexi\test\14.png")
-        upload_button = driver.find_element_by_css_selector("div.ZeVBtc>span")
+        upload_button = driver.find_element(By.CSS_SELECTOR, "div.ZeVBtc>span")
         upload_button.click()
 
     sleep(1)
     # image serach result page
-    exact_search=driver.find_element_by_css_selector("div.ICt2Q")
+    exact_search=driver.find_element(By.CSS_SELECTOR, "div.ICt2Q")
     exact_search.click()
     sleep(1)
 
     # exact search result page
-    results=driver.find_elements_by_css_selector("a")
+    results=driver.find_elements(By.CSS_SELECTOR, "a")
     search_results=[]
     for result in results:
         link = result.get_attribute('href')
@@ -143,7 +147,7 @@ def visual_search(source,text, chrome_driver_path = 'chromedriver.exe', is_url=T
 
 
 if __name__ == '__main__':
-    print(text_search('''news pr nightmare makeawish accidentally sent a costumed hero named terminally ill spiderman to a healthy kids house and asked the child to comfort him in his final hours'''))
+    # print(text_search('''news pr nightmare makeawish accidentally sent a costumed hero named terminally ill spiderman to a healthy kids house and asked the child to comfort him in his final hours'''))
     source_content_txt=visual_search("https://external-preview.redd.it/TmWagAjfo4gSjEQCH5nTuAu2Ly4TDk3Zoe7DAM4PNiw.jpg?width=320&crop=smart&auto=webp&s=50636678884dec4cce2047dbb5dcda3f913436c5","news pr nightmare makeawish accidentally sent a costumed hero named terminally ill spiderman to a healthy kids house and asked the child to comfort him in his final hours")
     print("Most relevant websites where image appears",source_content_txt)
 
@@ -188,7 +192,7 @@ if __name__ == '__main__':
     #         driver.get(link)
     #     except Exception as e:
     #         print(e)
-    #         result=driver.find_elements_by_css_selector("body")[0]
+    #         result=driver.find_element_by_css_selector("body")[0]
     #         html=result.text
     #         body_text=html2text.html2text(html).replace("\n"," ")[:max_len]
     #         source_content_txt += f"[Title] {title}\n[Text] {body_text} [Source] {link}\n"
