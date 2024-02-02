@@ -43,9 +43,11 @@ def ddg_search(keywords, top_k=2):
         search_results_txt+= f"\n[Title] {title}\n[Text] {body}\n[Source] {result['href']})"
     return search_results_txt
 
-def text_search(text,max_len=2000):
-    search_result_txt = ddg_search('fake_news ' + text)
-    print(search_result_txt)
+def text_search(text,max_len=2000, fake_news_prefix=False):
+    if fake_news_prefix:
+        search_result_txt = ddg_search('fake_news ' + text)
+    else:
+        search_result_txt = ddg_search(text)
     return search_result_txt[:max_len]
 
 

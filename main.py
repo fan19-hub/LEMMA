@@ -194,12 +194,12 @@ if __name__ == '__main__':
             if not use_cache_flag:
                 for i in range(max_retry):
                     try:
-                        tool_learning_text = text_search(text[:480])
+                        tool_learning_text = text_search(text[:480], fake_news_prefix=not zero_shot_pred)
                         # tool_learning_text += visual_search(url, text)
                         if mode.startswith('lemma'):
-                            tool_learning_text += text_search(title)
+                            tool_learning_text += text_search(title, fake_news_prefix=not zero_shot_pred)
                             for question in questions:
-                                tool_learning_text += text_search(question)
+                                tool_learning_text += text_search(question, fake_news_prefix=not zero_shot_pred)
                         if tool_learning_text is None:
                             print('Tool learning error, retrying...')
                             continue
@@ -291,10 +291,7 @@ if __name__ == '__main__':
                 elif mode == 'cot+fact':
                     pass
                 elif mode.startswith('lemma'):
-                    if zero_shot_pred == 0:
-                        prob, explain = lemma(text, url, tool_learning_text, kg1, kg2, zero_shot_pred, mode, is_url=use_online_image)
-                    else:
-                        prob, explain = 1, 'Zero shot predicted as 1'
+                    prob, explain = lemma(text, url, tool_learning_text, kg1, kg2, zero_shot_pred, mode, is_url=use_online_image)
                 else:
                     kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
                 break
