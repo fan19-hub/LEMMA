@@ -10,29 +10,28 @@ from config import data_root
 
 
 def onlineImg_process(prompt, url, model="gpt-4-vision-preview", max_tokens=1000, temperature=0.1):
-
     openai.api_key = os.getenv("OPENAI_API_KEY")
     client = OpenAI()
 
     response = client.chat.completions.create(
         model=model,
         messages=[
-          {
-            "role": "user",
-            "content": [
-              {"type": "text", "text": prompt},
-              {
-                "type": "image_url",
-                "image_url": {
-                  "url": f"{url}",
-                },
-              },
-            ],
-          }
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": prompt},
+                    {
+                        "type": "image_url",
+                        "image_url": {
+                            "url": f"{url}",
+                        },
+                    },
+                ],
+            }
         ],
         max_tokens=max_tokens,
         temperature=temperature
-      )
+    )
     return response.choices[0].message.content
 
 
@@ -81,7 +80,6 @@ def offlineImg_process(prompt, image_path, model="gpt-4-vision-preview", max_tok
 
 
 def metric(labels, pred_labels):
-
     def confusion_matrix(truth, pred):
         tp = sum((l == 1 and p == 1) for l, p in zip(truth, pred))
         fp = sum((l == 0 and p == 1) for l, p in zip(truth, pred))
@@ -130,7 +128,6 @@ def metric(labels, pred_labels):
 
 
 def write_metric_result(file_name, data, mode='w', prefix=''):
-
     with open(file_name, mode, encoding='utf-8') as f:
         if prefix:
             f.write('{}\n'.format(prefix))
@@ -224,10 +221,21 @@ def stats(data_path):
     print('Zero-shot correct: {}'.format(zero_shot_correct))
     print('Zero-shot incorrect: {}'.format(zero_shot_incorrect))
     print('Zero-shot Accuracy: {}'.format(zero_shot_correct / num_items))
-    print('Total modified: {}\n\t| 0 -> 1: {}\n\t\t| Correct: {}\n\t\t| Incorrect : {}\n\t| 1-> 0: {}\n\t\t| Correct: {}\n\t\t| Incorrect : {}'.format(total_modified, total_modified_0_to_1, total_modified_0_to_1_correct, total_modified_0_to_1_incorrect, total_modified_1_to_0, total_modified_1_to_0_correct, total_modified_1_to_0_incorrect))
+    print(
+        'Total modified: {}\n\t| 0 -> 1: {}\n\t\t| Correct: {}\n\t\t| Incorrect : {}\n\t| 1-> 0: {}\n\t\t| Correct: {}\n\t\t| Incorrect : {}'.format(
+            total_modified, total_modified_0_to_1, total_modified_0_to_1_correct, total_modified_0_to_1_incorrect,
+            total_modified_1_to_0, total_modified_1_to_0_correct, total_modified_1_to_0_incorrect))
     print('Total unmodified: {}'.format(total_unmodified))
     print('Total modified correct: {}'.format(total_modified_correct))
     print('Total modified incorrect: {}'.format(total_modified_incorrect))
+
+
+def is_chinese(char):
+    if '\u4e00' <= char <= '\u9fff':
+        return True
+    else:
+        return False
+
 
 if __name__ == '__main__':
     # stats('out/fakereddit_lemma_base_kg_final_output_50.json')

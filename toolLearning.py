@@ -2,6 +2,7 @@ import openai
 import re
 import pandas as pd
 from duckduckgo_search import DDGS
+from duckduckgo_search.exceptions import DuckDuckGoSearchException
 from openai import OpenAI
 import os
 import numpy as np
@@ -12,6 +13,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from time import sleep
 import pyautogui
 # import html2text
+from utils import is_chinese
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI()
@@ -27,11 +29,11 @@ def soure_filter(results):
             results.remove(result)
     return results
 
-def ddg_search(keywords, top_k=2):
+def ddg_search(keywords, top_k=2, region='us-en'):
     # query=ddg_translate(query, to = "en")["translated"]
     # Do the duckduckgo search
     with DDGS() as ddgs:
-        search_results=list(ddgs.text(keywords, region='us-en', safesearch='off', max_results=20))
+        search_results=list(ddgs.text(keywords, region=region, safesearch='off', max_results=20))
         search_results=soure_filter(search_results)
     if not search_results:
         return ''
@@ -44,10 +46,19 @@ def ddg_search(keywords, top_k=2):
     return search_results_txt
 
 def text_search(text,max_len=2000, fake_news_prefix=False):
-    if fake_news_prefix:
-        search_result_txt = ddg_search('fake_news ' + text)
+    if is_chinese(text):
+        region = 'tw-tzh'
     else:
-        search_result_txt = ddg_search(text)
+        region = 'us-en'
+    print(text, region)
+    try:
+        if fake_news_prefix:
+            search_result_txt = ddg_search('fake_news ' + text, region=region)
+        else:
+            search_result_txt = ddg_search(text, region=region)
+    except DuckDuckGoSearchException as e:
+        print(e)
+        search_result_txt = ''
     return search_result_txt[:max_len]
 
 
