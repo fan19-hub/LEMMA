@@ -50,7 +50,6 @@ def text_search(text,max_len=2000, fake_news_prefix=False):
         region = 'tw-tzh'
     else:
         region = 'us-en'
-    print(text, region)
     try:
         if fake_news_prefix:
             search_result_txt = ddg_search('fake_news ' + text, region=region)
