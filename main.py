@@ -18,7 +18,7 @@ from utils import metric, write_metric_result
 # cot+kg: use chain of thought method and knowledge graph based reasoning
 # cot+fact: use chain of thought method and fact check
 # lemma: our method
-mode = 'lemma_test'
+mode = 'lemma_base'
 
 # print the result
 view = True
@@ -26,11 +26,14 @@ view = True
 # automatic resume
 resume = False
 
+# zero-shot conditional result
+zs_flag = True
+
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'fakereddit'
+data_name = 'twitter'
 
 # using image caption cache
-using_cache = False
+using_cache = True
 
 # max retry times
 max_retry = 5
@@ -42,7 +45,7 @@ kg_cache_name = data_root+'kg_cache.json'
 
 # input data file name
 if data_name == 'twitter':
-    input_file = data_root+'twitter/twitter_s_50.json'
+    input_file = data_root+'twitter/twitter_50_3.json'
     use_online_image = True
 elif data_name == 'weibo':
     input_file = data_root+'weibo/weibo_50.json'
@@ -161,7 +164,15 @@ if __name__ == '__main__':
             else:
                 print('Zero shot error, skipping...')
                 continue
+        
+        ## If zero-shot predict 0, zs_flag True
 
+        if zero_shot_pred == 0:
+            zs_flag= True
+        elif zero_shot_pred == 1:
+            zs_flag = False
+
+    
         if mode.startswith('lemma'):
             use_cache_flag = False
             if using_cache:
@@ -217,10 +228,10 @@ if __name__ == '__main__':
                     tool_learning_cache[text] = tool_learning_text
                     with open(tool_learning_cache_name, 'w', encoding='utf-8') as f:
                         json.dump(tool_learning_cache, f, ensure_ascii=False)
-            try:
-                tool_learning_text+="\nThe exactly same image appears in the following web pages:\n"+visual_search(url, text)
-            except Exception as e:
-                print("Error in visual search",e)
+            # try:
+            #     tool_learning_text+="\nThe exactly same image appears in the following web pages:\n"+visual_search(url, text)
+            # except Exception as e:
+            #     print("Error in visual search",e)
 
         else:
             tool_learning_text = None
@@ -300,7 +311,7 @@ if __name__ == '__main__':
                 elif mode == 'cot+fact':
                     pass
                 elif mode.startswith('lemma'):
-                    prob, explain = lemma(text, url, tool_learning_text, kg1, kg2, zero_shot_pred, mode, is_url=use_online_image)
+                    prob, explain = lemma(text, url, tool_learning_text, kg1, kg2, zero_shot_pred, mode, zs_flag = zs_flag, is_url=use_online_image)
                 else:
                     kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
                 break

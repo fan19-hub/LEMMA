@@ -34,7 +34,7 @@ Begin of external resources:
 
 End of external resources.
 
-Finally, based on the KGs and external resources, you will now decide whether or not to modify your original prediction. 
+Finally, based on the KGs and external resources, you will now decide whether or not to modify your original prediction.
 
 In one or more paragraphs, output your reasoning steps. In the final line, use a single binary value (0 or 1) to indicate whether misinformation exists. 0 for no misinformation. 1 for the presence of misinformation. Please don't output any other words except for the binary label on the last line.
 

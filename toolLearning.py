@@ -45,9 +45,9 @@ def ddg_search(keywords, top_k=2):
 
 def text_search(text,max_len=2000, fake_news_prefix=False):
     if fake_news_prefix:
-        search_result_txt = ddg_search('fake_news ' + text)
+        search_result_txt = ddg_search('fake_news ' + text, top_k=2)
     else:
-        search_result_txt = ddg_search(text)
+        search_result_txt = ddg_search(text, top_k=2)
     return search_result_txt[:max_len]
 
 

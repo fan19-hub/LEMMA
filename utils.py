@@ -231,4 +231,8 @@ def stats(data_path):
 
 if __name__ == '__main__':
     # stats('out/fakereddit_lemma_base_kg_final_output_50.json')
-    stats('out/fakereddit_lemma_test_kg_final_output_50_5.json')
+    # stats('out/fakereddit_lemma_test_kg_final_output_50_8.json')
+    # stats('out/twitter_lemma_test_kg_final_output_50_3.json')
+    # stats('out/twitter_lemma_base_kg_final_output_50_2.json')
+    stats('out/twitter_lemma_base_kg_final_output_50_6.json')
+    # stats('out/weibo_lemma_base_kg_final_output_50.json')
