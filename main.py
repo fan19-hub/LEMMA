@@ -32,19 +32,19 @@ zs_flag = True
 # dataset (twitter or weibo or fakereddit or ticnn)
 data_name = 'twitter'
 
-# using image caption cache
-using_cache = True
+# using cache and cache file name
+using_cache_image_caption = True
+image_caption_cache_name = data_root+'image_captioning_cache.json'
+using_cache_tool_learning = False
+tool_learning_cache_name = data_root+'tool_learning_cache.json'
+using_cache_kg = True
+kg_cache_name = data_root+'kg_cache.json'
 
 # max retry times
 max_retry = 5
 
 # tool learning sleep time factor
 sleep_factor = 10
-
-# image caption cache file name
-image_caption_cache_name = data_root+'image_captioning_cache.json'
-tool_learning_cache_name = data_root+'tool_learning_cache.json'
-kg_cache_name = data_root+'kg_cache.json'
 
 # input data file name
 if data_name == 'twitter':
@@ -81,10 +81,12 @@ if __name__ == '__main__':
         "Input file": input_file,
         "Output score": output_score,
         "Output result": output_result,
-        "Using cache": using_cache
+        "Using cache (image caption)": using_cache_image_caption,
+        "Using cache (tool learning)": using_cache_tool_learning,
+        "Using cache (KG)": using_cache_kg,
     }
     print("Running LEMMa with mode:", mode)
-    config_str = "\n".join([f" ├─ {k}: {v}" if k != "Using cache" else f" └─ Using cache: {v}"
+    config_str = "\n".join([f" ├─ {k}: {v}" if k != "Using cache (KG)" else f" └─ Using cache (KG): {v}"
                             for k, v in configs.items()])
     print(config_str)
 
@@ -96,7 +98,7 @@ if __name__ == '__main__':
 
     all_results = []
 
-    if using_cache:
+    if using_cache_image_caption:
         try:
             with open(image_caption_cache_name, encoding='utf-8') as f:
                 image_captioning_cache = json.load(f)
@@ -104,6 +106,7 @@ if __name__ == '__main__':
         except FileNotFoundError:
             image_captioning_cache = {}
             print(f'\t├─ No image captioning cache found')
+    if using_cache_tool_learning:
         try:
             with open(tool_learning_cache_name, encoding='utf-8') as f:
                 tool_learning_cache = json.load(f)
@@ -111,6 +114,7 @@ if __name__ == '__main__':
         except FileNotFoundError:
             tool_learning_cache = {}
             print(f'\t├─ No tool learning cache found')
+    if using_cache_kg:
         try:
             with open(kg_cache_name, encoding='utf-8') as f:
                 kg_cache = json.load(f)
@@ -178,7 +182,7 @@ if __name__ == '__main__':
     
         if mode.startswith('lemma'):
             use_cache_flag = False
-            if using_cache:
+            if using_cache_tool_learning:
                 if text in tool_learning_cache:
                     use_cache_flag = True
 
@@ -200,7 +204,7 @@ if __name__ == '__main__':
         if mode.startswith('lemma') or mode == 'cot+fact':
             print('Tool learning...')
             use_cache_flag = False
-            if using_cache:
+            if using_cache_tool_learning:
                 if text in tool_learning_cache:
                     tool_learning_text = tool_learning_cache[text]
                     use_cache_flag = True
@@ -229,7 +233,7 @@ if __name__ == '__main__':
                 else:
                     print('Tool learning error, skipping...')
                     continue
-                if using_cache:
+                if using_cache_tool_learning:
                     tool_learning_cache[text] = tool_learning_text
                     with open(tool_learning_cache_name, 'w', encoding='utf-8') as f:
                         json.dump(tool_learning_cache, f, ensure_ascii=False)
@@ -246,7 +250,7 @@ if __name__ == '__main__':
         if mode != 'direct' and mode != 'cot':
             print("Generating Image Captioning...")
             use_cache_flag = False
-            if using_cache:
+            if using_cache_image_caption:
                 if url in image_captioning_cache:
                     image_text = image_captioning_cache[url]
                     if 'sorry' not in image_text and 'Sorry' not in image_text:
@@ -266,7 +270,7 @@ if __name__ == '__main__':
                 else:
                     print('Image captioning error, skipping...')
                     continue
-                if using_cache:
+                if using_cache_image_caption:
                     image_captioning_cache[url] = image_text
                     with open(image_caption_cache_name, 'w', encoding='utf-8') as f:
                         json.dump(image_captioning_cache, f)
@@ -276,7 +280,7 @@ if __name__ == '__main__':
         if mode.startswith('lemma'):
             use_cache_flag = False
 
-            if using_cache:
+            if using_cache_kg:
                 if text in kg_cache:
                     kg = kg_cache[text]
                     kg1 = kg.split('---')[0]
@@ -300,7 +304,7 @@ if __name__ == '__main__':
                     print('KG error, skipping...')
                     continue
 
-                if using_cache:
+                if using_cache_kg:
                     kg_cache[text] = kg
                     with open(kg_cache_name, 'w', encoding='utf-8') as f:
                         json.dump(kg_cache, f)
