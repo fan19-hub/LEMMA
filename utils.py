@@ -1,7 +1,7 @@
 import base64
 import json
 import os
-
+from langdetect import detect
 import openai
 import requests
 from openai import OpenAI
@@ -230,11 +230,21 @@ def stats(data_path):
     print('Total modified incorrect: {}'.format(total_modified_incorrect))
 
 
-def is_chinese(char):
-    if '\u4e00' <= char <= '\u9fff':
-        return True
+def predict_region(s):
+    lang = detect(s)
+    region_map = {
+        'en': 'us-en',
+        'ca': 'ct-ca',
+        'zh-cn': 'tw-tzh',
+        'zh-tw': 'tw-tzh',
+        'fr': 'fr-fr',
+        'tr': 'tr-tr',
+        'nl': 'nl-nl',
+    }
+    if lang in region_map:
+        return region_map[lang]
     else:
-        return False
+        return 'us-en'
 
 
 if __name__ == '__main__':

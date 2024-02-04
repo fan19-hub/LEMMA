@@ -13,7 +13,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from time import sleep
 import pyautogui
 # import html2text
-from utils import is_chinese
+from utils import predict_region
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI()
@@ -46,10 +46,7 @@ def ddg_search(keywords, top_k=2, region='us-en'):
     return search_results_txt
 
 def text_search(text,max_len=2000, fake_news_prefix=False):
-    if is_chinese(text):
-        region = 'tw-tzh'
-    else:
-        region = 'us-en'
+    region = predict_region(text)
     try:
         if fake_news_prefix:
             search_result_txt = ddg_search('fake_news ' + text, region=region)

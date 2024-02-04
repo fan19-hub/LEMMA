@@ -18,7 +18,7 @@ from utils import metric, write_metric_result
 # cot+kg: use chain of thought method and knowledge graph based reasoning
 # cot+fact: use chain of thought method and fact check
 # lemma: our method
-mode = 'lemma_test'
+mode = 'lemma_base'
 
 # print the result
 view = True
@@ -27,13 +27,16 @@ view = True
 resume = False
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'fakereddit'
+data_name = 'twitter'
 
 # using image caption cache
-using_cache = False
+using_cache = True
 
 # max retry times
 max_retry = 5
+
+# tool learning sleep time factor
+sleep_factor = 10
 
 # image caption cache file name
 image_caption_cache_name = data_root+'image_captioning_cache.json'
@@ -196,20 +199,22 @@ if __name__ == '__main__':
                 for i in range(2):
                     try:
                         tool_learning_text = text_search(text[:480], fake_news_prefix=not zero_shot_pred)
+                        sleep(sleep_factor)
                         # tool_learning_text += visual_search(url, text)
                         if mode.startswith('lemma'):
                             tool_learning_text += text_search(title, fake_news_prefix=not zero_shot_pred)
+                            sleep(sleep_factor)
                             for question in questions:
                                 tool_learning_text += text_search(question, fake_news_prefix=not zero_shot_pred)
-                                sleep(5)
+                                sleep(sleep_factor)
                         if tool_learning_text is None:
                             print('Tool learning error, retrying...')
-                            sleep(60)
+                            sleep(sleep_factor*5)
                             continue
                         break
                     except Exception as e:
                         print(f'Tool learning error: {e}, retrying')
-                        sleep(60)
+                        sleep(sleep_factor*5)
                 else:
                     print('Tool learning error, skipping...')
                     continue
@@ -217,10 +222,10 @@ if __name__ == '__main__':
                     tool_learning_cache[text] = tool_learning_text
                     with open(tool_learning_cache_name, 'w', encoding='utf-8') as f:
                         json.dump(tool_learning_cache, f, ensure_ascii=False)
-            try:
-                tool_learning_text+="\nThe exactly same image appears in the following web pages:\n"+visual_search(url, text)
-            except Exception as e:
-                print("Error in visual search",e)
+            # try:
+            #     tool_learning_text+="\nThe exactly same image appears in the following web pages:\n"+visual_search(url, text)
+            # except Exception as e:
+            #     print("Error in visual search",e)
 
         else:
             tool_learning_text = None

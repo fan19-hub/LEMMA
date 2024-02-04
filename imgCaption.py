@@ -14,8 +14,8 @@ def img2txt(source=data_root + "weibo", is_url=True):
     if is_url:
         if "http" not in source:
             source = imgbed_root + source
-        return onlineImg_process(prompt, source, max_tokens=300)
+        return onlineImg_process(prompt, source, max_tokens=1000)
     else:
-        return offlineImg_process(prompt, source, max_tokens=300)
+        return offlineImg_process(prompt, source, max_tokens=1000)
 
 # print(img2txt(source= "https://pbs.twimg.com/media/ByGXet8IYAA6kdh?format=jpg&name=small", is_url=True))

@@ -6,7 +6,7 @@ The text of this news is:
 
 Your original prediction is {PREDICTION}. (0 for no misinformation, 1 for presence of misinformation)
 
-However, external sources can better help you make the judgement. Please come up with a title for this news first, then list two questions/phrases/sentences that you would like to search on a public search engine, such as Google. Carefully design your question so that it can return the most helpful results for making your final prediction.
+However, external sources can better help you make the judgement. Please come up with a title for this news first, then list two questions/phrases/sentences that you would like to search on a public search engine, such as Google. Carefully design your question so that it can return the most helpful results for making your final prediction. When generating title and questions, please use the original language of the text. For example, if the text is in Chinese, please also use Chinese to generate title and questions. 
 
 Text Input example:
 
