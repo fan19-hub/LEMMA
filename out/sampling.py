@@ -1,11 +1,11 @@
 import json
 import random
 
-# json2 = 'data/twitter/twitter.json'
-# output_json_path = 'data/twitter/twitter_50.json'
+json2 = 'data/twitter/twitter.json'
+output_json_path = 'data/twitter/twitter_50_4.json'
 
-json2 = 'data/fakereddit/FAKEDDIT.json'
-output_json_path = 'data/fakereddit/FAKEDDIT_50_2.json'
+# json2 = 'data/fakereddit/FAKEDDIT.json'
+# output_json_path = 'data/fakereddit/FAKEDDIT_50_2.json'
 
 # json2 = 'data/weibo/weibo_shuffled.json'
 # output_json_path = 'data/weibo/weibo_50.json'
@@ -20,9 +20,9 @@ indices = list(range(len(data2)))
 random.shuffle(indices)  # Shuffle the indices randomly
 
 for i in indices:
-    if data2[i]['label'] == 1:
-        sample.append(data2[i])
-        total -= 1
+    # if data2[i]['label'] == 1:
+    sample.append(data2[i])
+    total -= 1
     
     if total == 0:
         break

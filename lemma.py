@@ -2,8 +2,11 @@ from config import prompts_root, imgbed_root
 from utils import onlineImg_process, offlineImg_process
 
 
-def lemma(text, url, tool, kg1, kg2, pred_label, method, is_url=True):
-    lemma_prompt_path = prompts_root + method + '.md'
+def lemma(text, url, tool, kg1, kg2, pred_label, method, zs_flag, is_url=True):
+    if zs_flag == True:
+        lemma_prompt_path = prompts_root + method + '_true.md'
+    else:
+        lemma_prompt_path = prompts_root + method + '_false.md'
 
     with open(lemma_prompt_path, 'r', encoding='utf-8') as f:
         lemma_prompt = f.read()

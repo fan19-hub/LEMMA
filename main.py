@@ -26,6 +26,9 @@ view = True
 # automatic resume
 resume = False
 
+# zero-shot conditional result
+zs_flag = True
+
 # dataset (twitter or weibo or fakereddit or ticnn)
 data_name = 'twitter'
 
@@ -45,7 +48,7 @@ kg_cache_name = data_root+'kg_cache.json'
 
 # input data file name
 if data_name == 'twitter':
-    input_file = data_root+'twitter/twitter_s_50.json'
+    input_file = data_root+'twitter/twitter_50_3.json'
     use_online_image = True
 elif data_name == 'weibo':
     input_file = data_root+'weibo/weibo_50.json'
@@ -164,7 +167,15 @@ if __name__ == '__main__':
             else:
                 print('Zero shot error, skipping...')
                 continue
+        
+        ## If zero-shot predict 0, zs_flag True
 
+        if zero_shot_pred == 0:
+            zs_flag= True
+        elif zero_shot_pred == 1:
+            zs_flag = False
+
+    
         if mode.startswith('lemma'):
             use_cache_flag = False
             if using_cache:
@@ -305,7 +316,7 @@ if __name__ == '__main__':
                 elif mode == 'cot+fact':
                     pass
                 elif mode.startswith('lemma'):
-                    prob, explain = lemma(text, url, tool_learning_text, kg1, kg2, zero_shot_pred, mode, is_url=use_online_image)
+                    prob, explain = lemma(text, url, tool_learning_text, kg1, kg2, zero_shot_pred, mode, zs_flag = zs_flag, is_url=use_online_image)
                 else:
                     kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
                 break
