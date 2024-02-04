@@ -30,7 +30,7 @@ resume = False
 zs_flag = True
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'twitter'
+data_name = 'fakereddit'
 
 # using cache and cache file name
 using_cache_image_caption = True
@@ -67,8 +67,8 @@ elif data_name == 'fakehealth':
 # use_online_image=True
 
 # output file names
-output_score = out_root + data_name + '_' + mode + '_' + 'results_50_6'
-output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_50_6.json'
+output_score = out_root + data_name + '_' + mode + '_' + 'results_50_3'
+output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_50_3.json'
 
 if __name__ == '__main__':
     # Open the JSON file
