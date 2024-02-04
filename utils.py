@@ -234,12 +234,12 @@ def predict_region(s):
     lang = detect(s)
     region_map = {
         'en': 'us-en',
-        'ca': 'ct-ca',
+        # 'ca': 'ct-ca',
         'zh-cn': 'tw-tzh',
         'zh-tw': 'tw-tzh',
-        'fr': 'fr-fr',
-        'tr': 'tr-tr',
-        'nl': 'nl-nl',
+        # 'fr': 'fr-fr',
+        # 'tr': 'tr-tr',
+        # 'nl': 'nl-nl',
     }
     if lang in region_map:
         return region_map[lang]
@@ -252,5 +252,6 @@ if __name__ == '__main__':
     # stats('out/fakereddit_lemma_test_kg_final_output_50_8.json')
     # stats('out/twitter_lemma_test_kg_final_output_50_3.json')
     # stats('out/twitter_lemma_base_kg_final_output_50_2.json')
-    stats('out/twitter_lemma_base_kg_final_output_50_6.json')
-    # stats('out/weibo_lemma_base_kg_final_output_50.json')
+    # stats('out/twitter_lemma_base_kg_final_output_50_6.json')
+    stats('out/weibo_lemma_base_kg_final_output_50_2.json')
+    # stats('out/weibo_lemma_base_kg_final_output_50_chinese.json')
