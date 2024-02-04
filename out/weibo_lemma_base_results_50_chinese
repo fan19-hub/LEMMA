@@ -1,0 +1,51 @@
+Labels:
+[0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1]
+Predictions:
+[0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1]
+
+Accuracy: 0.825
+
+Rumor Section:
+True positives: 17
+False positives: 2
+False negatives: 5
+True negatives: 16
+Precision: 0.8947368421052632
+Recall: 0.5151515151515151
+F1 Score: 0.6538461538461537
+
+Non-rumor Section:
+True positives: 16
+False positives: 5
+False negatives: 2
+True negatives: 17
+Precision: 0.7619047619047619
+Recall: 0.48484848484848486
+F1 Score: 0.5925925925925926
+
+zero shot section
+Labels:
+[0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1]
+Predictions:
+[0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1]
+
+Accuracy: 0.675
+
+Rumor Section:
+True positives: 21
+False positives: 12
+False negatives: 1
+True negatives: 6
+Precision: 0.6363636363636364
+Recall: 0.7777777777777778
+F1 Score: 0.7000000000000001
+
+Non-rumor Section:
+True positives: 6
+False positives: 1
+False negatives: 12
+True negatives: 21
+Precision: 0.8571428571428571
+Recall: 0.2222222222222222
+F1 Score: 0.35294117647058826
+
