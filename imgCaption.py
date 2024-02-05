@@ -17,5 +17,5 @@ def img2txt(source=data_root + "weibo", is_url=True):
         return onlineImg_process(prompt, source, max_tokens=1000)
     else:
         return offlineImg_process(prompt, source, max_tokens=1000)
-
-print(img2txt(source= "weibo/nonrumor_images/624c2f04gw1eyj6h1f5d5j20zk0npn1u.jpg", is_url=True))
+if __name__ == "__main__":
+    print(img2txt(source= "weibo/rumor_images/476b66c1jw1dwnz5den2cj.jpg", is_url=True))
