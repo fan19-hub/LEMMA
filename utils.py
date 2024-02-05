@@ -1,6 +1,9 @@
 import base64
+import io
 import json
 import os
+import sys
+
 from langdetect import detect
 import openai
 import requests
@@ -228,6 +231,15 @@ def stats(data_path):
     print('Total unmodified: {}'.format(total_unmodified))
     print('Total modified correct: {}'.format(total_modified_correct))
     print('Total modified incorrect: {}'.format(total_modified_incorrect))
+
+
+def stats_str(path):
+    sio = io.StringIO()
+    sys.stdout = sio
+    stats(path)
+    sys.stdout = sys.__stdout__
+    sio.seek(0)
+    return sio.read()
 
 
 def predict_region(s):

@@ -8,8 +8,8 @@ from question_gen import question_gen
 from zero_shot import zero_shot
 from toolLearning import text_search, visual_search
 from lemma import lemma
-from config import data_root,out_root
-from utils import metric, write_metric_result
+from config import data_root, out_root
+from utils import metric, write_metric_result, stats_str
 
 # mode ('direct' or 'cot' or 'cot+kg' or 'cot+fact' or 'lemma')
 #### EXPLAINATION ####
@@ -30,45 +30,61 @@ resume = False
 zs_flag = True
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'twitter'
+data_name = 'weibo'
 
 # using cache and cache file name
 using_cache_image_caption = True
-image_caption_cache_name = data_root+'image_captioning_cache.json'
+image_caption_cache_name = data_root + 'image_captioning_cache.json'
 using_cache_tool_learning = False
-tool_learning_cache_name = data_root+'tool_learning_cache.json'
+tool_learning_cache_name = data_root + 'tool_learning_cache.json'
 using_cache_kg = True
-kg_cache_name = data_root+'kg_cache.json'
+kg_cache_name = data_root + 'kg_cache.json'
 
 # max retry times
 max_retry = 5
 
 # tool learning sleep time factor
-sleep_factor = 0
+sleep_factor = 3
 
 # input data file name
 if data_name == 'twitter':
-    input_file = data_root+'twitter/twitter_50_4.json'
+    input_file = data_root + 'twitter/twitter_50_4.json'
     use_online_image = True
 elif data_name == 'weibo':
-    input_file = data_root+'weibo/weibo_50.json'
+    input_file = data_root + 'weibo/weibo_50_3.json'
     use_online_image = False
 elif data_name == 'fakereddit':
-    input_file = data_root+'fakereddit/FAKEDDIT_50.json'
+    input_file = data_root + 'fakereddit/FAKEDDIT_50.json'
     use_online_image = True
 elif data_name == 'ticnn':
-    input_file = data_root+'ticnn/ticnn_sample.json'
+    input_file = data_root + 'ticnn/ticnn_sample.json'
     use_online_image = True
 elif data_name == 'fakehealth':
-    input_file = data_root+'fakehealth/fakehealth.json'
+    input_file = data_root + 'fakehealth/fakehealth.json'
     use_online_image = True
 
 # input_file=data_root+"exampleinput.json"
 # use_online_image=True
 
 # output file names
-output_score = out_root + data_name + '_' + mode + '_' + 'results_50_13'
-output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_50_13.json'
+output_score = out_root + data_name + '_' + mode + '_' + 'results_50_8'
+output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_50_8.json'
+
+
+def save(labels, pred_labels, current_index, all_results):
+    with open(output_result, 'w', encoding='utf-8') as f:
+        json.dump(all_results, f, ensure_ascii=False, indent=4)
+    with open(output_score, 'w', encoding='utf-8') as f:
+        f.write('Labels:\n{}\nPredictions:\n{}\nCurrent Index:{}\n'.format(labels, pred_labels, current_index))
+        f.write(stats_str(output_result))
+
+    evaluation_result = metric(labels, pred_labels)
+    write_metric_result(output_score, evaluation_result, 'a', prefix='lemma section')
+
+    if mode.startswith('lemma'):
+        evaluation_result = metric(labels, zero_shot_labels)
+        write_metric_result(output_score, evaluation_result, 'a', prefix='zero shot section')
+
 
 if __name__ == '__main__':
     # Open the JSON file
@@ -134,11 +150,12 @@ if __name__ == '__main__':
             for char in lines[3]:
                 if char.isdigit():
                     pred_labels.append(int(char))
+            current_index = int(lines[4].split(':')[1].strip())
         with open(output_result, 'r', encoding='utf-8') as f:
             all_results = json.load(f)
         total_data_size = len(data)
-        data = data[len(labels):]
-        print('Resuming from index', len(labels))
+        data = data[current_index + 1:]
+        print('Resuming from index:', current_index, ', Next index:', current_index + 1)
     else:
         pred_labels = []
         labels = []
@@ -148,12 +165,14 @@ if __name__ == '__main__':
             f.write('Labels:\n{}\nPredictions:\n{}\n'.format(labels, pred_labels))
         with open(output_result, 'w', encoding='utf-8') as f:
             f.write('')
+        current_index = -1
 
     if mode.startswith('lemma'):
         zero_shot_labels = []
 
     for item in data:
-        print('Processing index {}/{}'.format(len(labels), total_data_size))
+        current_index += 1
+        print('Processing index {}/{}'.format(current_index, total_data_size))
         # read
         url = item["image_url"]
         text = item["original_post"]
@@ -170,16 +189,16 @@ if __name__ == '__main__':
                     print(f'Zero shot error: {e}, retrying...')
             else:
                 print('Zero shot error, skipping...')
+                save(labels, pred_labels, current_index, all_results)
                 continue
-        
+
         ## If zero-shot predict 0, zs_flag True
 
         if zero_shot_pred == 0:
-            zs_flag= True
+            zs_flag = True
         elif zero_shot_pred == 1:
             zs_flag = False
 
-    
         if mode.startswith('lemma'):
             use_cache_flag = False
             if using_cache_tool_learning:
@@ -198,6 +217,7 @@ if __name__ == '__main__':
                         print(f'Question gen error: {e}, retrying...')
                 else:
                     print('Question gen error, skipping...')
+                    save(labels, pred_labels, current_index, all_results)
                     continue
 
         # tool learning
@@ -224,14 +244,16 @@ if __name__ == '__main__':
                                 sleep(sleep_factor)
                         if tool_learning_text is None:
                             print('Tool learning error, retrying...')
-                            sleep(sleep_factor*5)
+                            sleep(sleep_factor * 5)
+                            save(labels, pred_labels, current_index, all_results)
                             continue
                         break
                     except Exception as e:
                         print(f'Tool learning error: {e}, retrying')
-                        sleep(sleep_factor*5)
+                        sleep(sleep_factor * 5)
                 else:
                     print('Tool learning error, skipping...')
+                    save(labels, pred_labels, current_index, all_results)
                     continue
                 if using_cache_tool_learning:
                     tool_learning_cache[text] = tool_learning_text
@@ -244,7 +266,6 @@ if __name__ == '__main__':
 
         else:
             tool_learning_text = None
-
 
         # image captioning
         if mode != 'direct' and mode != 'cot':
@@ -263,12 +284,14 @@ if __name__ == '__main__':
                         image_text = img2txt(url, data_name)
                         if 'sorry' in image_text.lower():
                             print('Image captioning error: LLM Failed, retrying...')
+                            save(labels, pred_labels, current_index, all_results)
                             continue
                         break
                     except Exception as e:
                         print(f'Image caption error: {e}, retrying')
                 else:
                     print('Image captioning error, skipping...')
+                    save(labels, pred_labels, current_index, all_results)
                     continue
                 if using_cache_image_caption:
                     image_captioning_cache[url] = image_text
@@ -302,6 +325,7 @@ if __name__ == '__main__':
                         print(f'KG error: {e}, retrying...')
                 else:
                     print('KG error, skipping...')
+                    save(labels, pred_labels, current_index, all_results)
                     continue
 
                 if using_cache_kg:
@@ -320,7 +344,8 @@ if __name__ == '__main__':
                 elif mode == 'cot+fact':
                     pass
                 elif mode.startswith('lemma'):
-                    prob, explain = lemma(text, url, tool_learning_text, kg1, kg2, zero_shot_pred, mode, zs_flag = zs_flag, is_url=use_online_image)
+                    prob, explain = lemma(text, url, tool_learning_text, kg1, kg2, zero_shot_pred, mode,
+                                          zs_flag=zs_flag, is_url=use_online_image)
                 else:
                     kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
                 break
@@ -328,6 +353,7 @@ if __name__ == '__main__':
                 print(f'Final prediction error: {e}, retrying...')
         else:
             print('Final prediction error, skipping...')
+            save(labels, pred_labels, current_index, all_results)
             continue
 
         if prob < 0.6:
@@ -356,23 +382,19 @@ if __name__ == '__main__':
 
         if view:
             print(
-                'Result of index {}/{}: \nLabel: {}\nZero-shot: {}\nFinal: {}\nFinal Reasoning: {}'.format(len(labels),
-                                                                                                            total_data_size,
-                                                                                                            label,
-                                                                                                            zero_shot_pred,
-                                                                                                            pred_label,
-                                                                                                            explain))
+                'Result of index {}/{}: \nLabel: {}\nZero-shot: {}\nFinal: {}\nFinal Reasoning: {}'.format(
+                    current_index,
+                    total_data_size,
+                    label,
+                    zero_shot_pred,
+                    pred_label,
+                    explain))
 
-        with open(output_score, 'w', encoding='utf-8') as f:
-            f.write('Labels:\n{}\nPredictions:\n{}\n'.format(labels, pred_labels))
-        with open(output_result, 'w', encoding='utf-8') as f:
-            json.dump(all_results, f, ensure_ascii=False, indent=4)
+        save(labels, pred_labels, current_index, all_results)
 
     evaluation_result = metric(labels, pred_labels)
     print('Evaluation result:', evaluation_result)
-    write_metric_result(output_score, evaluation_result)
 
     if mode.startswith('lemma'):
         evaluation_result = metric(labels, zero_shot_labels)
         print('Zero-shot evaluation result:', evaluation_result)
-        write_metric_result(output_score, evaluation_result, 'a', prefix='zero shot section')
