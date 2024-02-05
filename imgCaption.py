@@ -18,4 +18,4 @@ def img2txt(source=data_root + "weibo", is_url=True):
     else:
         return offlineImg_process(prompt, source, max_tokens=1000)
 
-# print(img2txt(source= "https://pbs.twimg.com/media/ByGXet8IYAA6kdh?format=jpg&name=small", is_url=True))
+print(img2txt(source= "weibo/nonrumor_images/624c2f04gw1eyj6h1f5d5j20zk0npn1u.jpg", is_url=True))
