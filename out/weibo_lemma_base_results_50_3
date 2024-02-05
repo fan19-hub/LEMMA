@@ -1,51 +1,51 @@
 Labels:
-[0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1]
+[1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1]
 Predictions:
-[0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0]
+[1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]
 
-Accuracy: 0.8205128205128205
+Accuracy: 0.6086956521739131
 
 Rumor Section:
-True positives: 20
-False positives: 6
-False negatives: 1
-True negatives: 12
-Precision: 0.7692307692307693
-Recall: 0.625
-F1 Score: 0.6896551724137931
+True positives: 23
+False positives: 12
+False negatives: 6
+True negatives: 5
+Precision: 0.6571428571428571
+Recall: 0.8214285714285714
+F1 Score: 0.73015873015873
 
 Non-rumor Section:
-True positives: 12
-False positives: 1
-False negatives: 6
-True negatives: 20
-Precision: 0.9230769230769231
-Recall: 0.375
-F1 Score: 0.5333333333333333
+True positives: 5
+False positives: 6
+False negatives: 12
+True negatives: 23
+Precision: 0.45454545454545453
+Recall: 0.17857142857142858
+F1 Score: 0.25641025641025644
 
 zero shot section
 Labels:
-[0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1]
+[1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1]
 Predictions:
-[0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1]
+[1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1]
 
-Accuracy: 0.717948717948718
+Accuracy: 0.41304347826086957
 
 Rumor Section:
-True positives: 21
-False positives: 11
-False negatives: 0
-True negatives: 7
-Precision: 0.65625
-Recall: 0.75
-F1 Score: 0.7
+True positives: 18
+False positives: 14
+False negatives: 5
+True negatives: 1
+Precision: 0.5625
+Recall: 0.9473684210526315
+F1 Score: 0.7058823529411765
 
 Non-rumor Section:
-True positives: 7
-False positives: 0
-False negatives: 11
-True negatives: 21
-Precision: 1.0
-Recall: 0.25
-F1 Score: 0.4
+True positives: 1
+False positives: 5
+False negatives: 14
+True negatives: 18
+Precision: 0.16666666666666666
+Recall: 0.05263157894736842
+F1 Score: 0.08
 

@@ -3,6 +3,7 @@ import re
 import pandas as pd
 from duckduckgo_search import DDGS
 from duckduckgo_search.exceptions import DuckDuckGoSearchException
+from langdetect import detect
 from openai import OpenAI
 import os
 import numpy as np
@@ -47,9 +48,14 @@ def ddg_search(keywords, top_k=2, region='us-en'):
 
 def text_search(text,max_len=2000, fake_news_prefix=False):
     region = predict_region(text)
+    if detect(text) == 'zh-cn':
+        prefix = '辟谣 '
+    else:
+        prefix = 'fake news '
+    print(prefix + text)
     try:
         if fake_news_prefix:
-            search_result_txt = ddg_search('fake_news ' + text, region=region)
+            search_result_txt = ddg_search(prefix + text, region=region)
         else:
             search_result_txt = ddg_search(text, region=region)
     except DuckDuckGoSearchException as e:
