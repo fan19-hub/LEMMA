@@ -30,7 +30,7 @@ resume = False
 zs_flag = True
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'fakereddit'
+data_name = 'twitter'
 
 # using cache and cache file name
 using_cache_image_caption = True
@@ -44,11 +44,11 @@ kg_cache_name = data_root+'kg_cache.json'
 max_retry = 5
 
 # tool learning sleep time factor
-sleep_factor = 10
+sleep_factor = 0
 
 # input data file name
 if data_name == 'twitter':
-    input_file = data_root+'twitter/twitter_50_3.json'
+    input_file = data_root+'twitter/twitter_50_4.json'
     use_online_image = True
 elif data_name == 'weibo':
     input_file = data_root+'weibo/weibo_50.json'
@@ -67,8 +67,8 @@ elif data_name == 'fakehealth':
 # use_online_image=True
 
 # output file names
-output_score = out_root + data_name + '_' + mode + '_' + 'results_50_3'
-output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_50_3.json'
+output_score = out_root + data_name + '_' + mode + '_' + 'results_50_13'
+output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_50_13.json'
 
 if __name__ == '__main__':
     # Open the JSON file

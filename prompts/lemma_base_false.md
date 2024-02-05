@@ -36,15 +36,17 @@ End of external resources.
 
 Now you have all the resources, please do verification based on following steps:
 
-Firstly, is there any information inconsistency between two KGs? If you think they are inconsistent, the news should be a misinformation. If you think they are related/consistent, please continue considering following steps.
+Check for inconsistencies between the two Knowledge Graphs (KGs). If found, suspect misinformation in the news; if not, proceed.
 
-Next, are the information in external resources only consistent with KG from text but vary from KGs from image. If it is, you should be conservative.
+Examine if external sources align only with text-based KGs and differ from image-based KGs. If so, be cautious.
 
-Also, is there any external knowledge can verify the entity/relation showed in KGs. If it isn't, the news probably contain misinformation. If it is, please continue considering following steps.
+Look for external validation supporting entities/relations in the KGs. Lack of validation suggests misinformation; if present, continue.
 
-Then, does the verified entities/relation only show in one of the KGs. if it is, the power such verification is limited and please do not take it into account too much.
+Confirm if verified details exist in just one KG; if yes, note its limited impact.
 
-Further, if there is a sardonnism in image, it might contain fake information.
+Detect sarcasm in images, as it may indicate fake information.
+
+Decide whether to adjust the original prediction based on verification.
 
 Finally, please decide whether or not to modify your original prediction.
 
