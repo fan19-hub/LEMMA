@@ -35,7 +35,7 @@ data_name = 'weibo'
 # using cache and cache file name
 using_cache_image_caption = True
 image_caption_cache_name = data_root + 'image_captioning_cache.json'
-using_cache_tool_learning = False
+using_cache_tool_learning = True
 tool_learning_cache_name = data_root + 'tool_learning_cache.json'
 using_cache_kg = True
 kg_cache_name = data_root + 'kg_cache.json'
@@ -51,7 +51,7 @@ if data_name == 'twitter':
     input_file = data_root + 'twitter/twitter_50_4.json'
     use_online_image = True
 elif data_name == 'weibo':
-    input_file = data_root + 'weibo/weibo_50_3.json'
+    input_file = data_root + 'weibo/weibo.json'
     use_online_image = False
 elif data_name == 'fakereddit':
     input_file = data_root + 'fakereddit/FAKEDDIT_50.json'
@@ -67,8 +67,8 @@ elif data_name == 'fakehealth':
 # use_online_image=True
 
 # output file names
-output_score = out_root + data_name + '_' + mode + '_' + 'results_50_8'
-output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_50_8.json'
+output_score = out_root + data_name + '_' + mode + '_' + 'results_full'
+output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_full.json'
 
 
 def save(labels, pred_labels, current_index, all_results):
