@@ -9,7 +9,7 @@ import openai
 import requests
 from openai import OpenAI
 
-from config import data_root
+from config import data_root,out_root
 
 
 def onlineImg_process(prompt, url, model="gpt-4-vision-preview", max_tokens=1000, temperature=0.1):
@@ -259,13 +259,44 @@ def predict_region(s):
         return 'us-en'
 
 
+def wrong(filepath):
+    with open(filepath, 'r', encoding='utf-8') as f:
+        data = json.load(f) 
+    wrong1to0 = []
+    wrong0to1 = []
+    correct=[]
+    for item in data:
+        if item['direct'] !=item['prediction']:
+            if item['prediction'] == item['label']:
+                correct.append(item)
+            elif item["prediction"] == 0:
+                wrong1to0.append(item)  
+            else:
+                wrong0to1.append(item)
+    outpath = out_root+'wrong1to0.json'
+    with open(outpath, 'w', encoding='utf-8') as f:
+        json.dump(wrong1to0, f)
+    print(f'wrong1to0 saved to {outpath}')
+    outpath = out_root+'wrong0to1.json'
+    with open(outpath, 'w', encoding='utf-8') as f:
+        json.dump(wrong0to1, f)
+    print(f'wrong0to1 saved to {outpath}')
+    outpath = out_root+'correct.json'
+    with open(outpath, 'w', encoding='utf-8') as f:
+        json.dump(correct, f)
+    print(f'correct saved to {outpath}')
+            
+
 if __name__ == '__main__':
     # stats('out/fakereddit_lemma_base_kg_final_output_50.json')
     # stats('out/fakereddit_lemma_test_kg_final_output_50_8.json')
     # stats('out/twitter_lemma_test_kg_final_output_50_3.json')
     # stats('out/twitter_lemma_base_kg_final_output_50_2.json')
-    stats('out/twitter_lemma_base_kg_final_output_50_13.json')
+    # stats('out/twitter_lemma_base_kg_final_output_50_13.json')
     # stats('out/weibo_lemma_base_kg_final_output_50_2.json')
     # stats('out/weibo_lemma_base_kg_final_output_50_chinese.json')
     # stats('out/weibo_lemma_base_kg_final_output_50_3.json')
     # stats('out/fakereddit_lemma_base_kg_final_output_50_3.json')
+    stats('out/fakereddit_lemma_base_kg_final_output_full.json')
+    wrong('out/fakereddit_lemma_base_kg_final_output_full.json')
+    
