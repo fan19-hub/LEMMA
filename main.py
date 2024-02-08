@@ -62,6 +62,9 @@ elif data_name == 'ticnn':
 elif data_name == 'fakehealth':
     input_file = data_root + 'fakehealth/fakehealth.json'
     use_online_image = True
+elif data_name == 'weibo21':
+    input_file = data_root + 'weibo21/weibo21.json'
+    use_online_image = False
 
 # input_file=data_root+"exampleinput.json"
 # use_online_image=True
