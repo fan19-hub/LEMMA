@@ -6,11 +6,7 @@ Here is the text of this news:
 
 The image is also provided.
 
-In your previous response, we asked you to predict a label that indicates whether this news article contains misinformation (0 for no misinformation, 1 for presence of misinformation), and your prediction is:
-
-{PREDICTION}
-
-Now, we are providing you additional reference, based on these references, you will decide whether or not to modify your decision. 
+Now, we are providing you additional reference
 
 ##### First reference: Knowledge graphs (KG).
 
@@ -34,21 +30,9 @@ Begin of external resources:
 
 End of external resources.
 
-Finally, based on the KGs and external resources, you will now decide whether or not to modify your original prediction based on following tips:
-1. your decision should based on two dimension: the level of information consistency between KGs, and the factuality of the information.
-2. please remember the major functionality of external resources is to verify the factuality of information.
-3. please consider the sardonlism of the images, usually that relates to the authenticity of the information.
+Finally, based on the KGs and external resources, you will now make your prediction.
 
-In one or more paragraphs, output your reasoning steps, then tell me whether you want to modify your original prediction which is {PREDICTION}. Please answer 'YES' or 'NO': 'YES' means you want to modify your prediction and 'NO' means you don't want to modify your prediction.
-
-At the final line, please output a single binary label (0 or 1) based on the following rules:
-If your original prediction is 1 and your answer is 'YES', please output 0;
-If your original prediction is 1 and your answer is 'NO', please output 1;
-If your original prediction is 0 and your answer is 'YES', please output 1;
-If your original prediction is 0 and your answer is 'NO', please output 0;
-Please don't output any other words except for the binary label on the last line.
-
-
+In one or more paragraphs, output your reasoning steps. In the final line, use a single binary value (0 or 1) to indicate whether misinformation exists. 0 for no misinformation. 1 for the presence of misinformation. Please don't output any other words except for the binary label on the last line.
 
 ### Your Final Reasoning and Decision:
 Let's think step by step, 
