@@ -7,8 +7,8 @@ from time import sleep
 from question_gen import question_gen
 from zero_shot import zero_shot
 from toolLearning import text_search, visual_search
-from lemma import lemma
-from config import data_root, out_root
+from lemma import lemma, reason_modify
+from config import data_root, out_root, definition_path
 from utils import metric, write_metric_result, stats_str
 
 # mode ('direct' or 'cot' or 'cot+kg' or 'cot+fact' or 'lemma')
@@ -29,16 +29,23 @@ resume = False
 # zero-shot conditional result
 zs_flag = True
 
+# intuition
+intuition = True
+
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'weibo'
+data_name = 'twitter'
 
 # using cache and cache file name
 using_cache_image_caption = True
 image_caption_cache_name = data_root + 'image_captioning_cache.json'
-using_cache_tool_learning = True
+using_cache_tool_learning = False
 tool_learning_cache_name = data_root + 'tool_learning_cache.json'
 using_cache_kg = True
 kg_cache_name = data_root + 'kg_cache.json'
+
+with open(definition_path, 'r', encoding='utf-8') as file:
+    # Read the contents of the file
+    definition = json.load(file)
 
 # max retry times
 max_retry = 5
@@ -48,13 +55,13 @@ sleep_factor = 3
 
 # input data file name
 if data_name == 'twitter':
-    input_file = data_root + 'twitter/twitter_50_4.json'
+    input_file = data_root + 'twitter/wrong1to0.json'
     use_online_image = True
 elif data_name == 'weibo':
     input_file = data_root + 'weibo/weibo.json'
     use_online_image = False
 elif data_name == 'fakereddit':
-    input_file = data_root + 'fakereddit/FAKEDDIT_50.json'
+    input_file = data_root + 'fakereddit/FAKEDDIT_shuffled.json'
     use_online_image = True
 elif data_name == 'ticnn':
     input_file = data_root + 'ticnn/ticnn_sample.json'
@@ -63,13 +70,9 @@ elif data_name == 'fakehealth':
     input_file = data_root + 'fakehealth/fakehealth.json'
     use_online_image = True
 
-# input_file=data_root+"exampleinput.json"
-# use_online_image=True
-
 # output file names
-output_score = out_root + data_name + '_' + mode + '_' + 'results_full'
-output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_full.json'
-
+output_score = out_root + data_name + '_' + mode + '_' + 'results_wrong'
+output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_wrong.json'
 
 def save(labels, pred_labels, current_index, all_results):
     with open(output_result, 'w', encoding='utf-8') as f:
@@ -84,7 +87,6 @@ def save(labels, pred_labels, current_index, all_results):
     if mode.startswith('lemma'):
         evaluation_result = metric(labels, zero_shot_labels)
         write_metric_result(output_score, evaluation_result, 'a', prefix='zero shot section')
-
 
 if __name__ == '__main__':
     # Open the JSON file
@@ -178,26 +180,26 @@ if __name__ == '__main__':
         text = item["original_post"]
         label = item["label"]
         zero_shot_pred = None
+        
+        if intuition:
+            if mode.startswith('lemma'):
+                print('Zero shot...')
+                for i in range(max_retry):
+                    try:
+                        _, _, _, zero_shot_pred, original_reason = zero_shot(text, url, is_url=use_online_image)
+                        break
+                    except Exception as e:
+                        print(f'Zero shot error: {e}, retrying...')
+                else:
+                    print('Zero shot error, skipping...')
+                    save(labels, pred_labels, current_index, all_results)
+                    continue
 
-        if mode.startswith('lemma'):
-            print('Zero shot...')
-            for i in range(max_retry):
-                try:
-                    _, _, _, zero_shot_pred, _ = zero_shot(text, url, is_url=use_online_image)
-                    break
-                except Exception as e:
-                    print(f'Zero shot error: {e}, retrying...')
-            else:
-                print('Zero shot error, skipping...')
-                save(labels, pred_labels, current_index, all_results)
-                continue
-
-        ## If zero-shot predict 0, zs_flag True
-
-        if zero_shot_pred == 0:
-            zs_flag = True
-        elif zero_shot_pred == 1:
-            zs_flag = False
+            ## If zero-shot predict 0, zs_flag True
+            if zero_shot_pred == 0:
+                zs_flag = True
+            elif zero_shot_pred == 1:
+                zs_flag = False
 
         if mode.startswith('lemma'):
             use_cache_flag = False
@@ -233,14 +235,14 @@ if __name__ == '__main__':
             if not use_cache_flag:
                 for i in range(2):
                     try:
-                        tool_learning_text = text_search(text[:480], fake_news_prefix=not zero_shot_pred)
+                        tool_learning_text = text_search(text[:480], fake_news_prefix=zs_flag)
                         sleep(sleep_factor)
                         # tool_learning_text += visual_search(url, text)
                         if mode.startswith('lemma'):
-                            tool_learning_text += text_search(title, fake_news_prefix=not zero_shot_pred)
+                            tool_learning_text += text_search(title, fake_news_prefix=zs_flag)
                             sleep(sleep_factor)
                             for question in questions:
-                                tool_learning_text += text_search(question, fake_news_prefix=not zero_shot_pred)
+                                tool_learning_text += text_search(question, fake_news_prefix=zs_flag)
                                 sleep(sleep_factor)
                         if tool_learning_text is None:
                             print('Tool learning error, retrying...')
@@ -259,13 +261,28 @@ if __name__ == '__main__':
                     tool_learning_cache[text] = tool_learning_text
                     with open(tool_learning_cache_name, 'w', encoding='utf-8') as f:
                         json.dump(tool_learning_cache, f, ensure_ascii=False)
-            # try:
-            #     tool_learning_text+="\nThe exactly same image appears in the following web pages:\n"+visual_search(url, text)
-            # except Exception as e:
-            #     print("Error in visual search",e)
-
         else:
             tool_learning_text = None
+
+        if mode.startswith('lemma') or mode == 'cot+fact':
+            for i in range(max_retry):
+                try:
+                    modified_reason = reason_modify(text, url, definition, questions[0], questions[1], tool_learning_text, original_reason, is_url=use_online_image)
+                    break
+                except Exception as e:
+                    print(f'Modified Reasoning error: {e}, retrying')
+
+        # print("Original Reason: ", original_reason)
+        # print("##############")
+        # print("Question1: ", questions[0])
+        # print("##############")
+        # print("Question2: ", questions[1])
+        # print("##############")
+        # print("Tool Learning Text: ", tool_learning_text)
+        # print("##############")
+        print("Modification Reason: ", modified_reason)
+     
+        continue
 
         # image captioning
         if mode != 'direct' and mode != 'cot':
@@ -344,7 +361,7 @@ if __name__ == '__main__':
                 elif mode == 'cot+fact':
                     pass
                 elif mode.startswith('lemma'):
-                    prob, explain = lemma(text, url, tool_learning_text, kg1, kg2, zero_shot_pred, mode,
+                    prob, explain = lemma(text, url, tool_learning_text, kg1, kg2, zero_shot_pred, intuition, mode,
                                           zs_flag=zs_flag, is_url=use_online_image)
                 else:
                     kg1, kg2, kg3, prob, explain = kg_generate_and_compare(text, image_text, tool_learning_text)
@@ -368,7 +385,7 @@ if __name__ == '__main__':
 
         all_results.append({
             'text': text,
-            'image': url,
+            'image_url': url,
             'image_text': image_text,
             'tool_learning_text': tool_learning_text,
             'text_kg': kg1,
