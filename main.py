@@ -6,7 +6,7 @@ from kg import kg_gen
 from time import sleep
 from question_gen import question_gen
 from zero_shot import zero_shot
-from toolLearning import text_search, visual_search
+from toolLearning import evidence_retreival
 from lemma import lemma, reason_modify
 from config import data_root, out_root, definition_path
 from utils import metric, write_metric_result, stats_str
@@ -55,7 +55,7 @@ sleep_factor = 3
 
 # input data file name
 if data_name == 'twitter':
-    input_file = data_root + 'twitter/wrong1to0.json'
+    input_file = data_root + 'twitter/wrong0to1.json'
     use_online_image = True
 elif data_name == 'weibo':
     input_file = data_root + 'weibo/weibo.json'
@@ -69,6 +69,9 @@ elif data_name == 'ticnn':
 elif data_name == 'fakehealth':
     input_file = data_root + 'fakehealth/fakehealth.json'
     use_online_image = True
+elif data_name == 'weibo21':
+    input_file = data_root + 'weibo21/weibo21.json'
+    use_online_image = False
 
 # output file names
 output_score = out_root + data_name + '_' + mode + '_' + 'results_wrong'
@@ -235,15 +238,7 @@ if __name__ == '__main__':
             if not use_cache_flag:
                 for i in range(2):
                     try:
-                        tool_learning_text = text_search(text[:480], fake_news_prefix=zs_flag)
-                        sleep(sleep_factor)
-                        # tool_learning_text += visual_search(url, text)
-                        if mode.startswith('lemma'):
-                            tool_learning_text += text_search(title, fake_news_prefix=zs_flag)
-                            sleep(sleep_factor)
-                            for question in questions:
-                                tool_learning_text += text_search(question, fake_news_prefix=zs_flag)
-                                sleep(sleep_factor)
+                        tool_learning_text = evidence_retreival(text, title, questions)
                         if tool_learning_text is None:
                             print('Tool learning error, retrying...')
                             sleep(sleep_factor * 5)
