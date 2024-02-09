@@ -2,6 +2,7 @@ from config import prompts_root, imgbed_root
 from utils import onlineImg_process, offlineImg_process
 
 def reason_modify(text, url, definition, q1, q2, tool, original_reason, is_url=True):
+    CATEGORY = ["True", "Satire/Parody", "Misleading Content", "Imposter Content", "False Connection", "Manipulated Content", "Unverified"]
     reason_modify_prompt_path = prompts_root + 'reason_modify.md'
     with open(reason_modify_prompt_path, 'r', encoding='utf-8') as f:
         reason_modify_prompt = f.read()
@@ -22,8 +23,19 @@ def reason_modify(text, url, definition, q1, q2, tool, original_reason, is_url=T
                                                     Question2 = q2,
                                                     TOOLLEARNING=tool,
                                                     DEFINITION = definition), url, max_tokens=1000)
-        
-    return info
+    print(info)
+    text = info.split("\n")[-1]
+
+    for category in CATEGORY:
+        if category.lower() in text.lower():
+            if category == "True":
+                pred = 0
+            elif category == "Unverified":
+                pred = None
+            else:
+                pred = 1
+            
+    return pred
 
 def lemma(text, url, tool, kg1, kg2, pred_label, intuition, method, zs_flag, is_url=True):
     if zs_flag == True:
