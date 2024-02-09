@@ -1,6 +1,6 @@
 import json
 from lemma_component import LemmaComponent
-from toolLearning import text_search
+from toolLearning import evidence_retreival
 from config import data_root, out_root, definition_path
 from utils import save
 
@@ -26,7 +26,7 @@ zs_flag = True
 intuition = True
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'twitter'
+data_name = 'weibo21'
 
 # input data file name
 if data_name == 'twitter':
@@ -45,7 +45,7 @@ elif data_name == 'fakehealth':
     input_file = data_root + 'fakehealth/fakehealth.json'
     use_online_image = True
 elif data_name == 'weibo21':
-    input_file = data_root + 'weibo21/weibo21.json'
+    input_file = data_root + 'weibo21/weibo21_shuffle_1.json'
     use_online_image = False
 else:
     raise ValueError('Invalid data name')
@@ -84,17 +84,17 @@ else:
     zero_shot_labels = []
     total_data_size = len(data)
     print('Starting from index 0')
-    with open(output_score, 'w', encoding='utf-8') as f:
-        f.write('Labels:\n{}\nPredictions:\n{}\n'.format(labels, pred_labels))
-    with open(output_result, 'w', encoding='utf-8') as f:
-        f.write('')
     current_index = -1
     all_results = []
 
-zero_shot_module = LemmaComponent(prompt='zero_shot_question_gen.md', name='zero_shot', model='gpt4v', using_cache=True,
+zero_shot_module = LemmaComponent(prompt='zero_shot.md', name='zero_shot', model='gpt4v', using_cache=True,
                                   online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                                   post_process=lambda x: json.loads(x))
-modify_reasoning_module = LemmaComponent(prompt='reason_modify.md', name='modify_reasoning', model='gpt4v', using_cache=True,
+question_gen_module = LemmaComponent(prompt='question_gen.md', name='question_gen', model='gpt4v', using_cache=True,
+                                     online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
+                                     post_process=lambda x: json.loads(x))
+modify_reasoning_module = LemmaComponent(prompt='reason_modify.md', name='modify_reasoning', model='gpt4v',
+                                         using_cache=True,
                                          online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                                          post_process=lambda x: (x.split('\n')[-1], x))
 
@@ -106,32 +106,48 @@ for i, item in enumerate(data):
     label = item["label"]
 
     zero_shot = zero_shot_module(TEXT=text, image=url)
+    if zero_shot is None:
+        continue
+
     zero_shot_label = zero_shot['label']
     zero_shot_explain = zero_shot['explanation']
-    zero_shot_title = zero_shot['title']
-    zero_shot_questions = zero_shot['questions']
     zero_shot_external = zero_shot['external knowledge']
 
+    tool_learning_text = None
+
     if zero_shot_external == 1:
-        
-        tool_learning_text = text_search(zero_shot_title)
-        for q in zero_shot_questions:
-            tool_learning_text += text_search(q)
+        question_gen = question_gen_module(TEXT=text, PREDICTION=zero_shot_label, REASONING=zero_shot_explain,
+                                           image=url)
+        if question_gen is None:
+            continue
+        title, questions = question_gen['title'], question_gen['questions']
+        tool_learning_text = evidence_retreival(text, title, questions)
+        final_result = modify_reasoning_module(TEXT=text,
+                                               ORIGINAL_REASONING=zero_shot_explain,
+                                               Question1=questions[0],
+                                               Question2=questions[1],
+                                               TOOLLEARNING=tool_learning_text,
+                                               DEFINITION=open(definition_path, 'r').read(),
+                                               image=url)
+        if final_result is None:
+            continue
+        else:
+            modified_label, modified_reasoning = final_result
 
-        modified_label, modified_reasoning = modify_reasoning_module(TEXT=text,
-                                                                    ORIGINAL_REASONING=zero_shot_explain,
-                                                                    Question1=zero_shot_questions[0],
-                                                                    Question2=zero_shot_questions[1],
-                                                                    TOOLLEARNING=tool_learning_text,
-                                                                    DEFINITION=open(definition_path, 'r').read(),
-                                                                    image=url)
-
+        for cat in ["True", "Satire/Parody", "Misleading Content", "Imposter Content", "False Connection", "Manipulated Content", "Unverified"]:
+            if cat.lower() in modified_label.lower():
+                modified_label = cat
+                break
+        print('Modified label:', modified_label)
         if modified_label == 'True':
             pred_label = 0
         elif modified_label == 'Unverified':
             pred_label = zero_shot_label
         else:
             pred_label = 1
+    else:
+        pred_label = zero_shot_label
+        modified_reasoning = zero_shot_explain
 
     pred_labels.append(pred_label)
     labels.append(label)
@@ -147,6 +163,9 @@ for i, item in enumerate(data):
         'direct': zero_shot_label,
         'direct_explain': zero_shot_explain,
     })
+
+    print('Label:', label, ', Prediction:', pred_label, ', Zero-shot:', zero_shot_label)
+    print('Modified explain:', modified_reasoning)
 
     save(labels, pred_labels, zero_shot_labels, current_index, all_results, output_result, output_score)
 

@@ -41,14 +41,14 @@ def topic_relevance_filter(text, all_results, top_k, query_set, cutoff_index=150
         results= all_results[query]
         for i,result in enumerate(results):
             id = qid*top_k + i        # we can use id//top_k to determine which query it belongs later
-            result['text']=result['text'][:cutoff_index]
+            result['body']=result['body'][:cutoff_index]
             all_results_flatterned.append({id:result})
 
     # Prompt formation
     text=text[:cutoff_index]
     with open(prompts_root+'topic_relevance_filter.md', 'r', encoding='utf-8') as f: 
         prompt=f.read()
-    prompt=prompt.format(TEXT=text, SEARCH_RESULT=json.dumps(all_results_flatterned))
+    prompt=prompt.format(TEXT=text, SEARCH_RESULT=json.dumps(all_results_flatterned, ensure_ascii=False, indent=4))
 
     # GPT Query
     completion = client.chat.completions.create(

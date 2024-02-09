@@ -34,6 +34,7 @@ class LemmaComponent:
                 self.cache = {}
 
     def __call__(self, *args, **kwargs):
+        print(f'Lemma Component {self.name}: Starting...')
         if 'image' in kwargs:
             image_path = kwargs['image']
             del kwargs['image']
@@ -42,6 +43,7 @@ class LemmaComponent:
         prompt = self.prompt.format(**kwargs)
         if self.using_cache:
             if prompt in self.cache:
+                print(f'Lemma Component {self.name}: retrieve from cache')
                 return self.cache[prompt]
         for i in range(self.max_retry):
             try:
@@ -66,10 +68,10 @@ class LemmaComponent:
                     result = self.post_process(result)
                 break
             except Exception as e:
-                print(f'Error in lemma component {self.name}: {e}, retrying...')
+                print(f'Lemma Component {self.name}: {e}, retrying...')
                 continue
         else:
-            print(f'Error in lemma component {self.name}: Max retry exceeded')
+            print(f'Lemma Component {self.name}: Max retry exceeded')
             return None
 
         if self.using_cache and result is not None:

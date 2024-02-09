@@ -2,7 +2,7 @@ Your task is to filter the off-topic search result. You will be provided a piece
 
 Example output format:
 
-{{0:true, 1:false, 2:false, 3:true, 4:false, 5:true, 6:false, 7:true}}
+{{"0":true, "1":false, "2":false, "3":true, "4":false, "5":true, "6":false, "7":true}}
 
 Text input that you are going to determine the topic:
 
