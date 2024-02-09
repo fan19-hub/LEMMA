@@ -9,7 +9,7 @@ import openai
 import requests
 from openai import OpenAI
 
-from config import data_root,out_root
+from config import data_root, out_root
 
 
 def onlineImg_process(prompt, url, model="gpt-4-vision-preview", max_tokens=1000, temperature=0.1):
@@ -80,6 +80,21 @@ def offlineImg_process(prompt, image_path, model="gpt-4-vision-preview", max_tok
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
 
     return eval(response.text)["choices"][0]["message"]["content"]
+
+
+def gpt_no_image(prompt, model="gpt-3.5-turbo", max_tokens=1000, temperature=0.1):
+    openai.api_key = os.getenv("OPENAI_API_KEY")
+    client = OpenAI()
+
+    response = client.chat.completions.create(
+        model=model,
+        messages=[
+            {"role": "user", "content": prompt}
+        ],
+        max_tokens=max_tokens,
+        temperature=temperature
+    )
+    return response.choices[0].message
 
 
 def metric(labels, pred_labels):
@@ -261,31 +276,46 @@ def predict_region(s):
 
 def wrong(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
-        data = json.load(f) 
+        data = json.load(f)
     wrong1to0 = []
     wrong0to1 = []
-    correct=[]
+    correct = []
     for item in data:
-        if item['direct'] !=item['prediction']:
+        if item['direct'] != item['prediction']:
             if item['prediction'] == item['label']:
                 correct.append(item)
             elif item["prediction"] == 0:
-                wrong1to0.append(item)  
+                wrong1to0.append(item)
             else:
                 wrong0to1.append(item)
-    outpath = out_root+'wrong1to0.json'
+    outpath = out_root + 'wrong1to0.json'
     with open(outpath, 'w', encoding='utf-8') as f:
         json.dump(wrong1to0, f)
     print(f'wrong1to0 saved to {outpath}')
-    outpath = out_root+'wrong0to1.json'
+    outpath = out_root + 'wrong0to1.json'
     with open(outpath, 'w', encoding='utf-8') as f:
         json.dump(wrong0to1, f)
     print(f'wrong0to1 saved to {outpath}')
-    outpath = out_root+'correct.json'
+    outpath = out_root + 'correct.json'
     with open(outpath, 'w', encoding='utf-8') as f:
         json.dump(correct, f)
     print(f'correct saved to {outpath}')
-            
+
+
+def save(labels, pred_labels, zero_shot_labels, current_index, all_results, output_result, output_score):
+    with open(output_result, 'w', encoding='utf-8') as f:
+        json.dump(all_results, f, ensure_ascii=False, indent=4)
+    with open(output_score, 'w', encoding='utf-8') as f:
+        f.write('Labels:\n{}\nZero-shot:\n{}\nPredictions:\n{}\nCurrent Index:{}\n'.format(labels, zero_shot_labels,
+                                                                                           pred_labels, current_index))
+        f.write(stats_str(output_result))
+
+    evaluation_result = metric(labels, pred_labels)
+    write_metric_result(output_score, evaluation_result, 'a', prefix='lemma section')
+
+    evaluation_result = metric(labels, zero_shot_labels)
+    write_metric_result(output_score, evaluation_result, 'a', prefix='zero shot section')
+
 
 if __name__ == '__main__':
     # stats('out/fakereddit_lemma_base_kg_final_output_50.json')
@@ -299,4 +329,3 @@ if __name__ == '__main__':
     # stats('out/fakereddit_lemma_base_kg_final_output_50_3.json')
     stats('out/fakereddit_lemma_base_kg_final_output_full.json')
     wrong('out/fakereddit_lemma_base_kg_final_output_full.json')
-    
