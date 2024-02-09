@@ -110,25 +110,28 @@ for i, item in enumerate(data):
     zero_shot_explain = zero_shot['explanation']
     zero_shot_title = zero_shot['title']
     zero_shot_questions = zero_shot['questions']
+    zero_shot_external = zero_shot['external knowledge']
 
-    tool_learning_text = text_search(zero_shot_title)
-    for q in zero_shot_questions:
-        tool_learning_text += text_search(q)
+    if zero_shot_external == 1:
+        
+        tool_learning_text = text_search(zero_shot_title)
+        for q in zero_shot_questions:
+            tool_learning_text += text_search(q)
 
-    modified_label, modified_reasoning = modify_reasoning_module(TEXT=text,
-                                                                 ORIGINAL_REASONING=zero_shot_explain,
-                                                                 Question1=zero_shot_questions[0],
-                                                                 Question2=zero_shot_questions[1],
-                                                                 TOOLLEARNING=tool_learning_text,
-                                                                 DEFINITION=open(definition_path, 'r').read(),
-                                                                 image=url)
+        modified_label, modified_reasoning = modify_reasoning_module(TEXT=text,
+                                                                    ORIGINAL_REASONING=zero_shot_explain,
+                                                                    Question1=zero_shot_questions[0],
+                                                                    Question2=zero_shot_questions[1],
+                                                                    TOOLLEARNING=tool_learning_text,
+                                                                    DEFINITION=open(definition_path, 'r').read(),
+                                                                    image=url)
 
-    if modified_label == 'True':
-        pred_label = 0
-    elif modified_label == 'Unverified':
-        pred_label = zero_shot_label
-    else:
-        pred_label = 1
+        if modified_label == 'True':
+            pred_label = 0
+        elif modified_label == 'Unverified':
+            pred_label = zero_shot_label
+        else:
+            pred_label = 1
 
     pred_labels.append(pred_label)
     labels.append(label)
