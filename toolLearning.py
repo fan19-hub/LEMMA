@@ -3,9 +3,8 @@ import re
 import os
 import json
 
-# import requests
-from requests_html import HTMLSession
-import html2text
+from newspaper import Article
+from time import sleep
 from langdetect import detect
 from duckduckgo_search import DDGS
 from duckduckgo_search.exceptions import DuckDuckGoSearchException
@@ -16,14 +15,22 @@ from openai import OpenAI
 from config import prompts_root,imgbed_root
 from utils import predict_region
 
+from gne import GeneralNewsExtractor
+extractor = GeneralNewsExtractor()
+
+
+
 # Setup OpenAI API
 openai.api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI()
 
 untrusted_sources={"www.facebook.com","m.facebook.com","www.reddit.com","www.weibo.com","twitter.com","www.tiktok.com","www.instagram.com","www.youtube.com","www.pinterest.com","www.linkedin.com","www.tumblr.com","www.douban.com","www.taobao.com","www.jd.com","www.amazon.com","www.ebay.com","www.aliexpress.com","www.bilibili.com","www.netflix.com","www.hulu.com","www.imdb.com","www.dailymotion.com","www.douyin.com","steamcommunity.com","m.ixigua.com"}
 
-# 创建一个HTML会话
-session = HTMLSession()
+# requests_html session
+# session = HTMLSession()
+
+# html2text process 
+# html2text_process= html2text.HTML2Text()
 
 
 def soure_filter(results):
@@ -96,6 +103,34 @@ def topic_relevance_filter(text, all_results, top_k, query_set, cutoff_index=150
     return all_filtered_results
 
 
+def scraper(url, max_len=2000):
+    if url == None or url == "" or "http" not in url:
+        return ""
+    
+    try:
+        article = Article(url)
+    except Exception as e:
+        print(f"Tool learning Warning: scraper failed on {url}. {e}")
+        return ""
+    try: article.download()
+    except Exception as e:
+        sleep(10)
+        try: article.download()
+        except:
+            print(f"Tool learning Warning: scraper failed on {url}. {e}")
+            return ""
+    try: article.parse()
+    except Exception as e:
+        print(f"Tool learning Warning: scraper failed on {url}. {e}")
+        return ""
+
+    publish_date=article.publish_date
+    text=article.text
+    body_text = f"publish date: {publish_date}\n\n{text}"
+    body_text = body_text[:max_len]
+    return body_text
+    
+
 
 def text_search(query, query_type="title", top_k=5):
     # Prefix
@@ -125,26 +160,16 @@ def text_search(query, query_type="title", top_k=5):
 
 
 
-def scraper(url, max_len):
-    try:
-        response = session.get(url) # get request
-        response.html.render()      # render JavaScript
-        html = response.html.text
-    except Exception as e:
-        print(f"Tool learning Warning: scraper failed{e}")
-        return ""
-    body_text = html2text.html2text(html).replace("\n", " ")[:max_len]
-    return body_text
-    
-
-def evidence_extraction(search_results, query, max_len=200):
+def evidence_extraction(search_results, query, pre_max_len=2000, after_max_len=250):
     full_text_results = []
     for search_result in search_results:
         title = search_result['title']
         link = search_result['href']
-        full_text = scraper(link, max_len)
-        full_text = f"[title]: {title}\n"+full_text[:max_len]
+        full_text = scraper(link,pre_max_len)
+        full_text = f"[title]: {title}\n"+full_text
         full_text_results.append(full_text)
+    with open("full_text_results.json", 'w', encoding='utf-8') as f: 
+        f.write(json.dumps(full_text_results, ensure_ascii=False, indent=4))
     
     # Prompt formation
     with open(prompts_root+'evidence_extraction.md', 'r', encoding='utf-8') as f: 
@@ -162,10 +187,13 @@ def evidence_extraction(search_results, query, max_len=200):
     response = completion.choices[0].message.content
     try:
         evidences=json.loads(response)
+        evidences=list(evidences.values())[0]
     except:
         print("Tool learning Warning: Invalid response from evidence_extraction. Remain unchanged.")
         evidences=full_text_results
-    evidences=[evidence[:max_len] for evidence in evidences if len(evidence)>0]
+    with open("evidences.json", 'w', encoding='utf-8') as f:
+        f.write(json.dumps(evidences, ensure_ascii=False, indent=4))
+    evidences=[evidence[:after_max_len] for evidence in evidences if len(evidence)>0]
     return evidences
     
 
@@ -193,7 +221,8 @@ def evidence_retreival(text, title, questions, max_len=2000):
     all_search_results = topic_relevance_filter(enhanced_text, all_search_results, top_k, query_set)
     
     # Evidence Extraction
-    # evidence_extraction(all_search_results[title], enhanced_text)
+    evidences=evidence_extraction(all_search_results[title], enhanced_text)
+    all_search_results[title]=evidences
     return json.dumps(all_search_results, ensure_ascii=False)
 
 
@@ -203,7 +232,8 @@ if __name__ =="__main__":
     text="'cash backing to remake scotland a wastefree economy the cash is from the scottish institute for remanufacture supported by the government to create a wastefree circular economy remanufacturing is a process that takes old but highvalue products and restores them to an asnew condition'"
     title="Scotland's Investment in Waste-Free Circular Economy"
     questions=['Scottish Institute for Remanufacture government funding', 'Success stories of remanufacturing in Scotland']
-    evidence_retreival(text, title, questions)
+    evidence_retreival(text, title, questions)    
+    # scraper("https://www.bbc.com/news/world-us-canada-68244352", 2000)
     
 
 
@@ -215,6 +245,24 @@ if __name__ =="__main__":
 
 
 # Appendix:
+# from requests_html import HTMLSession
+# import html2text
+    # try:
+    #     response = session.get(url) # get request
+    #     response.html.render()      # render JavaScript
+    #     html = response.html._html.decode('utf-8')
+    # except Exception as e:
+    #     print(f"Tool learning Warning: scraper failed{e}")
+    #     return ""
+    # Create an instance of HTML2Text
+    # html2text_process = html2text.HTML2Text()
+    # import bs4
+    # Parse the HTML and convert to text
+    # body_html = bs4.BeautifulSoup(html, 'html.parser').find('body')
+
+
+    # body_text = html2text_process.handle(body_html).replace("\n", " ")
+    # sentences = nltk.sent_tokenize(body_text)
 
 # import pyautogui
 # import pandas as pd
