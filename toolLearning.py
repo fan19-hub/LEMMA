@@ -1,44 +1,51 @@
-import openai
+
 import re
 import os
 import json
+
+import requests
+import html2text
+from langdetect import detect
 from duckduckgo_search import DDGS
 from duckduckgo_search.exceptions import DuckDuckGoSearchException
-from langdetect import detect
+
+import openai
 from openai import OpenAI
+
 from config import prompts_root,imgbed_root
-from time import sleep
-# import html2text
 from utils import predict_region
 
+# Setup OpenAI API
 openai.api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI()
 
-
+untrusted_sources={"www.facebook.com","m.facebook.com","www.reddit.com","www.weibo.com","twitter.com","www.tiktok.com","www.instagram.com","www.youtube.com","www.pinterest.com","www.linkedin.com","www.tumblr.com","www.douban.com","www.taobao.com","www.jd.com","www.amazon.com","www.ebay.com","www.aliexpress.com","www.bilibili.com","www.netflix.com","www.hulu.com","www.imdb.com","www.dailymotion.com","www.douyin.com","steamcommunity.com","m.ixigua.com"}
 
 def soure_filter(results):
+    global untrusted_sources
     if results == None or results == []:
         return []
     for result in results:
         link=result['href']
         domain = re.search('https?://([A-Za-z_0-9.-]+).*', link).group(1)
-        if domain in ["","www.facebook.com","m.facebook.com","www.reddit.com","www.weibo.com","twitter.com","www.tiktok.com","www.instagram.com","www.youtube.com","www.pinterest.com","www.linkedin.com","www.tumblr.com","www.douban.com","www.taobao.com","www.jd.com","www.amazon.com","www.ebay.com","www.aliexpress.com","www.bilibili.com","www.netflix.com","www.hulu.com","www.imdb.com","www.dailymotion.com","www.douyin.com","steamcommunity.com","m.ixigua.com"]:   
+        if domain in untrusted_sources:   
             results.remove(result)
     return results
 
 
 
-def topic_relevance_filter(text, title, all_results, top_k, query_set, cutoff_index=200):
+def topic_relevance_filter(text, all_results, top_k, query_set, cutoff_index=150):
     # Structure flattern
     all_results_flatterned = []
     for qid, query in enumerate(all_results.keys()):
         results= all_results[query]
         for i,result in enumerate(results):
-            id = qid*top_k + i        # we can use id/top_k to determine which query it belongs
+            id = qid*top_k + i        # we can use id//top_k to determine which query it belongs later
+            result['text']=result['text'][:cutoff_index]
             all_results_flatterned.append({id:result})
 
     # Prompt formation
-    text=f"[title]:{title}\n{text[:cutoff_index]}"
+    text=text[:cutoff_index]
     with open(prompts_root+'topic_relevance_filter.md', 'r', encoding='utf-8') as f: 
         prompt=f.read()
     prompt=prompt.format(TEXT=text, SEARCH_RESULT=json.dumps(all_results_flatterned))
@@ -60,7 +67,7 @@ def topic_relevance_filter(text, title, all_results, top_k, query_set, cutoff_in
         print("Tool learning Warning: Invalid response from topic_relevance_filter. Remain unchanged.")
         return results
     
-    # Wash the string keys to int
+    # Wash the string keys to int, and remove the non-integer keys
     temp = {}
     for id, value in relevance_labels.items():
         if type(id)==str: 
@@ -75,7 +82,7 @@ def topic_relevance_filter(text, title, all_results, top_k, query_set, cutoff_in
     for temp in all_results_flatterned:
         id, result = list(temp.items())[0]
         if relevance_labels[id]==1:
-            qid=id//top_k
+            qid=id//top_k               # use id//top_k to determine which query it belongs
             query=query_set[qid]
             try:
                 all_filtered_results[query].append(result)
@@ -85,13 +92,12 @@ def topic_relevance_filter(text, title, all_results, top_k, query_set, cutoff_in
 
 
 
-
 def text_search(query, query_type="title", top_k=5):
     # Prefix
     region = predict_region(query)
     if detect(query) == 'zh-cn': prefix = '谣言 '
     else: prefix = 'fake news '
-    if query_type=='title':
+    if query_type =='title':
         query = prefix + query
 
     # DuckDuckGo Search
@@ -108,11 +114,37 @@ def text_search(query, query_type="title", top_k=5):
     if not results: 
         return []
 
-    
     # Source Filter
-    results = soure_filter(results)
+    # results = soure_filter(results)
     return results[:top_k]
+
+
+
+def scraper(url, max_len):
+    try:
+        response = requests.get(url)
+    except Exception as e:
+        print(f"Tool learning Warning: scraper failed{e}")
+        return ""
+    html = response.text
+    body_text = html2text.html2text(html).replace("\n", " ")[:max_len]
+    return body_text
     
+
+def evidence_extraction(search_results, query, max_len=1000):
+    full_text_results = []
+    for search_result in search_results:
+        title = search_result['title']
+        link = search_result['href']
+        full_text = scraper(link, max_len)
+        result_text = f"[title]: {title}\n"+result_text[:max_len]
+        full_text_results.append(full_text)
+    
+        
+        
+
+
+    # return evidence
 
 
 def evidence_retreival(text, title, questions, max_len=2000):
@@ -135,8 +167,13 @@ def evidence_retreival(text, title, questions, max_len=2000):
                 all_search_results[query]=[result]
 
     # Topic Relevance Filter
-    all_search_results = topic_relevance_filter(text, title,  all_search_results, top_k, query_set)
-    return json.dumps(all_search_results)
+    enhanced_text=f"[title]:{title}\n{text}"
+    all_search_results = topic_relevance_filter(enhanced_text, all_search_results, top_k, query_set)
+    
+    # Evidence Extraction
+    # evidence_extraction(all_search_results[title], enhanced_text)
+    return json.dumps(all_search_results, ensure_ascii=False)
+
 
 
 
