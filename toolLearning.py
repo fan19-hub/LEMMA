@@ -3,7 +3,8 @@ import re
 import os
 import json
 
-import requests
+# import requests
+from requests_html import HTMLSession
 import html2text
 from langdetect import detect
 from duckduckgo_search import DDGS
@@ -20,6 +21,10 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI()
 
 untrusted_sources={"www.facebook.com","m.facebook.com","www.reddit.com","www.weibo.com","twitter.com","www.tiktok.com","www.instagram.com","www.youtube.com","www.pinterest.com","www.linkedin.com","www.tumblr.com","www.douban.com","www.taobao.com","www.jd.com","www.amazon.com","www.ebay.com","www.aliexpress.com","www.bilibili.com","www.netflix.com","www.hulu.com","www.imdb.com","www.dailymotion.com","www.douyin.com","steamcommunity.com","m.ixigua.com"}
+
+# 创建一个HTML会话
+session = HTMLSession()
+
 
 def soure_filter(results):
     global untrusted_sources
@@ -81,7 +86,7 @@ def topic_relevance_filter(text, all_results, top_k, query_set, cutoff_index=150
     all_filtered_results = {}  
     for temp in all_results_flatterned:
         id, result = list(temp.items())[0]
-        if relevance_labels[id]==1:
+        if id in relevance_labels and relevance_labels[id]==True:
             qid=id//top_k               # use id//top_k to determine which query it belongs
             query=query_set[qid]
             try:
@@ -122,30 +127,47 @@ def text_search(query, query_type="title", top_k=5):
 
 def scraper(url, max_len):
     try:
-        response = requests.get(url)
+        response = session.get(url) # get request
+        response.html.render()      # render JavaScript
+        html = response.html.text
     except Exception as e:
         print(f"Tool learning Warning: scraper failed{e}")
         return ""
-    html = response.text
     body_text = html2text.html2text(html).replace("\n", " ")[:max_len]
     return body_text
     
 
-def evidence_extraction(search_results, query, max_len=1000):
+def evidence_extraction(search_results, query, max_len=200):
     full_text_results = []
     for search_result in search_results:
         title = search_result['title']
         link = search_result['href']
         full_text = scraper(link, max_len)
-        result_text = f"[title]: {title}\n"+result_text[:max_len]
+        full_text = f"[title]: {title}\n"+full_text[:max_len]
         full_text_results.append(full_text)
     
-        
-        
-
-
-    # return evidence
-
+    # Prompt formation
+    with open(prompts_root+'evidence_extraction.md', 'r', encoding='utf-8') as f: 
+        prompt=f.read()
+    prompt=prompt.format(EVIDENCE = json.dumps(full_text_results), TEXT = query)
+    
+    # GPT Query
+    completion = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.1
+    )
+    response = completion.choices[0].message.content
+    try:
+        evidences=json.loads(response)
+    except:
+        print("Tool learning Warning: Invalid response from evidence_extraction. Remain unchanged.")
+        evidences=full_text_results
+    evidences=[evidence[:max_len] for evidence in evidences if len(evidence)>0]
+    return evidences
+    
 
 def evidence_retreival(text, title, questions, max_len=2000):
     # Query processing
