@@ -1,4 +1,4 @@
-We are doing a misinformation detection task. You are given a piece of post/news and a list of evidence retrieved from the Internet , and you need to decide whether each evidence supports, refutes, or is irrelevant to the post/news. Choose from the following three options.
+it We are doing a misinformation detection task. You are given a piece of post/news and a list of evidence retrieved from the Internet , and you need to decide whether each evidence supports, refutes, or is irrelevant to the post/news. Choose from the following three options.
 1. The evidence supports the news/post.
 2. The evidence refutes the news/post.
 3. The evidence is irrelevant to the news/post.

@@ -15,9 +15,6 @@ from openai import OpenAI
 from config import prompts_root,imgbed_root
 from utils import predict_region
 
-from gne import GeneralNewsExtractor
-extractor = GeneralNewsExtractor()
-
 
 
 # Setup OpenAI API
