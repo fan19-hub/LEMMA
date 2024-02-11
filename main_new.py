@@ -97,8 +97,7 @@ external_knowledge_module = LemmaComponent(prompt='external_knowledge.md', name=
                                   online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                                   post_process=lambda x: json.loads(x))
 kg_gen_module = LemmaComponent(prompt='kg_gen_no_cap_prompt.md', name='kg_gen', model='gpt4v', using_cache=True,
-                                     online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
-                                     post_process=lambda x: json.loads(x))
+                                     online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1)
 question_gen_module = LemmaComponent(prompt='question_gen.md', name='question_gen', model='gpt4v', using_cache=True,
                                      online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                                      post_process=lambda x: json.loads(x))

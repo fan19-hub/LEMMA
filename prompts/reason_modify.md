@@ -14,7 +14,7 @@ Here is the original text of the news:
 ##### Third reference: Knowledge Graph
 Here are the extracted knowledge graphs derived from both the text and image of the news. When conducting your analysis, prioritize information that appears in both the Knowledge Graph and the raw context. While trivial details mentioned solely in the context but not represented in the knowledge graph may exist, inconsistencies related to these details should not significantly impact your evaluation.
 
-{KGs}
+{KG}
 
 
 ##### Fourth reference: External knowledge and facts.
