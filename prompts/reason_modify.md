@@ -32,7 +32,7 @@ Now you have been provided all references and please look the definition of pred
 
 Finally, based on the references and the definition of predefined categories, please firstly provide the improved reasoning and classify the news into one of the six predefined categories.
 
-
+In one or more paragraphs, output your reasoning steps. In the final line, output your predicted category that this news belongs to. (Please don't output anything else except the category)
 
 
 

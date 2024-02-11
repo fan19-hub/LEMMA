@@ -17,7 +17,7 @@ mode = 'lemma_base'
 view = True
 
 # automatic resume
-resume = False
+resume = True
 
 # zero-shot conditional result
 zs_flag = True
@@ -26,7 +26,7 @@ zs_flag = True
 intuition = True
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'weibo21'
+data_name = 'fakereddit'
 
 # input data file name
 if data_name == 'twitter':
@@ -51,8 +51,8 @@ else:
     raise ValueError('Invalid data name')
 
 # output file names
-output_score = out_root + data_name + '_' + mode + '_' + 'result'
-output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output.json'
+output_score = out_root + data_name + '_' + mode + '_' + 'result_full_2'
+output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_full_2.json'
 
 with open(input_file, encoding='utf-8') as file:
     data = json.load(file)
@@ -121,7 +121,10 @@ for i, item in enumerate(data):
         if question_gen is None:
             continue
         title, questions = question_gen['title'], question_gen['questions']
-        tool_learning_text = evidence_retreival(text, title, questions)
+        try:
+            tool_learning_text = evidence_retreival(text, title, questions)
+        except:
+            continue
         final_result = modify_reasoning_module(TEXT=text,
                                                ORIGINAL_REASONING=zero_shot_explain,
                                                Question1=questions[0],
