@@ -17,7 +17,7 @@ mode = 'lemma_base'
 view = True
 
 # automatic resume
-resume = False
+resume = True
 
 # zero-shot conditional result
 zs_flag = True
@@ -26,14 +26,14 @@ zs_flag = True
 intuition = True
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'weibo21'
+data_name = 'twitter'
 
 # input data file name
 if data_name == 'twitter':
-    input_file = data_root + 'twitter/wrong1to0.json'
+    input_file = data_root + 'twitter/twitter_shuffled.json'
     use_online_image = True
 elif data_name == 'weibo':
-    input_file = data_root + 'weibo/weibo.json'
+    input_file = data_root + 'weibo/weibo_50_2.json'
     use_online_image = False
 elif data_name == 'fakereddit':
     input_file = data_root + 'fakereddit/FAKEDDIT_shuffled.json'
@@ -51,8 +51,8 @@ else:
     raise ValueError('Invalid data name')
 
 # output file names
-output_score = out_root + data_name + '_' + mode + '_' + 'result'
-output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output.json'
+output_score = out_root + data_name + '_' + mode + '_' + 'result_shuffle_new_method'
+output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_shuffle_new_method.json'
 
 with open(input_file, encoding='utf-8') as file:
     data = json.load(file)
@@ -109,9 +109,9 @@ for i, item in enumerate(data):
     if zero_shot is None:
         continue
 
-    zero_shot_label = zero_shot['label']
+    zero_shot_label = 0 if zero_shot['label'].lower() in "Real".lower() else 1
     zero_shot_explain = zero_shot['explanation']
-    zero_shot_external = zero_shot['external knowledge']
+    zero_shot_external = 0 if zero_shot['external knowledge'].lower() in "No".lower() else 1
 
     tool_learning_text = None
 
@@ -121,7 +121,11 @@ for i, item in enumerate(data):
         if question_gen is None:
             continue
         title, questions = question_gen['title'], question_gen['questions']
-        tool_learning_text = evidence_retreival(text, title, questions)
+        try:
+            tool_learning_text = evidence_retreival(text, title, questions)
+        except Exception as e:
+            print(e)
+            continue
         final_result = modify_reasoning_module(TEXT=text,
                                                ORIGINAL_REASONING=zero_shot_explain,
                                                Question1=questions[0],
@@ -134,7 +138,8 @@ for i, item in enumerate(data):
         else:
             modified_label, modified_reasoning = final_result
 
-        for cat in ["True", "Satire/Parody", "Misleading Content", "Imposter Content", "False Connection", "Manipulated Content", "Unverified"]:
+        for cat in ["True", "Satire/Parody", "Misleading Content", "Imposter Content", "False Connection",
+                    "Manipulated Content", "Unverified"]:
             if cat.lower() in modified_label.lower():
                 modified_label = cat
                 break
