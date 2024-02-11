@@ -17,7 +17,7 @@ mode = 'lemma_base'
 view = True
 
 # automatic resume
-resume = True
+resume = False
 
 # zero-shot conditional result
 zs_flag = True
@@ -47,6 +47,9 @@ elif data_name == 'fakehealth':
 elif data_name == 'weibo21':
     input_file = data_root + 'weibo21/weibo21_shuffle_1.json'
     use_online_image = False
+elif data_name == 'pheme':
+    input_file = data_root + 'PHEME/PHEME_reshuffled.json'
+    use_online_image = True
 else:
     raise ValueError('Invalid data name')
 

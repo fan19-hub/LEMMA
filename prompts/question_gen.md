@@ -12,16 +12,29 @@ Your original reasoning based on that prediction is:
 
 External sources can better help you make the judgement. Please come up with a title for this news first, then list two questions/phrases/sentences that you would like to search on a public search engine, such as Google. Carefully design your question so that it can return the most helpful results for making your final prediction and reasoning. Please use English to generate your title and questions. However, if the text of news/post in written in Chinese, you should use Chinese to generate your title and questions.
 
-Text Input example:
+Text Input example 1:
 
-giving something back denmarks refugee entrepreneurs a new project in denmark aims to help refugees start their own businesses challenging the perspective held by some that they are a burden
+is baltimores prosecutor wrong about freddie grays legal knife the weapon police described is definitely illegalso why did marilyn mosby say it wasnt the answer hinges on a single spring
 
-Output example (JSON):
+Output example (JSON) 1:
 {{
-    "title": "Empowerment Initiative: Refugee Entrepreneurship in Denmark",
-    "questions": [
-        "Denmark refugee entrepreneurship programs",
-        "Economic impact of refugees in Denmark",
+    "title":"Freddie Gray's Knife: Legal or Not?",
+    "questions":[
+        "Was Freddie Gray's knife legal?", 
+        "Marilyn Mosby's comments on Freddie Gray’s Legal Knife"
+    ]
+}}
+
+Text Input example 2:
+
+RT @danrem: Konon, inside The Bataclan concert before the attack. How life can change in a second. #Pray4Paris
+
+Output example (JSON) 2:
+{{
+    "title":"Inside The Bataclan Concert Moments Before the Attack",
+    "questions":[
+        "the full story of what happened in the Bataclan | Paris attacks", 
+        "Authenticity of images from Bataclan before the attack"
     ]
 }}
 

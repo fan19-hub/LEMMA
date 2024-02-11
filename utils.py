@@ -94,7 +94,7 @@ def gpt_no_image(prompt, model="gpt-3.5-turbo", max_tokens=1000, temperature=0.1
         max_tokens=max_tokens,
         temperature=temperature
     )
-    return response.choices[0].message
+    return response.choices[0].message.content
 
 
 def metric(labels, pred_labels):
