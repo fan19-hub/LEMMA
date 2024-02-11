@@ -1,5 +1,5 @@
 import json
-from config import prompts_root, imgbed_root, data_root
+from config import prompts_root, imgbed_root, cache_root
 from utils import onlineImg_process, offlineImg_process, gpt_no_image
 
 
@@ -28,7 +28,7 @@ class LemmaComponent:
 
         if using_cache:
             try:
-                with open(data_root + self.cache_name, 'r', encoding='utf-8') as f:
+                with open(cache_root + self.cache_name, 'r', encoding='utf-8') as f:
                     self.cache = json.load(f)
             except FileNotFoundError:
                 self.cache = {}
@@ -76,7 +76,7 @@ class LemmaComponent:
 
         if self.using_cache and result is not None:
             self.cache[prompt] = result
-            with open(data_root + self.cache_name, 'w', encoding='utf-8') as f:
+            with open(cache_root + self.cache_name, 'w', encoding='utf-8') as f:
                 json.dump(self.cache, f)
 
         return result

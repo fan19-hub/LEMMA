@@ -3,3 +3,4 @@
 /data/image_captioning_cache_1.json
 /data/tool_learning_cache_1.json
 chromedriver.exe
+/cache
