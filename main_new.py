@@ -26,7 +26,7 @@ zs_flag = True
 intuition = True
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'twitter'
+data_name = 'fakereddit'
 
 # input data file name
 if data_name == 'twitter':
@@ -54,8 +54,8 @@ else:
     raise ValueError('Invalid data name')
 
 # output file names
-output_score = out_root + data_name + '_' + mode + '_' + 'result_shuffle_new_method'
-output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_shuffle_new_method.json'
+output_score = out_root + data_name + '_' + mode + '_' + 'result_full_2'
+output_result = out_root + data_name + '_' + mode + '_' + 'kg_final_output_full_2.json'
 
 with open(input_file, encoding='utf-8') as file:
     data = json.load(file)
