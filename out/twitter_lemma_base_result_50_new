@@ -1,0 +1,76 @@
+Labels:
+[0, 1, 0, 1, 1, 0, 0]
+Zero-shot:
+[0, 1, 1, 0, 1, 0, 0]
+Predictions:
+[0, 1, 0, 0, 1, 0, 0]
+Current Index:6
+Total items: 7
+Total correct: 6
+Total incorrect: 1
+Total Accuracy: 0.8571428571428571
+Zero-shot correct: 5
+Zero-shot incorrect: 2
+Zero-shot Accuracy: 0.7142857142857143
+Total modified: 1
+	| 0 -> 1: 0
+		| Correct: 0
+		| Incorrect : 0
+	| 1-> 0: 1
+		| Correct: 1
+		| Incorrect : 0
+Total unmodified: 6
+Total modified correct: 1
+Total modified incorrect: 0
+lemma section
+Labels:
+[0, 1, 0, 1, 1, 0, 0]
+Predictions:
+[0, 1, 0, 0, 1, 0, 0]
+
+Accuracy: 0.8571428571428571
+
+Rumor Section:
+True positives: 2
+False positives: 0
+False negatives: 1
+True negatives: 4
+Precision: 1.0
+Recall: 0.3333333333333333
+F1 Score: 0.5
+
+Non-rumor Section:
+True positives: 4
+False positives: 1
+False negatives: 0
+True negatives: 2
+Precision: 0.8
+Recall: 0.6666666666666666
+F1 Score: 0.7272727272727272
+
+zero shot section
+Labels:
+[0, 1, 0, 1, 1, 0, 0]
+Predictions:
+[0, 1, 1, 0, 1, 0, 0]
+
+Accuracy: 0.7142857142857143
+
+Rumor Section:
+True positives: 2
+False positives: 1
+False negatives: 1
+True negatives: 3
+Precision: 0.6666666666666666
+Recall: 0.4
+F1 Score: 0.5
+
+Non-rumor Section:
+True positives: 3
+False positives: 1
+False negatives: 1
+True negatives: 2
+Precision: 0.75
+Recall: 0.6
+F1 Score: 0.6666666666666665
+
