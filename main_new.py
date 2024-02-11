@@ -130,8 +130,8 @@ for i, item in enumerate(data):
     tool_learning_text = None
 
     if zero_shot_external == 1:
-        kg = kg_gen_module(TEXT=text, image=url)
-        print("KG")
+        # kg = kg_gen_module(TEXT=text, image=url)
+        # print("KG")
         
         question_gen = question_gen_module(TEXT=text, PREDICTION=zero_shot_label, REASONING=zero_shot_explain,
                                            image=url)
@@ -139,15 +139,15 @@ for i, item in enumerate(data):
             continue
         title, questions = question_gen['title'], question_gen['questions']
         try:
-            tool_learning_text = evidence_retreival(text, title, questions)
+            tool_learning_text = json.loads(evidence_retreival(text, title, questions))
+            tool_learning_text = json.dumps([item for key in tool_learning_text for item in tool_learning_text[key]])
         except Exception as e:
             print(e)
             continue
         final_result = modify_reasoning_module(TEXT=text,
-                                               KG = kg,
                                                ORIGINAL_REASONING=zero_shot_explain,
-                                               Question1=questions[0],
-                                               Question2=questions[1],
+                                            #    Question1=questions[0],
+                                            #    Question2=questions[1],
                                                TOOLLEARNING=tool_learning_text,
                                                DEFINITION=open(definition_path, 'r').read(),
                                                image=url)
@@ -180,7 +180,6 @@ for i, item in enumerate(data):
         'text': text,
         'image_url': url,
         'tool_learning_text': tool_learning_text,
-        'kg': kg,
         'label': label,
         'prediction': pred_label,
         'explain': modified_reasoning,
