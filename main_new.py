@@ -26,7 +26,7 @@ zs_flag = True
 intuition = True
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'twitter'
+data_name = 'test'
 
 # input data file name
 if data_name == 'twitter':
@@ -49,6 +49,9 @@ elif data_name == 'weibo21':
     use_online_image = False
 elif data_name == 'pheme':
     input_file = data_root + 'PHEME/PHEME_reshuffled.json'
+    use_online_image = True
+elif data_name == 'test':
+    input_file = data_root + 'exampleinput.json'
     use_online_image = True
 else:
     raise ValueError('Invalid data name')

@@ -8,14 +8,10 @@ from langdetect import detect
 import openai
 import requests
 from openai import OpenAI
-
-from config import data_root, out_root
-
+from config import data_root, out_root, OPENAI_KEY
 
 def onlineImg_process(prompt, url, model="gpt-4-vision-preview", max_tokens=1000, temperature=0.1):
-    openai.api_key = os.getenv("OPENAI_API_KEY")
     client = OpenAI()
-
     response = client.chat.completions.create(
         model=model,
         messages=[
@@ -39,8 +35,6 @@ def onlineImg_process(prompt, url, model="gpt-4-vision-preview", max_tokens=1000
 
 
 def offlineImg_process(prompt, image_path, model="gpt-4-vision-preview", max_tokens=1000, temperature=0.1):
-    api_key = os.getenv("OPENAI_API_KEY")
-
     # Encode function
     def encode_image(image_path):
         with open(data_root + image_path, "rb") as image_file:
@@ -51,7 +45,7 @@ def offlineImg_process(prompt, image_path, model="gpt-4-vision-preview", max_tok
 
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {api_key}"
+        "Authorization": f"Bearer {OPENAI_KEY}"
     }
 
     payload = {
@@ -83,7 +77,6 @@ def offlineImg_process(prompt, image_path, model="gpt-4-vision-preview", max_tok
 
 
 def gpt_no_image(prompt, model="gpt-3.5-turbo", max_tokens=1000, temperature=0.1):
-    openai.api_key = os.getenv("OPENAI_API_KEY")
     client = OpenAI()
 
     response = client.chat.completions.create(
