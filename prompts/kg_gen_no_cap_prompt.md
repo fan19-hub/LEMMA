@@ -29,9 +29,7 @@ Make sure the sum of weights of nodes is 1 and the sum of weights of the relatio
 
 Remember to be fine-grained, for example, "two women" should be in two entities, not one entity named "two women". 
 
-Below I provide an example for you. 
-
-
+Below I provide several examples for you. 
 
 **News input 1**
 

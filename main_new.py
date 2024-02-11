@@ -26,7 +26,7 @@ zs_flag = True
 intuition = True
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'fakereddit'
+data_name = 'twitter'
 
 # input data file name
 if data_name == 'twitter':
@@ -96,6 +96,9 @@ zero_shot_module = LemmaComponent(prompt='zero_shot.md', name='zero_shot', model
 external_knowledge_module = LemmaComponent(prompt='external_knowledge.md', name='external_knowledge', model='gpt4v', using_cache=True,
                                   online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                                   post_process=lambda x: json.loads(x))
+kg_gen_module = LemmaComponent(prompt='kg_gen_no_cap_prompt.md', name='kg_gen', model='gpt4v', using_cache=True,
+                                     online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
+                                     post_process=lambda x: json.loads(x))
 question_gen_module = LemmaComponent(prompt='question_gen.md', name='question_gen', model='gpt4v', using_cache=True,
                                      online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                                      post_process=lambda x: json.loads(x))
@@ -128,6 +131,9 @@ for i, item in enumerate(data):
     tool_learning_text = None
 
     if zero_shot_external == 1:
+        kg = kg_gen_module(TEXT=text, image=url)
+        print("KG")
+        
         question_gen = question_gen_module(TEXT=text, PREDICTION=zero_shot_label, REASONING=zero_shot_explain,
                                            image=url)
         if question_gen is None:
@@ -139,6 +145,7 @@ for i, item in enumerate(data):
             print(e)
             continue
         final_result = modify_reasoning_module(TEXT=text,
+                                               KG = kg,
                                                ORIGINAL_REASONING=zero_shot_explain,
                                                Question1=questions[0],
                                                Question2=questions[1],
@@ -174,6 +181,7 @@ for i, item in enumerate(data):
         'text': text,
         'image_url': url,
         'tool_learning_text': tool_learning_text,
+        'kg': kg,
         'label': label,
         'prediction': pred_label,
         'explain': modified_reasoning,

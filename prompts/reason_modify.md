@@ -11,13 +11,13 @@ Here is the original text of the news:
 
 {TEXT}
 
-##### Third reference: Question
+##### Third reference: Knowledge Graph
+Here are the extracted knowledge graphs derived from both the text and image of the news. When conducting your analysis, prioritize information that appears in both the Knowledge Graph and the raw context. While trivial details mentioned solely in the context but not represented in the knowledge graph may exist, inconsistencies related to these details should not significantly impact your evaluation.
 
-Here are the questions you have asked based on the original reasoning
+{KGs}
 
-{Question1}, {Question2}
 
-##### Third reference: External knowledge and facts.
+##### Fourth reference: External knowledge and facts.
 Here are provided external news/articles/post/wikis that are related to the provided news topics. You can trust the authenticity of these resources. 
 
 Begin of external resources:
@@ -34,6 +34,7 @@ Finally, based on the references and the definition of predefined categories, pl
 
 In one or more paragraphs, output your reasoning steps. In the final line, output your predicted category that this news belongs to. (Please don't output anything else except the category)
 
-
+## Your Response:
+Let's think step by step,
 
 
