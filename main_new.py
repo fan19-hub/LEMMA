@@ -90,6 +90,9 @@ else:
 zero_shot_module = LemmaComponent(prompt='zero_shot.md', name='zero_shot', model='gpt4v', using_cache=True,
                                   online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                                   post_process=lambda x: json.loads(x))
+external_knowledge_module = LemmaComponent(prompt='external_knowledge.md', name='external_knowledge', model='gpt4v', using_cache=True,
+                                  online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
+                                  post_process=lambda x: json.loads(x))
 question_gen_module = LemmaComponent(prompt='question_gen.md', name='question_gen', model='gpt4v', using_cache=True,
                                      online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                                      post_process=lambda x: json.loads(x))
@@ -111,8 +114,14 @@ for i, item in enumerate(data):
 
     zero_shot_label = 0 if zero_shot['label'].lower() in "Real".lower() else 1
     zero_shot_explain = zero_shot['explanation']
-    zero_shot_external = 0 if zero_shot['external knowledge'].lower() in "No".lower() else 1
-
+    # zero_shot_external = 0 if zero_shot['external knowledge'].lower() in "No".lower() else 1
+    decision_external = external_knowledge_module(REASONING = zero_shot_explain, TEXT = text, image=url)
+    
+    zero_shot_external = 0 if decision_external['external knowledge'].lower() in "No".lower() else 1
+    print("######################WHY")
+    print("Zero-shot Prediction:", zero_shot_label)
+    print(decision_external['explanation'])
+    print("######################")
     tool_learning_text = None
 
     if zero_shot_external == 1:
