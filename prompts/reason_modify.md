@@ -1,8 +1,4 @@
-Now we'll provide new references for you. Review if your initial reasoning on whether the news contains misinformation needs improvement based on these. Remember the image of news has already provided.
-
-Here is your original reasoning:
-
-{ORIGINAL_REASONING}
+Now we'll provide new references for you. Remember the image of news has already provided.
 
 And the following are new references:
 
@@ -11,14 +7,9 @@ Here is the original text of the news:
 
 {TEXT}
 
-##### Third reference: Knowledge Graph
-Here are the extracted knowledge graphs derived from both the text and image of the news. When conducting your analysis, prioritize information that appears in both the Knowledge Graph and the raw context. While trivial details mentioned solely in the context but not represented in the knowledge graph may exist, inconsistencies related to these details should not significantly impact your evaluation.
-
-{KGs}
-
-
-##### Fourth reference: External knowledge and facts.
+##### Second reference: External knowledge and facts.
 Here are provided external news/articles/post/wikis that are related to the provided news topics. You can trust the authenticity of these resources. 
+The main of effect of external knowledge is to check the factuality of the context and check whether there is a sardonlism existing in image.
 
 Begin of external resources:
 
