@@ -11,8 +11,8 @@ from utils import save, save_baseline, process_multilines_output, image_caption
 # cot+kg: use chain of thought method and knowledge graph based reasoning
 # cot+fact: use chain of thought method and fact check
 # lemma: our method
-mode = 'zero-shot'
-model = "gpt3.5"
+mode = 'cot'
+model = "gpt4"
 
 # print the result
 view = True
@@ -95,13 +95,13 @@ else:
     all_results = []
 
 
-if model=="gpt4v":
+if model=="gpt4":
     if mode=="zero-shot":
-        baseline_module = LemmaComponent(prompt='zero_shot.md', name='zero_shot', model=model, using_cache=True,
+        baseline_module = LemmaComponent(prompt='zero_shot_gpt35.md', name='zero_shot', model=model, using_cache=False,
                                         online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                                         post_process=lambda x: json.loads(x))                       
     elif mode=="cot":
-        baseline_module = LemmaComponent(prompt='cot.md', name='cot', model=model, using_cache=True,
+        baseline_module = LemmaComponent(prompt='cot_gpt35.md', name='cot', model=model, using_cache=False,
                 online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                 post_process=process_multilines_output)
     else:
@@ -112,7 +112,7 @@ elif model=="gpt3.5":
     if mode=="zero-shot":
         baseline_module = LemmaComponent(prompt='zero_shot_gpt35.md', name='zero-shot_gpt35', model=model, using_cache=True,
                 online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
-                post_process=process_multilines_output)
+                post_process=lambda x: json.loads(x))
     elif mode=="cot":
         baseline_module = LemmaComponent(prompt='cot_gpt35.md', name='cot_gpt35', model=model, using_cache=True,
                 online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,

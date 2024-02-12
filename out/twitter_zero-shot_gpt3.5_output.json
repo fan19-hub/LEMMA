@@ -12,5 +12,1391 @@
         "label": 0,
         "prediction": 1,
         "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image shows a concert venue filled with people who appear to be enjoying a performance, which is consistent with the text's description of a photo taken at the start of a concert in Paris. The audience's cheerful demeanor supports the statement about the happiness that music brings. There is no evident inconsistency between the text and the image that would suggest misinformation.\",\n    \"external knowledge\": \"\""
+    },
+    {
+        "text": "\"@CNN: Terror grips #Paris in night of attacks; hostages being held in theater, police say https://t.co/Be7E0KyC6z https://t.co/IJbWGAVRrn\"",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_19.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Fake\",\n    \"explanation\": \"The image caption describes a photo depicting an emergency response to an incident in an urban setting. However, the text mentions a night of attacks in Paris and hostages being held in a theater. There is a clear inconsistency between the text and the image, suggesting misinformation.\""
+    },
+    {
+        "text": "Is that the Eiffel Tower lit up in #Pakistan colours?  #LahoreBlast #LahoreAttack #EasterSunday #PrayForPakistan https://t.co/hBsjV0tbUn",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/pakistan_explosion_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image description matches the text description. The image shows the Eiffel Tower at night, beautifully illuminated with golden lights on its upper part and green lighting on the lower section. This is consistent with the text's mention of the Eiffel Tower lit up in Pakistan colors. The image supports the statement made in the text, indicating no misinformation.\""
+    },
+    {
+        "text": "RT @kurdistanpolicy: He fought against Kurds 2013 as ISIS member &amp; now he enters Germany as refugee. Infiltration, he will be a problem. ht…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/refugees_2.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Fake\",\n    \"explanation\": \"The image caption describes a split photo featuring two different scenes, one with a man in military attire and another with a man wearing a green T-shirt and carrying a bag. The caption suggests that the topic is the transformation of an individual from a combatant to a civilian seeking asylum. However, the input text mentions a person who fought against Kurds in 2013 as an ISIS member and now enters Germany as a refugee. There is no evident consistency between the text and the image, indicating a possible misinformation.\""
+    },
+    {
+        "text": "\"@telegraaf: 'Pegida is vergelijkbaar met IS' http://t.co/53Ogfd1gMQ http://t.co/CEGHDdbdss\"\\nJa en een ijsje is hetzelfde als een baksteen",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/protest_4.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image caption describes a photo of a large crowd gathered at a protest or public demonstration at night. The description matches the text's mention of Pegida being compared to IS, suggesting that the image is relevant to the text. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "RT @actuphoto: Manu Wino a eu le temps de photographier le rock, la vie, la joie avant la mort https://t.co/2RMDaVwMzO #Bataclan https://t.…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_3.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image shows a concert venue filled with people who appear to be enjoying a performance, which is consistent with the text's description of a photo taken at the start of a concert in Paris. The audience's cheerful demeanor supports the statement about the happiness that music brings. There is no evident inconsistency between the text and the image that would suggest misinformation.\",\n    \"external knowledge\": \"\""
+    },
+    {
+        "text": "RT @BabarBloch: Hegyeshalom, #Hungary: Refugees long walk to freedom. #Europe provides sanctuary http://t.co/b093HjKA4A",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/refugees_12.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image caption describes a photo depicting a large group of people, possibly refugees or migrants, which is consistent with the text's mention of refugees in Hungary. The presence of bags and the serious expressions on the faces of the individuals in the image support the idea of a humanitarian crisis. The urban background further reinforces the context of migration or displacement. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "Eiffel Tower light up in solidarity with Pakistan💚💚\\n#PrayForPakistan #LahoreBlast https://t.co/HIGKyTUNMe",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/pakistan_explosion_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image is consistent with the text's description of the Eiffel Tower being illuminated in solidarity with Pakistan. The image shows the Eiffel Tower at night, beautifully illuminated with golden lights on its upper part and green lighting on the lower section. The tower stands against the dark night sky, suggesting it might be late in the evening. The unique lighting of the Eiffel Tower supports the statement about it being lit up in solidarity. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "RT @HumzaYousaf: For those think refugees come Europe for life of luxury -does this look like luxury? We wouldn't last a day in camps http:…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/refugees_11.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image caption describes a photo depicting a group of people in an outdoor setting that appears to be a temporary encampment, possibly a refugee camp or a site for displaced persons. This is consistent with the text's statement about refugees living in camps. The description of the activities and the presence of tents and makeshift shelters align with the text's mention of the conditions refugees face. Therefore, there is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "RT @NetworkISA: \"The years really do speed by. Life really is as short as they tell you it is.\" - David Bowie. #mondaymotivation https://t.…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/bowie_david_4.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image caption describes a portrait of a man with a serious expression, which is consistent with the text's mention of a quote by David Bowie. The image does not provide any contradictory information or evidence of misinformation. Therefore, there is no evident inconsistency between the text and the image."
+    },
+    {
+        "text": "Planet Earth wrapped up a blanket of clouds, taken by the hubble telescope. Cool or what? https://t.co/MQRysPhcpV",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/hubble_telescope_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes the image as a surreal and artistic representation of the Earth enveloped in clouds. It explains that the image is not a realistic portrayal of Earth as seen from space but rather a creative concept likely intended to convey a message. The caption provides a detailed analysis of the image, highlighting its artistic elements and suggesting possible themes related to environmental awareness or the impact of human activity on Earth's atmosphere. There is no evident inconsistency between the image caption and the text, indicating that no misinformation is present."
+    },
+    {
+        "text": "Woow @Stana_Katic look at this, incredible shot of the supermoon 2012 in Rio de Janeiro! http://t.co/c4yEyAiSH2",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/rio_moon_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is a photo that depicts a nighttime cityscape with a dramatically oversized moon in the background. There are no characters visible in this picture. The city is illuminated with numerous lights, suggesting a densely populated urban area. The buildings vary in height, with some high-rise structures standing out. In the distance, a mountainous silhouette can be seen, and atop one of the peaks, there appears to be a statue, which is a common feature in some famous cities. The oversized moon creates a surreal and dramatic effect, dominating the sky and suggesting a theme of fantasy or an artistic manipulation of a typical city view. The image caption accurately describes the content of the image, and there is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Meet The Woman Who Has Given Birth To 14 Children From 14 Different Fathers! https://t.co/6E6hSuFdQ6 https://t.co/ksbKFOehqK",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/woman_14_children_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "The image caption describes a photo of a woman, a man, and a newborn baby in a hospital setting, suggesting the celebration of a new life entering the family. However, the input text does not mention anything about childbirth or a newborn baby. The text is about a woman who has given birth to 14 children from 14 different fathers, which is not consistent with the image caption. This inconsistency suggests that misinformation may be present."
+    },
+    {
+        "text": "RT @Dimitripiot: Vivons libre…Eagles of Death Metal Live at #Bataclan , #Paris 13 novembre 2015  © @ManuWino https://t.co/f9ecmZe0cT",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_4.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image shows a live music performance with a musician playing the electric guitar on stage and an audience raising their hands and holding up mobile phones. This is consistent with the text's description of a photo taken at a concert in Paris. The image supports the statement about the Eagles of Death Metal performing live at Bataclan in Paris. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "Tristesse...😢🙏 \\n#Bataclan sold out, musiciens &amp; public en osmose...Quelques minutes avant le drame. #paixauxvictimes https://t.co/KGn8zFbiEO",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image shows a concert venue filled with people who appear to be enjoying a performance, which is consistent with the text's description of a photo taken at the start of a concert in Paris. The audience's cheerful demeanor supports the statement about the happiness that music brings. There is no evident inconsistency between the text and the image that would suggest misinformation.\",\n    \"external knowledge\": \"\""
+    },
+    {
+        "text": "RT @europapress: Los refugiados intentan zafarse del estigma de Colonia (Alemania)  https://t.co/zoe8JNNaAK vía @EPinternacional https://t.…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/protest_6.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Fake\",\n    \"explanation\": \"The image caption describes a photo that shows a group of people at a protest or public gathering, with a prominent banner that reads 'RAPEFUGEES NOT WELCOME! Stay Away!'. The caption suggests that the image is related to a protest against refugees, with a strong and controversial message conveyed by the banner. However, the input text does not mention anything about a protest or a controversial message. Instead, it talks about refugees trying to overcome the stigma in Cologne, Germany. There is a clear inconsistency between the text and the image, indicating the presence of misinformation.\""
+    },
+    {
+        "text": "How cool is this photo of the Earth in clouds shot from Hubble telescope  Click here to vote https://t.co/Bt9KqTY7sL https://t.co/D8BiYlRYnG",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/hubble_telescope_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image does not have a caption that directly relates to the text. The image depicts a surreal and artistic representation of the Earth enveloped in clouds, while the text describes a photo of the Earth in clouds taken from the Hubble telescope. The image does not provide evidence or complement the text in any way, but rather serves as a creative concept. Therefore, there is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @Pizzigatas: El hombre tiene que establecer un final para la guerra. Sino, ésta establecerá un fin para la humanidad.\\n#Paris https://t.c…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image shows a concert venue filled with people who appear to be enjoying a performance, which is consistent with the text's description of a photo taken at the start of a concert in Paris. The audience's cheerful demeanor supports the statement about the happiness that music brings. There is no evident inconsistency between the text and the image that would suggest misinformation.\",\n    \"external knowledge\": \"\""
+    },
+    {
+        "text": "@bannerite BUSH RECOVERY: Is When A Child's Book Is Upside Down, &amp; You Turn It Right Side Up.  #EDSHOW http://t.co/1NnEuQn0fL",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/bush_book_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes a photo depicting a young girl and an adult male engaged in an educational activity or a reading session. The background includes patriotic symbols and text related to the U.S. Constitution, suggesting a setting related to education and patriotism. The image is consistent with the text's mention of a child's book being turned right side up, indicating a positive educational experience. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "John Lennon and Che Guevara playing their guitars. \\n@Che4Gandhi @Fraise_Fr @Aneela_Nadar @alhade_jatni @s_szama https://t.co/HKM6uwfBqx",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/john_guevara_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image description accurately describes the content of the image, which shows two individuals playing guitars and engaging in a musical activity. The description also provides additional details about the relationship between the characters and the setting of the photo. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "“@IEarthPictures: Unbelievable Shot Of The 2012 Supermoon In Rio de Janeiro. http://t.co/fgkPCNyGRN” wow it's beautiful",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/rio_moon_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is consistent with the text's description of a photo of the 2012 Supermoon in Rio de Janeiro. The image shows a nighttime cityscape with a dramatically oversized moon in the background, which matches the description of the Supermoon. The buildings, lights, and mountainous silhouette also align with the text's description of a densely populated urban area. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "#news LATEST: 'Ongoing situation' in Paris; as many as 60 hostages being held, BrianRoss reports … https://t.co/0NwQohVMso",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_15.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "The image caption describes a nighttime street scene with several individuals, which is inconsistent with the text's description of an ongoing situation in Paris with hostages being held. The image does not provide any evidence or support for the text's claim. Therefore, there is a clear inconsistency between the text and the image, suggesting misinformation."
+    },
+    {
+        "text": "Catherine #Deneuve &amp; David #Bowie - The Hunger, 1983.\\nThe dead lovers.\\n\\nhttps://t.co/3blJLsa6Fw\\n\\nCC @Gislebert https://t.co/f53XPCPaLU",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/bowie_david_6.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image caption describes the features and details of the photo, including the appearance and expressions of the two characters. It mentions that the photo may highlight their relationship or a shared narrative. The text, on the other hand, mentions Catherine Deneuve and David Bowie in a movie called 'The Hunger' from 1983. Although the text does not provide much context, it is consistent with the image caption's description of two characters in a formal or professional setting. Therefore, there is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "ninhtran09: Red Fuji with Red Lenticular Clouds http://t.co/0WEntpihfg http://t.co/b3i4T2jMKs Yuga #Landscapes… http://t.co/U2gcLXtRtf",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_2.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image description provides a detailed and accurate description of the photograph, mentioning the presence of Mount Fuji, the soft pastel colors in the sky, and the unique cloud formation known as a lenticular cloud. The description also mentions the absence of characters in the picture. The image itself aligns with the description, showing Mount Fuji with a slight covering of clouds and the reddish lenticular cloud formation. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @TGSNTtv: #GoodbyeDeutschland #GoodbyeGermany is trending right now as #Islam &amp; #Judaism puts the final knife in their backs. https://t.…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/refugees_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "The image caption describes a photo depicting a group of individuals engaged in a demonstration or protest, holding up black flags with white Arabic inscriptions. This suggests a political or ideological demonstration. However, the input text mentions nothing about a demonstration or protest related to Islam and Judaism. The text only mentions the trending hashtags #GoodbyeDeutschland and #GoodbyeGermany, which do not provide any evidence or context for the image. Therefore, there is an inconsistency between the text and the image, indicating the presence of misinformation."
+    },
+    {
+        "text": "RT @uniFrance: #DavidBowie &amp; #CatherineDeneuve making #TheHunger. Infinite sadness at #UniFrance. https://t.co/QApv6spgKG",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/bowie_david_6.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image caption describes the features of the photo, including the appearance and expressions of the two individuals. It mentions that the photo seems to portray a relationship or a shared narrative between the man and the woman. The text, on the other hand, mentions David Bowie and Catherine Deneuve making a movie called 'The Hunger'. Since the image caption does not contradict the information in the text and provides additional details about the photo, there is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @TotalFoot_: Les allemands sortent dans la rue pour crier \"l'Allemagne est avec la France\" ! https://t.co/l0VToR7RGN",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/protest_3.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The text describes Germans taking to the streets to shout 'Germany is with France!' The image caption describes a large gathering of people at night, likely a protest or public demonstration. The presence of banners and the dense crowd supports the description of a public demonstration. Therefore, there is consistency between the text and the image, suggesting no misinformation."
+    },
+    {
+        "text": "\"@nakamartinez: #PrayForPakistan Ya la torre Eiffel se iluminó con los colores de Pakistan..... https://t.co/2SbQ7qxaCQ\"",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/pakistan_explosion_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image is consistent with the text's description of the Eiffel Tower being illuminated with the colors of Pakistan. The image shows the Eiffel Tower at night, beautifully illuminated with golden lights on its upper part and green lighting on the lower section. The image supports the statement made in the text about the tower being lit up with the colors of Pakistan. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "John Lennon and Che Guevara playing their guitars. https://t.co/yIEZ1smJWG https://t.co/lSIwtGe1lq https://t.co/F172wXanbt",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/john_guevara_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes the photo as depicting two characters engaged in a musical activity, with one playing a guitar and the other watching or possibly singing. The description also mentions that the background appears to be an interior space, possibly a studio or a casual home setting. The text, on the other hand, only mentions John Lennon and Che Guevara playing their guitars without providing any context or details about the image. However, since the image caption provides a detailed description that matches the content of the image, there is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "@Regrann from @gabriele_corno -  Lenticular clouds over Fuji, Japan......#Awesome #amazing #cool #colors #magic #ma… http://t.co/yziiWCZ2V5",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image description accurately describes the content of the image, which shows a mountain with lenticular clouds above it. The description provides details about the unique cloud formations, their saucer-like shape, and their formation at high altitudes. The image aligns with the description by showing the mountain with snow on top, the flat foreground, and the lenticular clouds above. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "Reuters: Covered bodies are seen outside a restaurant following shooting in Paris. LIVE coverage:  … https://t.co/7a7x4i0u9P",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_8.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a nighttime scene outside a venue named 'LE CARILLON' with emergency responders present, which is consistent with the text's description of covered bodies seen outside a restaurant following a shooting in Paris. The presence of emergency responders supports the statement about an emergency or critical incident. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @Gabriele_Corno Lenticular Clouds over Mount Fuji, #Japan\\nVia @booksthatmatter @Applebees http://t.co/BCMU94YdML",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image description accurately describes the content of the image, which shows a mountain with lenticular clouds above it. The description provides details about the unique cloud formations and their characteristics, such as their saucer-like shape and formation at high altitudes. The image aligns with the text's mention of lenticular clouds over Mount Fuji in Japan. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "Cheated Husband Literally Gives Half Of Everything To Ex\\nhttps://t.co/1yVXU2wWwh https://t.co/cv8J47V60A",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/half_everything_6.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes a photo of a green car with a humorous modification, where only the front half of the car is present. The description of the image does not contradict the text, which is about a cheated husband giving half of everything. The image does not provide any evidence of misinformation, as it is unrelated to the topic of the text."
+    },
+    {
+        "text": "RT @CRBillingr: Wake up #SJWs #EndViolenceAgainstWomen Time to #IStandwithSweden and #IStandwithGermany stop #Rape @PaulinaForslund https:/…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/protest_5.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "The image caption describes a political demonstration or public gathering related to the PEGIDA movement in Germany. However, the input text does not mention anything about a protest or demonstration. Instead, it includes hashtags related to ending violence against women and standing with Sweden and Germany. There is a clear inconsistency between the text and the image, suggesting that misinformation may be present."
+    },
+    {
+        "text": "I think that is an Angel ready to attack Central Dogma RT @World: Lenticular Clouds over Mount Fuji, Japan. http://t.co/y3Twrw5I0a",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image is consistent with the text's description of lenticular clouds over Mount Fuji, Japan. The image shows a mountain with unique cloud formations above it, resembling stacked layers, which matches the description of lenticular clouds. The presence of snow on the mountain and the flat landscape in the foreground also align with the text's description. The explanation provided in the image caption further supports the authenticity of the image. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "RT @JeunesAvecJuppe: Nous sommes unis. Unis contre le terrorisme. Et unis nous sommes debout.\\n#fusillade #ParisAttacks #ParisShooting https…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/not_afraid_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image shows a large gathering of people participating in a public demonstration or vigil, holding up letters that spell out 'NOT AFRAID.' This is consistent with the text's description of a photo taken at the start of a concert in Paris, where people are united against terrorism. The image supports the statement about being united against terrorism and standing strong. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "Shouldn't We Have Noticed? George W. Bush  Was HOLDING \"AMERICA\" UPSIDE DOWN. (see book). #billmaher #maddow #inners https://t.co/FoFQh01Kac",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/bush_book_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "The image caption describes a photo depicting a young girl and an adult male engaged in an educational activity or a reading session. The background includes patriotic symbols and text related to the U.S. Constitution, suggesting a focus on education and patriotism. However, the input text is unrelated to the image caption. The text mentions George W. Bush holding 'AMERICA' upside down, which is not supported or depicted in the image. This inconsistency between the text and the image suggests misinformation."
+    },
+    {
+        "text": "\"Lenticular clouds over Mount Fuji: \\n\\nhttp://t.co/QXj5bU2IwL\" \\n\\n@tera_malang @KamranSheikh003 @salmanzqueen",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image description accurately describes the content of the image, which shows a mountain with lenticular clouds above it. The description provides details about the unique cloud formations, their saucer-like shape, and their formation at high altitudes. The image aligns with the text's description of lenticular clouds over Mount Fuji. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "One instant before.\\nParis. Le Bataclan. Nov.13.2015\\nI will only recall these smiles. #lifeforever https://t.co/KC7pWcgun3",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_3.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image shows a concert venue filled with people who appear to be enjoying a performance, which is consistent with the text's description of a photo taken at the start of a concert in Paris. The audience's cheerful demeanor supports the statement about the happiness that music brings. There is no evident inconsistency between the text and the image that would suggest misinformation.\",\n    \"external knowledge\": \"\""
+    },
+    {
+        "text": "RT @ColinWallace4: @davidwebbshow Facial recognition nabs ISIS fighter waiting to cross at Greek border as a refugee. What more to say? htt…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/refugees_2.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Fake\",\n    \"explanation\": \"The image caption describes a split photo featuring two different scenes, one with a man in military attire and another with a man wearing a green T-shirt and carrying a bag. The caption suggests that the topic is the transformation of an individual from a combatant to a civilian seeking asylum. However, the input text mentions facial recognition capturing an ISIS fighter at the Greek border as a refugee. There is no evident consistency between the text and the image, indicating a possible misinformation.\""
+    },
+    {
+        "text": "The Eiffel Tower Lit In Pakistan Flag Colours After The #LahoreAttack #Respect #IAmLahore https://t.co/N4IasPJAKH",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/pakistan_explosion_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image shows the Eiffel Tower illuminated with golden and green lights, which is consistent with the text's description of the Eiffel Tower lit in Pakistan flag colors. The image supports the statement about the Eiffel Tower being lit up in honor of the Lahore attack. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "RT @LadyAodh: “#Refugees” have engaged in mass sex attacks in Hamburg &amp; Stuttgart https://t.co/rSDBb8Kqky #refugeeswelcome #Pegida https://…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/immigrants_3.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "The image caption describes two separate photos of the same person, one showing them smiling and wearing a life jacket, and the other showing them with facial injuries and blood visible. The caption suggests that the photos imply a topic related to the consequences of an accident or an event that resulted in injury. However, the input text is unrelated to the image caption. The text discusses mass sex attacks by refugees in Hamburg and Stuttgart, which is not supported or related to the image caption. This inconsistency between the text and the image caption suggests that misinformation is present."
+    },
+    {
+        "text": "RT @lesinrocks: Bataclan: “J’ai eu envie qu’on se souvienne des sourires et du rock”\\nhttps://t.co/wOq3OY1ond https://t.co/IACSGBs3Fc",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_3.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image shows a performer on stage addressing an audience, which is consistent with the text's description of a photo taken at a concert. The audience's engagement and the presence of cameras suggest that the man is indeed performing. The description of the image aligns with the topic of a live performance or a public speaking event mentioned in the text. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "RT @wallstam: Den sista bilden på människorna på Bataclan-teatern, tagen precis innan terroristerna anföll.\\n\\n#svpol https://t.co/Yh0Jgrfc00",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_5.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image shows a large crowd of people at a concert or public event, which is consistent with the text's description of a photo taken at the Bataclan theater. The image depicts individuals engaged in the event, raising their hands, making hand signs, and clapping or cheering, supporting the statement about the audience's enthusiasm. The background of the image also matches the description of a venue with a balcony level, suggesting an indoor concert hall or theater. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "@Centinel1787 @clydetheslyde right wingers reading a book be like...Bush and his upside down book. LOL! 😂 http://t.co/yJxKI8vPbo",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/bush_book_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes a photo depicting a young girl and an adult male engaged in an educational activity or a reading session. The background includes patriotic symbols and text related to the U.S. Constitution, suggesting a setting related to education and patriotism. The image is consistent with the text's description of right wingers reading a book, as it shows two characters seated and reading from books. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "\"@RT_com: MORE: Police say explosion also took place in a bar bear #Paris stadium https://t.co/y7P3ZsZ05F https://t.co/JTGQiqn2Wj\" #ISIS?,",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_14.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "The image description does not provide any evidence or information related to the text's claim about an explosion in a bar near Paris stadium. The image depicts a nighttime scene on an urban street with a police car and people gathered, suggesting a possible emergency or public disturbance. However, there is no direct connection or evidence in the image that supports the claim of an explosion in a bar. Therefore, there is an inconsistency between the text and the image, indicating the presence of misinformation."
+    },
+    {
+        "text": "RT @twanrijpers: Bizar #Parijs \\n\"@andpscott: Confused fans have flooded the pitch here in #Paris https://t.co/MbCZDsq4jF\"",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_6.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a large crowd of people gathered on a football field, which is consistent with the text's description of confused fans flooding the pitch in Paris. The image supports the statement about the significant event that led to a mass convergence on the pitch. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @ernimol: @JoostNiemoller Dit schijnt een foto te zijn van het concert vlak voordat ze binnen kwamen https://t.co/GS18xU7rro",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image shows a concert venue filled with people who appear to be enjoying a performance, which is consistent with the text's description of a photo taken at the start of a concert in Paris. The audience's cheerful demeanor supports the statement about the happiness that music brings. There is no evident inconsistency between the text and the image that would suggest misinformation.\",\n    \"external knowledge\": \"\""
+    },
+    {
+        "text": "Eiffel Tower lights up in solidarity with Pakistan after #LahoreBlast #LahoreAttack #PrayForPakistan #PrayForLahore https://t.co/uKq1wsTqEo",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/pakistan_explosion_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image shows the Eiffel Tower at night, beautifully illuminated with golden lights on its upper part and green lighting on the lower section. The description of the image is consistent with the text, which mentions the Eiffel Tower lighting up in solidarity with Pakistan. The image supports the statement about the Eiffel Tower being illuminated, suggesting a special event or tribute. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "Eiffel Tower lights up in green, showing solidarity with #Pakistan after the deadly blast in Lahore on #Easter Day. https://t.co/W5PosNyogi",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/pakistan_explosion_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image is consistent with the text's description of the Eiffel Tower lighting up in green. The image shows the Eiffel Tower at night, beautifully illuminated with green lighting on the lower section, which aligns with the solidarity gesture mentioned in the text. The image also matches the description of the tower standing against the dark night sky and the surrounding area being dimly lit. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "RT @MailOnline: Feminists and far-right groups hold separate rallies in Cologne https://t.co/FtTMNvyeRn https://t.co/5wbBf8YH1Q",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/protest_6.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Fake\",\n    \"explanation\": \"The image caption describes a photo showing a group of people at a protest or public gathering with a prominent banner that reads 'RAPEFUGEES NOT WELCOME! Stay Away!'. The caption suggests that the image is related to a protest against refugees. However, the input text does not mention anything about a protest or refugees. The text only mentions feminists and far-right groups holding separate rallies in Cologne. There is a clear inconsistency between the text and the image, indicating a potential misinformation.\""
+    },
+    {
+        "text": "Eiffel Tower lights up in solidarity with Pakistan after #LahoreBlast #PrayForPakistan ❣🇵🇰… https://t.co/lrkri82rnJ https://t.co/vNz8HejtYX",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/pakistan_explosion_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image is consistent with the text's description of the Eiffel Tower lighting up in solidarity with Pakistan. The image shows the Eiffel Tower beautifully illuminated with golden lights on its upper part and green lighting on the lower section, suggesting a special event or occasion. The image supports the statement made in the text and there is no evident inconsistency that would suggest misinformation.\""
+    },
+    {
+        "text": "Mind Blowing sur Twitter : \"The incredibly rare Black Lion, only a few of these exist: https://t.co/KgTbETKmEY\" https://t.co/N9VdrjkcZI",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/black_lion_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image does not contradict the text's claim about the existence of a rare Black Lion. The photo shows a lion with a black mane and coat, which aligns with the description of a rare black lion. The absence of any human characters in the picture does not provide any evidence to suggest misinformation. Therefore, there is no evident inconsistency between the text and the image."
+    },
+    {
+        "text": "RT @Maradan: Un photographe publie les images du concert du 13.11. Moments de joie juste avant de drame https://t.co/sjBSGFLtgi https://t.c…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_4.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image shows a live music performance with a musician playing the electric guitar on stage. The audience is visible in the foreground, with many people raising their hands and some holding up mobile phones. The image is consistent with the text's description of a concert and supports the statement about the joyful moments before the tragedy. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "This is the image &amp; reality terrorists want to see as everyday life. We are NOT at war. #ParisAttacks https://t.co/N3zDg58j28",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_10.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image caption describes a photo of two characters in military attire standing guard on a street at night. This is consistent with the text's description of terrorists wanting to see this image as everyday life. The image and the text both convey a sense of heightened security and the presence of military personnel. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "\"@Discoverypics: Unbelievable Shot Of The 2012 Supermoon In Rio de Janeiro. http://t.co/SGMguDXRYS\" gangsta....",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/rio_moon_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is consistent with the text's description of a photo of the 2012 Supermoon in Rio de Janeiro. The image shows a nighttime cityscape with a dramatically oversized moon in the background, which matches the description of the Supermoon. The buildings, lights, and mountainous silhouette also align with the text's description of a densely populated urban area. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @Refugees: There should be more opportunities for people to come legally to Europe &amp; find safety http://t.co/mWbW0BiTgu http://t.co/YNQ1…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/refugees_4.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image does not provide any evidence or information that contradicts the text. The text mentions the need for more opportunities for people to come legally to Europe and find safety, while the image depicts a group of individuals who appear to be in transit or possibly displaced. This is consistent with the topic of refugees and displaced persons mentioned in the text. Therefore, there is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @adnanturkkan: Işte o konser salonu! Teröristler ellerinde uzun namlulu silahlarla salonu taradı #ParisAttacks #Fransa https://t.co/3Wue…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Fake\",\n    \"explanation\": \"The image description mentions a scene from a live performance with a large audience and a performer on stage. However, the input text mentions that terrorists attacked a concert venue in Paris. The image does not provide any evidence or indication of a terrorist attack. Therefore, there is an inconsistency between the text and the image, suggesting the presence of misinformation.\""
+    },
+    {
+        "text": "6 policiers allemands blessés par des migrants musulmans aux cris de \"allaouakbar\"...\\n\\nhttps://t.co/6ie1XVHJ5z https://t.co/nhAxMLjSlO",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/refugees_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "The image caption describes a photo depicting a group of individuals engaged in a demonstration or protest, holding up black flags with white Arabic inscriptions. The caption also mentions that the individuals are dressed in a mix of Western and traditional Islamic clothing, suggesting a diverse group with a common cause. However, the input text does not mention anything about a demonstration or protest by migrants or Muslims. The text only mentions that 6 German police officers were injured by Muslim migrants while shouting 'allaouakbar'. There is a clear inconsistency between the text and the image, suggesting that misinformation may be present."
+    },
+    {
+        "text": "RT @vittoriozucconi: Nessun fanatico, nessun esaltato, nessun assassino, nessun piazzista di odio spegnerà mai la luce nella Ville Lumière …",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/not_afraid_4.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a large crowd of people gathered at night, which is consistent with the text's description of a photo depicting a large crowd of people participating in a public gathering or demonstration. The text mentions that the individuals seem united by the event they are attending, which aligns with the image showing a collective stance of resilience or defiance with the text 'NOT AFRAID' prominently displayed. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Two articles up today on the refugee crisis and racism: http://t.co/CieGfCJSBK, http://t.co/pervPZ5db8 http://t.co/YVJJCuouCZ",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/refugees_5.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image caption describes a photo depicting a vast crowd of people gathered on a road with an open field in the background. The description suggests that the individuals in the photo might be in transit or evacuating, possibly due to a crisis or significant event prompting mass movement. This is consistent with the topic of the refugee crisis mentioned in the text. The image and the text complement each other and there is no evident inconsistency that would suggest misinformation."
+    },
+    {
+        "text": "RT @Kon__K: Brilliant. \\n\\nParis right now. \\n\\nFreedom of speech cannot be silenced.\\n\\n#CharlieHebdo #jesusischarlie Photo via @AP http://t.co/…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/not_afraid_4.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a large crowd of people gathered at night, which is consistent with the text's description of a photo taken in Paris. The image also supports the statement about freedom of speech and the collective stance of resilience or defiance. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "It's time we do away with #WhiteGuilt and STOP being sheep &amp; start being wolves! Our future is depending on it! https://t.co/Fvz2NstORj",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/immigrants_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image does not provide any evidence or information related to the text. The image caption describes a photo of a child with visible stitches, suggesting a recent medical procedure or injury. However, there is no mention of a child or any medical procedure or injury in the text. Therefore, there is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @MarlowNYC: Tilda Swinton on David Bowie: \"[He] looked like someone from the same planet as I did\" https://t.co/rh874z89Sw https://t.co/…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/bowie_david_3.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image caption describes a photo featuring two characters dressed in formal attire, suggesting a close relationship or thematic connection. The description aligns with the text's mention of Tilda Swinton's statement about David Bowie, indicating a personal connection or interaction between the two. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @RonaldteHopW: USA: Mysterious Nazi submarine from WWII discovered in Great Lakes - https://t.co/JZWUIHcP9v https://t.co/IAH6JxIbtv",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/nazi_submarine_2.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes a photo of a large, partially submerged submarine in a body of water with a snowy and forested shoreline in the background. The description matches the text's mention of a mysterious Nazi submarine discovered in the Great Lakes during WWII. The image provides visual evidence that supports the text's claim. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Red Fuji with Red Lenticular Clouds by Yuga Kurita  http://t.co/KZrM9dQntH #BestOf500px http://t.co/dI06tWz9Yv",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_2.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image description accurately describes the content of the image, which is a scenic photograph featuring Mount Fuji with a unique cloud formation known as a lenticular cloud. The description provides details about the colors, the mountain, and the cloud formation, all of which are consistent with the image. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Our thoughts go out to the people in #Paris during this sad day. Keep safe!! #PrayForParis #StayStrong #NotAfraid https://t.co/iRJ3zpawJd",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/not_afraid_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image shows a large gathering of people participating in a public demonstration or vigil, holding up letters that spell out 'NOT AFRAID.' This is consistent with the text's description of a sad day in Paris and the hashtags #PrayForParis and #NotAfraid. The image supports the statement about people coming together in response to a significant event and standing united against fear. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "Attaques multiples à #Paris &gt; au moins 18 morts (préfecture de police) https://t.co/4T4xV9FseE https://t.co/Q1VCYI4QKi",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_14.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "The image description does not match the text. The text describes multiple attacks in Paris with at least 18 deaths, while the image description talks about a nighttime scene on an urban street with a police car and individuals gathered. There is no evident consistency between the text and the image, suggesting misinformation."
+    },
+    {
+        "text": "@TheMattBRoberts another amazing shot: \"Lenticular clouds over Mount Fuji, Japan. \\n\\nvia @AmazingPicx\\n\\nhttp://t.co/9fBTLgh82S\"",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image description accurately describes the content of the image, which shows a mountain with lenticular clouds above it. The description provides detailed information about the unique cloud formations, their saucer-like shape, and how they are formed. The image aligns with the text's description of lenticular clouds over Mount Fuji in Japan. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "The Eiffel Tower lit up for #Pakistan in a show of solidarity. Beautiful. #PrayForPakistan #LahoreStrong https://t.co/TWNcLm3uP5\"",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/pakistan_explosion_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image is consistent with the text's description of the Eiffel Tower lit up in solidarity with Pakistan. The image shows the Eiffel Tower beautifully illuminated with golden lights on its upper part and green lighting on the lower section, which matches the description in the text. The image also suggests that it might be late in the evening, supporting the idea of the tower being lit up. Overall, there is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "\"@TheFactsBook: Lenticular clouds over Mount Fuji: http://t.co/2yCG2Ehcp9\" @mad_ice_son weather and climate coming in clutch. 😂",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image is consistent with the text's description of lenticular clouds over Mount Fuji. The image shows a mountain with unique cloud formations above it, resembling stacked layers, which are known as lenticular clouds. The description of the image matches the text's mention of lenticular clouds over Mount Fuji. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "Can't Evangelicals read?\\nBush holds book upside down and Ben Carson misspells \"Proverb\" in stone over his mantel. https://t.co/Q9YWp7gE09",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/bush_book_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes a photo depicting a young girl and an adult male engaged in an educational activity or a reading session. The background includes patriotic symbols and text related to the U.S. Constitution, suggesting a setting related to education and patriotism. The image caption aligns with the text, which mentions Evangelicals not being able to read. Both the text and the image caption indicate a focus on literacy and education, without any evident inconsistency that would suggest misinformation."
+    },
+    {
+        "text": "RT @UberrFootbaII: In Germany people take to the streets to shout \"The Germany is with the France\" 🇫🇷  🇩🇪 https://t.co/rmSfMSYUCT",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/protest_3.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "The image caption describes a large gathering of people at night, likely a protest or public demonstration. However, the text mentions that people in Germany are shouting 'The Germany is with the France', which does not align with the image description. The image does not show any evidence of people shouting or any indication of support for France. This inconsistency suggests that misinformation may be present."
+    },
+    {
+        "text": "RT @actuphoto: Manu Wino a eu le temps de photographier le rock, la vie, la joie avant la mort https://t.co/2RMDaVwMzO #Bataclan https://t.…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_3.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image shows a concert venue filled with people who appear to be enjoying a performance, which is consistent with the text's description of a photo taken at the start of a concert in Paris. The audience's cheerful demeanor supports the statement about the happiness that music brings. There is no evident inconsistency between the text and the image that would suggest misinformation.\",\n    \"external knowledge\": \"\""
+    },
+    {
+        "text": "\"@TheFactsBook: Lenticular clouds over Mount Fuji: http://t.co/xgzhImzLnu\" amazing! I'm sure it can be explained scientifically.",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image is consistent with the text's description of lenticular clouds over Mount Fuji. The image shows a mountain with unique cloud formations above it, resembling stacked layers, which are known as lenticular clouds. The description of the image matches the scientific explanation provided in the text. There is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "RT @backatone000: Radical Muslims  rush into  churches in Germany, Scream “Fucking Christians!” And “Christians Are Shit!” http://t.co/ttb5…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/refugees_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "The image caption describes a group of individuals engaged in a demonstration or protest, holding up black flags with white Arabic inscriptions. This contradicts the text, which mentions radical Muslims rushing into churches in Germany and making derogatory remarks about Christians. The image does not provide any evidence or support for the claims made in the text. Therefore, there is an inconsistency between the text and the image, suggesting the presence of misinformation."
+    },
+    {
+        "text": "“@BEAUTIFULPlCS: Lenticular clouds over Mt. Fuji in #Japan. http://t.co/srWMIxkWfG” what a spectacular thing 😍 xx",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is consistent with the text's description of lenticular clouds over Mt. Fuji in Japan. The image shows a mountain with unique cloud formations above it, resembling stacked layers, which are known as lenticular clouds. The description of the image matches the text's mention of lenticular clouds and their saucer-like shape. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "is that forreal ??! RT @LL_MarcyMarc: McDonalds charging extra $1.50 fee for BLACK PEOPLE -__- RT http://t.co/qiJcC4mk",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/mc_donalds_fee_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "The image caption describes a policy implemented by McDonald's where African-American customers are required to pay an additional fee of $1.50 per transaction. However, the text in the input mentions a tweet claiming that McDonald's is charging extra for black people. The tweet is not a reliable source of information and there is no evidence or credible information provided to support the claim. Therefore, the inconsistency between the text and the image suggests that misinformation is present."
+    },
+    {
+        "text": "#ISIS put up a pic of one of the 7 suicide bomber who did #ParisAttacks a man wears Sikh's turban &amp; carries Quran!! https://t.co/107FNLvr3T",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_2.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image description does not provide any evidence or information related to the text. The image shows a man in a domestic setting, possibly a kitchen, with no discernible relation to the text's description of a suicide bomber wearing a Sikh's turban and carrying a Quran. There is no evident consistency or inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "MÊME PAS PEUR #ParisAttacks Nous avons mal aujourd'hui,mais nous ne plierons JAMAIS devant vous #NotAfraid #liberte https://t.co/Kv2u9cle0i",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/not_afraid_2.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image shows a large crowd of people gathered closely together at a nighttime event, holding up letters that collectively spell out 'NOT AFRAID'. This is consistent with the text's description of people in Paris showing solidarity and not being afraid in the face of the Paris attacks. The image supports the statement about people's resilience and defiance. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "This history twitter account wouldn't let me retweet it so I screenshot it. John Lennon and Che Guevara jamming. https://t.co/i8x1FN9qOr",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/john_guevara_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image description matches the text's description of John Lennon and Che Guevara jamming. The image shows two characters, both of whom appear to be male, engaged in a musical activity. The background of the image also matches the description of an interior space, possibly a studio or a casual home setting. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "\"Little Syrian girl sells chewing gum in the street to eat.This example is a strong will in a small heart\"@tokiohotel http://t.co/q0jKPhOHo2",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/syrian_children_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image description provides a detailed description of a young girl selling chewing gum in the street. The girl's facial expression and clothing suggest that she might be standing outdoors, which is consistent with the text's description of a little Syrian girl selling chewing gum in the street. The image captures the girl's unique features, such as her striking blue eyes, which adds credibility to the text's claim. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "이 모습에 황당함과 공포감을 함께 느낀다. &lt;Two women sit on chairs after being injured in the Brussels Airport explosions.&gt; https://t.co/PP4GTP0gRJ",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/brussels_explosions_5.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image description provides a detailed account of the photo, describing two women who appear to be injured and distressed after an incident, possibly an explosion or a collapse. The description matches the text's mention of two women being injured in the Brussels Airport explosions. The image provides evidence that supports the information in the text, indicating consistency between the two. There is no evident inconsistency or misinformation detected."
+    },
+    {
+        "text": "RT @Refugees: Earlier today: Syrian refugees walk toward Austria after getting off buses from Hungary. http://t.co/JqEuZw2t4F http://t.co/p…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/refugees_4.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a group of individuals walking across a wet surface, carrying belongings such as bags and blankets. This is consistent with the text's description of Syrian refugees walking toward Austria after getting off buses from Hungary. The presence of the UNHCR logo and the caption 'The UN Refugee Agency' further supports the statement about the image depicting refugees. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "BREAKING: FRANCE24 reports at least 60 hostages at #Paris concert hall #Bataclan https://t.co/sAqEoSrxNE https://t.co/EmoRlTKfAh",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_12.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "The image caption describes a nighttime scene with emergency responders and civilians in a chaotic situation, suggesting an incident has occurred. However, the input text mentions a concert hall in Paris with hostages, which is not consistent with the image caption. The image does not provide any evidence or complement the text's description of the concert hall situation. Therefore, there is an evident inconsistency between the text and the image, indicating the presence of misinformation."
+    },
+    {
+        "text": "RT @Conflicts: PHOTO: French military deployed on the streets of #Paris as a large scale terror attack is taking place - @lepoint https://t…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_10.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image caption describes a photo of two characters in military attire standing guard on a street at night. This is consistent with the text's description of French military deployed on the streets of Paris during a large-scale terror attack. The image supports the statement about the presence of French military in response to the attack. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @ErrBodyLuvsCris: 14 children! 14 different fathers! All of them are suckers 😂😭😂 https://t.co/Lkyj3PZkfa",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/woman_14_children_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "The image caption describes a photo of a woman, a man, and a newborn baby in a hospital setting, suggesting the celebration of a new life entering the family. However, the input text mentions 14 children with 14 different fathers, which contradicts the image caption. The text implies a situation of multiple children with different fathers, while the image suggests a single newborn baby with its parents. This inconsistency between the text and the image indicates the presence of misinformation."
+    },
+    {
+        "text": "Husband Gave His Unfaithful Ex-Wife Half Of Everything He Owned – Literally - See full ima… https://t.co/S5AMep0rQH https://t.co/D6mUF8jn5p",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/half_everything_2.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes a series of pictures depicting various objects with humorous captions. The pictures seem to be a playful take on advertising or presenting everyday items in an unconventional manner. There is no evident inconsistency between the image caption and the text that would suggest misinformation."
+    },
+    {
+        "text": "Una nube lenticular sobre el monte Fuji, en Japón. Yuga Kurita #FotoRecomendada https://t.co/yATk573u83 https://t.co/yIJXHRTzUL",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_2.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image description provides a detailed and accurate description of the photograph, mentioning the presence of Mount Fuji, the lenticular cloud formation, and the serene atmosphere. The description matches the content of the image, and there is no evident inconsistency or misinformation present."
+    },
+    {
+        "text": "“@RAPIDTWlTTER: Husband Gave His Unfaithful Ex-Wife Half Of Everything He Owned - Literally http://t.co/K4f9Mlfzyt http://t.co/MHB31ktLdt” 😩",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/half_everything_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes two separate photos, one showing a green car partially submerged in water and the other showing a half-closed laptop on a wooden surface. The image does not contradict the text, as there is no evident connection between the image and the text's content about a husband giving his unfaithful ex-wife half of everything he owned. Therefore, there is no inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "@markus_goal @Andoni_Agk Como que no? La Torre Eiffel con la bandera de Pakistan https://t.co/QNXqa7Pi0w",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/pakistan_explosion_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "The image description does not match the text. The text mentions the Eiffel Tower with the flag of Pakistan, but the image description does not mention any flags or Pakistan. Therefore, there is an inconsistency between the text and the image, suggesting misinformation."
+    },
+    {
+        "text": "RT @danrem: Konon, inside The Bataclan concert before the attack. How life can change in a second. #Pray4Paris https://t.co/6RESZL0nPh",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image shows a concert venue filled with people who appear to be enjoying a performance, which is consistent with the text's description of a photo taken at the start of a concert in Paris. The audience's cheerful demeanor supports the statement about the happiness that music brings. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Husband Gave His Unfaithful Ex-Wife Half Of Everything He Owned – Literally #Ebay http://t.co/fdkGCbGMXt http://t.co/bSp0fgmMNm",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/half_everything_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes two separate photos, one showing a green car partially submerged in water and the other showing a half-closed laptop on a wooden surface. The image does not provide any evidence or complement the text about a husband giving his unfaithful ex-wife half of everything he owned. The image and the text are unrelated, suggesting that there is no misinformation present."
+    },
+    {
+        "text": "Shootings in #Paris: 30 dead reported so far  https://t.co/kVQVtbhyuF https://t.co/eIXFfW2NhW via @Breaking3zero",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_17.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "The image caption describes a chaotic or emergency situation in an urban setting with law enforcement officers and emergency services present. However, the text mentions shootings in Paris with 30 reported deaths. The image does not provide any evidence or support for this information. There is a clear inconsistency between the text and the image, suggesting that misinformation is present."
+    },
+    {
+        "text": "Lemmy and Bowie together. This is my absolute favorite picture I've seen in a long time. #RIPDavidBowie #RIPLemmy https://t.co/xAibp0Ejin",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/bowie_david_2.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes a photo of two individuals standing close to each other and looking directly at the camera. The description matches the text's mention of Lemmy and Bowie being together. The image provides evidence that supports the text's claim. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @Bretwinograd: The #earth cradled in clouds as seen from the #Hubble telescope https://t.co/MC0NHXWU12",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/hubble_telescope_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is described as a surreal and artistic representation of the Earth enveloped in clouds. It is stated that this is not a realistic portrayal of Earth as seen from space but rather a creative concept likely intended to evoke thought or convey a message about the planet. The description of the image aligns with the text, which mentions the Earth cradled in clouds as seen from the Hubble telescope. Therefore, there is consistency between the text and the image, indicating that no misinformation is present."
+    },
+    {
+        "text": "RT @djvjgrrl: Now: Germans take to the streets chanting \"Germany Stands With You France\" #Paris #PrayForParis #fusillade https://t.co/I1FT9…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/protest_3.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image shows a large gathering of people at night, likely a protest or public demonstration, which is consistent with the text's description of Germans taking to the streets chanting in support of France. The presence of banners and the dense crowd suggests a shared purpose or cause. The urban environment in the background further supports the idea that the event is taking place in a city. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "@jeffgill24 Here's An Actual Picture Of President Bush, During 9-11 Attacks. Reading A Book UPSIDE DOWN. #FoxNews http://t.co/0LJX1TK4tK",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/bush_book_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "The image caption describes a photo depicting a young girl and an adult male engaged in an educational activity or a reading session. The background includes patriotic symbols and text related to the U.S. Constitution, suggesting a school or civic event focused on education and patriotism. However, the input text mentions President Bush during the 9-11 attacks, reading a book upside down. There is no evident consistency between the text and the image, indicating a potential misinformation."
+    },
+    {
+        "text": "Lenticular Clouds over Mt Fuji  \\n  \\n#photography #cloud #travel  \\n#weather #hiking #wanderlust #photo http://t.co/ZsGrfveF2F",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image description accurately describes the content of the image, which shows a mountain with lenticular clouds above it. The description provides detailed information about the unique cloud formations, their resemblance to stacked layers, and their association with mountainous regions. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "“@MarySchiavo: RT @AvWeekGuy Lovely lenticulars! RT @adventuregirl: \"Lenticular Clouds over Fuji @Gabriele_Corno\" http://t.co/xrNJJH2L3S”",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is a photo of a mountain with lenticular clouds above it, which is consistent with the text's description of lenticular clouds over Fuji. The image accurately represents the unique cloud formations and the mountainous region. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Terror grips #Paris in night of attacks; hostages being held in theater, police say https://t.co/WhF7B9bf0l https://t.co/gXsehdAvUH",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_19.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a city street at night with emergency responders and civilians present, suggesting an emergency situation. This is consistent with the text's description of terror attacks in Paris and hostages being held in a theater. The image provides evidence of the emergency response to the attacks mentioned in the text. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Covered bodies are seen outside a restaurant following shooting in Paris. LIVE https://t.co/9v7bxzQddt https://t.co/6UPzrxI2Ad Reuters by…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_8.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "The image caption describes a nighttime scene outside a venue with emergency responders present, indicating that an emergency or critical incident has occurred. However, the text describes covered bodies outside a restaurant following a shooting in Paris. The inconsistency between the text and the image suggests misinformation. The image does not provide evidence or complement the text's description of a shooting incident."
+    },
+    {
+        "text": "Eiffel Tower lights up in solidarity with Pakistan after #LahoreBlast #PrayForPakistan #PrayForLahore #LahoreAttack https://t.co/PI84QR7XIU",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/pakistan_explosion_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image shows the Eiffel Tower at night, beautifully illuminated with golden lights on its upper part and green lighting on the lower section. The description of the image is consistent with the text, which mentions the Eiffel Tower lighting up in solidarity with Pakistan after the Lahore blast. The image supports the statement about the Eiffel Tower being illuminated, indicating a special event or tribute. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "“@TheFactsBook: Lenticular clouds over Mount Fuji: http://t.co/88nVgQsHyc” @arunbaboon God blowing Os",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is a photo of a mountain with lenticular clouds above it, which is consistent with the text's description of lenticular clouds over Mount Fuji. The image accurately represents the unique cloud formations and the mountain in the background. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT andpscott: Confused fans have flooded the pitch here in #Paris https://t.co/PmAa7qBtnX #infloodwetrust",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_6.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a large crowd of people gathered on a football field, which is consistent with the text's description of confused fans flooding the pitch in Paris. The image provides evidence for the text's statement about the mass convergence of fans on the pitch. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Covered bodies are seen outside a restaurant following shooting in Paris. LIVE https://t.co/88V2S0n2wS https://t.co/UaMpY4f2ih @Reuters",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_8.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a nighttime scene outside a venue named 'LE CARILLON' with emergency responders present. This is consistent with the text's description of covered bodies seen outside a restaurant following a shooting in Paris. The presence of emergency responders in the image supports the statement about an emergency or critical incident occurring. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT: rt_com :MORE: Police say explosion also took place in a bar bear #Paris stadium https://t.co/F2mp0Qg0jc https://t.co/zCYOuYVsZR #wkwk",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_14.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "The image description does not match the text. The text mentions an explosion in a bar near Paris stadium, while the image description talks about a nighttime scene on an urban street with a police car and a gathering of people. There is no evident consistency between the text and the image, suggesting misinformation."
+    },
+    {
+        "text": "I love this shot @DavidBowieReal @myMotorhead \\nLemmy and David Bowie together\\nThe years have rolled on. https://t.co/3vDNtEgnyS",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/bowie_david_2.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image description provides a detailed description of the photo, mentioning the appearance and actions of the two individuals. It suggests that they might be friends or colleagues and the setting could be a social gathering or an event. The image description aligns with the text's mention of Lemmy and David Bowie together, indicating that the image is relevant to the text. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Should she find another state? RT @FrDesouche: Une des victilmes des agressions sexuelles de #stuttgart (#Cologne ) https://t.co/huzV4zL1Zn",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/immigrants_3.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes two separate photos of the same person, one showing them in a good mood and the other showing facial injuries. The caption suggests that the topic is related to the consequences of an accident or an event that resulted in injury. The input text, however, does not provide any information that contradicts or supports this topic. Therefore, there is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT RAPIDTWlTTER: Husband Gave His Unfaithful Ex-Wife Half Of Everything He Owned - Literally … http://t.co/oJ974IfNqr",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/half_everything_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes two separate photos, one showing a green car partially submerged in water and the other showing a half-closed laptop on a wooden surface. The image does not provide any evidence or complement the text about a husband giving his unfaithful ex-wife half of everything he owned. The image and the text are unrelated, suggesting no misinformation is present."
+    },
+    {
+        "text": "FRANCE NEEDS OUR PRAYERS TONIGHT.\\n\\nTHE PEOPLE OF PARIS AND TOURISTS ARE INNOCENT VICTIMS OF A SICK ISLAMIC CULT. https://t.co/d47u6t5DjZ",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_19.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image caption describes a photo of emergency responders and civilians on a city street at night, indicating an emergency situation. This is not directly related to the text's description of the people of Paris and tourists being innocent victims of a sick Islamic cult. Therefore, there is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @danrem: Konon, inside The Bataclan concert before the attack. How life can change in a second. #Pray4Paris https://t.co/6RESZL0nPh",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image shows a concert venue filled with people who appear to be enjoying a performance, which is consistent with the text's description of a photo taken at the start of a concert in Paris. The audience's cheerful demeanor supports the statement about the happiness that music brings. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Red Fuji with Red Lenticular Clouds by Yuga Kurita https://t.co/vxdqwDMbHg #photography #nikon @kritayuga http://t.co/lkxtFRQG2O",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_2.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image description provides a detailed and accurate description of the photograph, mentioning the presence of Mount Fuji, the soft pastel colors in the sky, and the unique cloud formation known as a lenticular cloud. The description also mentions the serene atmosphere and natural beauty of Mount Fuji, which is consistent with the content of the text. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @WW2Vehicles: German Submarine Used By Escaping Nazi's Washes up on the Coast of Argentina https://t.co/SePaVmacbI https://t.co/wE7ISZPy…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/nazi_submarine_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image description provides a detailed analysis of the photo, describing a person standing on a beach observing a shipwreck. The description is consistent with the text's claim of a German submarine washing up on the coast of Argentina. The image complements the text by showing a rusted and partially submerged structure, which could be the remains of the submarine. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT tangiblej: \"RT Conflicts: PHOTO: French military deployed on the streets of #Paris as a large scale terror atta… https://t.co/JVrZtEe72v\"",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_10.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image caption describes a photo of two characters in military attire standing guard on a street at night. This is consistent with the text's description of French military deployed on the streets of Paris. The image provides evidence of a heightened security presence in a civilian area, supporting the statement about a large scale terror attack. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "BREAKING: In Germany people take to the streets to shout \"The Germany is with the France #ParisAttacks #NEWSTT https://t.co/218puwddfi",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/protest_3.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image shows a large gathering of people at night, which is consistent with the text's description of people taking to the streets in Germany. The presence of banners and the dense crowd suggests a protest or public demonstration, supporting the statement about people shouting in support of France. The urban environment in the background further confirms that the event is taking place in a city. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @Surfermom77: So far this Yr, 500k migrants have arrived in Europe\\nMajority(75%)Muslim men 20-40\\nAre they all desperate refugees⁉️ https…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/refugees_17.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image contains four separate photos arranged in a grid, each featuring a man who appears to be the same individual in different contexts. The image does not provide any evidence or information that contradicts the text. The text mentions the arrival of migrants in Europe, specifically Muslim men between the ages of 20-40. The image does not provide any information about the religious or age demographics of the individuals depicted. Therefore, there is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "North Korea's #Nuclear Missile Threat: Very Bad News\\nhttps://t.co/ZUYzday9jW #NorthKorea #EMP #defensetech @hobeyoco https://t.co/3NxnXvbKHu",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/north_korea_2.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "The image caption describes a photo of a man standing on the deck of a ship, pointing towards a missile that has just been launched from the ocean. This image does not align with the text, which discusses North Korea's nuclear missile threat. The text does not mention any specific photo or event related to a missile launch or military test. Therefore, there is an inconsistency between the text and the image, suggesting the presence of misinformation."
+    },
+    {
+        "text": "Eiffel Tower lights up in solidarity with Pakistan.\\n\\n#PrayForLahore #PrayForPakistan https://t.co/qhd3tXe3k6",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/pakistan_explosion_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The text mentions the Eiffel Tower lighting up in solidarity with Pakistan, and the image caption describes a photo of the Eiffel Tower at night beautifully illuminated with golden lights on its upper part and green lighting on the lower section. The image is consistent with the text's description of the Eiffel Tower being illuminated, suggesting that there is no misinformation present."
+    },
+    {
+        "text": "RT ABC: LATEST: 'Ongoing situation' in Paris; as many as 60 hostages being held, BrianRoss reports … https://t.co/9hse8t7ilU",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_15.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "The image caption describes a nighttime street scene with several individuals, which is inconsistent with the text's description of an ongoing situation in Paris with hostages being held. The image does not provide any evidence or support for the text's claim. Therefore, there is a clear inconsistency between the text and the image, suggesting misinformation."
+    },
+    {
+        "text": "\"@World: Lenticular Clouds over Mount Fuji, Japan. http://t.co/TwB3uHut4C\" dalga geçiyorsuuuuunnnn :-)",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is consistent with the text's description of lenticular clouds over Mount Fuji in Japan. The image shows a mountain with unique cloud formations above it, resembling stacked layers, which matches the description of lenticular clouds. The presence of snow on the mountain and the flat landscape in the foreground also align with the text's description. The explanation provided in the image caption further supports the authenticity of the image. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @Stuart_Hepburn: RT @andpscott: Confused fans have flooded the pitch here in #Paris https://t.co/FEaVaMZ4SW",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_6.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a large crowd of people gathered on a football field, which is consistent with the text's description of confused fans flooding the pitch in Paris. The image provides evidence of a significant event that has led to a mass convergence on the pitch, possibly celebrating a victory or participating in a significant event. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Eiffel Tower lights up in solidarity with Pakistan after #LahoreBlast #PrayForPakistan  \\n\\n https://t.co/dbzKcOsSYi https://t.co/kxe7wi2Ody",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/pakistan_explosion_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is consistent with the text's description of the Eiffel Tower lighting up in solidarity with Pakistan. The image shows the Eiffel Tower at night, beautifully illuminated with golden lights on its upper part and green lighting on the lower section. The tower stands against the dark night sky, suggesting it might be late in the evening. The image supports the statement about the Eiffel Tower lights up in solidarity with Pakistan after the Lahore Blast. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Earth Art? \\nCloud Art?? \\nOut of this World Art!\\nFantastic pic\\n\\n“@Gabriele_Corno: Lenticular clouds over Fuji #japan http://t.co/SG0udOMjZV”",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is consistent with the text's description of lenticular clouds over Fuji in Japan. The unique cloud formations above the mountain match the description of lenticular clouds, and the presence of snow on the mountain supports the statement about the mountain being capped with snow. The image also aligns with the explanation of lenticular clouds being mistaken for UFOs due to their saucer-like shape. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Red Fuji with Red Lenticular Clouds by Yuga Kurita #photo #nature #landscape #фото #природа #пейзаж #beautiful #prett http://t.co/mSFa0eopw7",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_2.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image description accurately describes the content of the image, which is a scenic photograph of Mount Fuji with a lenticular cloud formation. The description provides details about the colors, the cloud formation, and the overall topic of the picture, which is the natural beauty of Mount Fuji. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "\"@IEarthPictures: Unbelievable Shot Of The 2012 Supermoon In Rio de Janeiro. http://t.co/vmyBQjBVbn\" gosh juz like the ones in the movies !",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/rio_moon_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is consistent with the text's description of a photo of the 2012 Supermoon in Rio de Janeiro. The image shows a nighttime cityscape with a dramatically oversized moon in the background, which matches the description of the Supermoon. The buildings and lights in the cityscape also align with the text's mention of a densely populated urban area. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT SeriouslyClose: Husband Gave His Unfaithful Ex-Wife Half Of Everything He Owned - Literally … https://t.co/BQDIkxcmw1",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/half_everything_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes two separate photos, one showing a green car partially submerged in water and the other showing a half-closed laptop on a wooden surface. The caption explains that the topic of the photos is unexpected situations or objects placed in unusual positions. There is no evident inconsistency between the image caption and the text, as the text does not provide any information related to the image caption. Therefore, no misinformation is detected."
+    },
+    {
+        "text": "RT @MiddleEastEye: \"Sexual violence is not specific to any ethnicity\" https://t.co/pd47HgdfTY https://t.co/m1nc0fT2ze",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/protest_6.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "The image caption describes a photo showing a group of people at a protest or public gathering with a prominent banner that reads 'RAPEFUGEES NOT WELCOME! Stay Away!'. The caption suggests that the image is related to a protest against refugees, with a strong and controversial message conveyed by the banner. However, the input text does not mention anything about a protest or refugees. The text only states that 'sexual violence is not specific to any ethnicity'. There is a clear inconsistency between the text and the image, indicating that misinformation may be present."
+    },
+    {
+        "text": "\"Feeling the #cold today?\"\\n\\nTake a look at this photograph of earth cradled by clouds, from the Hubble telescope! https://t.co/jCXBIfN3E4",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/hubble_telescope_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image does not have a caption, so it cannot be directly assessed for consistency with the text. However, the text describes a photograph of Earth cradled by clouds from the Hubble telescope, which matches the content of the image. The image shows a surreal and artistic representation of Earth enveloped in clouds, which aligns with the description provided in the text. Therefore, there is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @Refugees: \"What do you expect in Germany?\"  \"Playgrounds.\" Selwa, 9, fled Damascus last week with her family + is now in Lesbos http://…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/refugees_9.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image features a young girl in a crowded and possibly makeshift shelter environment, which is consistent with the text's description of a family fleeing Damascus and seeking shelter in Lesbos. The image also supports the statement about the refugee crisis and humanitarian issues. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT SeriouslyClose: Husband Gave His Unfaithful Ex-Wife Half Of Everything He Owned - Literally … https://t.co/9B0XYvShM2",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/half_everything_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes two separate photos, one showing a green car partially submerged in water and the other showing a half-closed laptop on a wooden surface. The caption explains that the topic of the photos is unexpected situations or objects placed in unusual positions. There is no evident inconsistency between the image caption and the text, as the text does not provide any information related to the image. Therefore, no misinformation is detected."
+    },
+    {
+        "text": "@GabrielGaby18 @Don_Dendy @adityayosa Unbelievable Shot Of The 2012 Supermoon In Rio de Janeiro. http://t.co/G8WT0nrEJW",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/rio_moon_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is consistent with the text's description of a photo of the 2012 Supermoon in Rio de Janeiro. The image shows a nighttime cityscape with a dramatically oversized moon in the background, which aligns with the text's mention of the Supermoon. The description of the cityscape, including the buildings, lights, and mountainous silhouette, also matches the details provided in the text. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @Balvenie01: Des drapeaux de Daesh brandis par les nouveaux gentils migrants devant la Police en Allemagne https://t.co/ynrCBxRYbr",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/refugees_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "The image caption describes a photo showing a group of individuals holding up black flags with white Arabic inscriptions, which are commonly associated with a particular ideology. This contradicts the text, which mentions the flags being brandished by 'new nice migrants' in front of the police in Germany. The text implies that the individuals in the photo are migrants, while the image caption suggests that they are engaged in a political or ideological demonstration. This inconsistency between the text and the image raises doubts about the accuracy of the information."
+    },
+    {
+        "text": "Titta på barnen. De satt närmare 30 barn i den här båten. Barn som flyr i en överfull båt över havet. https://t.co/YtTfJxXh6d",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/refugees_14.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image caption describes a photo of a group of people wearing life jackets on a boat, which is consistent with the text's description of children fleeing on an overcrowded boat. The image supports the statement about the children fleeing on a boat over the sea. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "\"@TheFactsBook: Lenticular clouds over Mount Fuji: http://t.co/wiRWfx28TB\" tenemos que ir ahí 😐😐😐 @seer935",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is consistent with the text's description of lenticular clouds over Mount Fuji. The image shows a mountain with unique cloud formations above it, resembling stacked layers, which are known as lenticular clouds. The description of the image matches the text's mention of lenticular clouds over Mount Fuji. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "@shaahandbook @dougmac2011 this is a cool FAKE picture! Lenticular clouds over Mount Fuji http://t.co/LcsjYdYVei http://t.co/2ghRAi5z6g",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is consistent with the text's description of lenticular clouds over Mount Fuji. The unique cloud formations above the mountain resemble stacked layers, which aligns with the text's mention of lenticular clouds. The absence of characters in the picture also matches the text's description. The image captures the natural beauty and phenomena associated with mountainous regions, supporting the text's statement. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Remember to look up today to find something beautiful…\\n\\nPhoto by @kritayuga. Red Fuji with Red Lenticular Clouds. https://t.co/cUWn1WN8Hk",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_2.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a scenic photograph of Mount Fuji with a unique cloud formation known as a lenticular cloud. The description of the image in the caption matches the content of the text, which mentions a photo of Mount Fuji with red lenticular clouds. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT_com: BREAKING: FRANCE24 reports at least 60 hostages at #Paris concert hall #Bataclan https://t.co/Uu6lyvQ4Gc https://t.co/zQD4DZ1GXv",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_12.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image caption describes a nighttime scene with emergency responders and civilians present in a chaotic situation. This is consistent with the text's description of a report about a hostage situation at a concert hall in Paris. The presence of emergency personnel and the disarray in the image support the statement about an incident occurring. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Husband Gave His Unfaithful Ex-Wife Half Of Everything He Owned - Literally https://t.co/q0Y90VZmoC https://t.co/nHeTG6OLVS",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/half_everything_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes two separate photos, one showing a green car partially submerged in water and the other showing a half-closed laptop on a wooden surface. The image caption mentions that the topic seems to be about unexpected situations or objects placed in unusual positions. There is no evident inconsistency between the image caption and the text, as the text does not provide any information about the content of the image. Therefore, there is no misinformation detected."
+    },
+    {
+        "text": "RT @marcelomena: Esta foto se tomó al inicio de recital en París. Nadie podrá parar la felicidad que brinda la música. https://t.co/qHgEDh9…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image shows a concert venue filled with people who appear to be enjoying a performance, which is consistent with the text's description of a photo taken at the start of a concert in Paris. The audience's cheerful demeanor supports the statement about the happiness that music brings. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Lenticular clouds over Mt. Fuji at the sunrise. Photo by Yuga Kurita (taken on September 13, 2015) https://t.co/kIFmUkobZ8",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_2.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image is consistent with the text's description of a scenic photograph featuring Mount Fuji at either dawn or dusk. The image shows the mountain with a slight covering of clouds near its base, and a unique cloud formation known as a lenticular cloud above it. The soft pastel colors in the sky also match the description in the text. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @gemsmaquillage: I admire France for their freedom &amp; dedication to separation of church &amp; state #JeSuisCharlie (image @cvillanove) http:…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/not_afraid_3.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a crowd of people gathered at night, holding signs that read 'JE SUIS CHARLIE' and 'NOT AFRAID.' This is consistent with the text's description of a photo taken at a vigil or demonstration, where participants show solidarity and shared purpose. The background of the image also matches the description of an urban environment. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "WOOWW...awannya bisa begitu bentukannya. RT @World: Lenticular Clouds over Mount Fuji, Japan. http://t.co/TBD8B8B908",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is consistent with the text's description of lenticular clouds over Mount Fuji, Japan. The unique cloud formations above the mountain resemble stacked layers, which aligns with the description of lenticular clouds. The absence of characters in the picture supports the focus on the natural beauty and phenomena associated with mountainous regions. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT : Husband Gave His Unfaithful Ex-Wife Half Of Everything He Owned - Literally http://t.co/CGbQNPEe1R … http://t.co/wBi4EoVg6h",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/half_everything_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes two separate photos, one showing a green car partially submerged in water and the other showing a half-closed laptop on a wooden surface. The image does not provide any evidence or complement the text about a husband giving his unfaithful ex-wife half of everything he owned. The image and the text are unrelated, suggesting that there is no misinformation present."
+    },
+    {
+        "text": "#PrayForPakistan Ya la torre Eiffel se iluminó con los colores de Pakistán... https://t.co/CbYQhBUZoU",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/pakistan_explosion_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image description matches the text's mention of the Eiffel Tower being illuminated with the colors of Pakistan. The image shows the Eiffel Tower at night with golden lights on its upper part and green lighting on the lower section, which represents the colors of Pakistan's flag. The description of the image aligns with the text, indicating that there is no misinformation present."
+    },
+    {
+        "text": "Two women wounded in Brussels Airport after explosions. Pic: Georgian Public Broadcaster/PA https://t.co/c1hjomAHD2",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/brussels_explosions_5.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image description provides a detailed account of the photo, describing two women who appear to be injured and distressed in an indoor public space. This is consistent with the text's description of two women wounded in Brussels Airport after explosions. The image supports the information provided in the text and there is no evident inconsistency that would suggest misinformation."
+    },
+    {
+        "text": "Every wonder why Bush read this upside down, My Pet Goat, a book seeming like a chant on 9/11(dial 911) http://t.co/yxpeaF8DLl",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/bush_book_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes a photo depicting a young girl and an adult male engaged in an educational activity or a reading session. The background includes patriotic symbols and text related to the U.S. Constitution, suggesting a setting related to education and patriotism. Although the image does not directly relate to the text's mention of Bush reading a book upside down, there is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Check this out @Martin_LW \\n\\nUnbelievable Shot Of The 2012 Supermoon In Rio de Janeiro. \\n\\nhttp://t.co/wLk6Al5F6Y",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/rio_moon_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is consistent with the text's description of a photo of the 2012 Supermoon in Rio de Janeiro. The image shows a nighttime cityscape with a dramatically oversized moon in the background, which matches the text's mention of a Supermoon. The description of the cityscape, including the buildings, lights, and mountainous silhouette, also aligns with the image. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Isaranjuez: RT Reuters: Covered bodies are seen outside a restaurant following shooting in Paris. LIVE coverage:  … https://t.co/mpBhQVZhmH",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_8.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "The image caption describes a nighttime scene outside a venue named 'LE CARILLON' with emergency responders present. It mentions that there are no visible characters actively engaging in any activity within the frame. However, the input text describes a shooting incident outside a restaurant in Paris. The image does not provide any evidence or support for the shooting incident mentioned in the text. This inconsistency suggests that misinformation may be present."
+    },
+    {
+        "text": "domdyer70: RT Conflicts: PHOTO: French military deployed on the streets of #Paris as a large scale terror attack i… https://t.co/dN5oIlbBIu",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_10.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image caption describes a photo of two characters in military attire standing guard on a street at night. This is consistent with the text's description of French military deployed on the streets of Paris. The image provides evidence of a heightened security presence in a civilian area, supporting the statement about a large scale terror attack. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @ArtLify: Remembering...\\n#DavidBowie Actor,\\n\\nDavid Bowie and Catherine Deneuve\\n\"The Hunger\"\\nDirected by Tony Scott\\n1983 https://t.co/Gzs…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/bowie_david_6.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image caption describes the features and details of the photo, including the appearance and expressions of the two individuals. It provides a clear description of the content of the image, which is consistent with the text's mention of David Bowie and Catherine Deneuve in the movie 'The Hunger'. The description of the individuals and their appearance matches the text's reference to actors. Therefore, there is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Kindest thanks @MiloMoire for remarkable support for victims of violent #Islamists attacks https://t.co/OoFdibFTM6 https://t.co/BJcuqzHj48",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/immigrants_8.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image does not provide any evidence or information that contradicts the text. The image shows a woman engaged in a form of protest or activism, which is consistent with the text's mention of support for victims of violent Islamist attacks. The presence of other individuals and a security or police officer suggests that this is a public demonstration. The background of the image, with a large Gothic cathedral, indicates that this event is taking place in a city with historical significance. Overall, there is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Eiffel Tower lights up in Pakistan colours showing solidarity with all HUMANS effected by terror\\n\\n #PrayForLahore https://t.co/joWmXeQRp2",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/pakistan_explosion_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The text describes the Eiffel Tower lighting up in Pakistan colours as a show of solidarity with all humans affected by terror. The image caption confirms that the image is a photo of the Eiffel Tower at night, beautifully illuminated with golden lights on its upper part and green lighting on the lower section. The image is consistent with the text's description of the Eiffel Tower being lit up in special colors, suggesting that there is no misinformation present."
+    },
+    {
+        "text": "Reuters: Covered bodies are seen outside a restaurant following shooting in Paris. LIVE coverage:  … https://t.co/8lnIRcwB92",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_8.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a nighttime scene outside a venue named 'LE CARILLON' with emergency responders present, which is consistent with the text's description of covered bodies seen outside a restaurant following a shooting in Paris. The presence of emergency responders supports the statement about an emergency or critical incident. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Popular on 500px : Red Fuji with Red Lenticular Clouds by Yuga #Landscapes #updatly http://t.co/Ylzxirs5bw",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_2.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image description accurately describes the content of the image, which is a scenic photograph featuring Mount Fuji with a unique cloud formation known as a lenticular cloud. The description provides details about the colors, the mountain, and the cloud formation, all of which are consistent with the image. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @radiocorse2b: En Allemagne, les gens sortent dans la rue pour crier\"l'Allemagne est avec la France\". Beau geste🇫🇷#Attentats #Paris http…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/protest_3.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image shows a large gathering of people at night, which is consistent with the text's description of people in Germany coming out to support France. The image depicts a protest or public demonstration, suggesting a shared purpose or cause. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT SeriouslyClose: Husband Gave His Unfaithful Ex-Wife Half Of Everything He Owned - Literally … https://t.co/Odm6Nc2Veq",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/half_everything_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes two separate photos, one showing a green car partially submerged in water and the other showing a half-closed laptop on a wooden surface. The image caption mentions that the topic seems to be about unexpected situations or objects placed in unusual positions. There is no evident inconsistency between the image caption and the text, as the text does not provide any information about the content of the image. Therefore, there is no misinformation detected."
+    },
+    {
+        "text": "Lenticular Clouds over Mount Fuji https://t.co/5t6C3Ftqxb #Mountaineers #FlyingTraveler #adventure https://t.co/y9SIdXdYv1",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image description accurately describes the content of the image, which shows a mountain with lenticular clouds above it. The description provides detailed information about the unique cloud formations and their characteristics, such as their saucer-like shape and formation at high altitudes. The image aligns with the text's description of lenticular clouds over Mount Fuji, emphasizing the natural beauty and phenomena associated with mountainous regions. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @EPinternacional: El fracaso del 'sueño alemán' lleva a muchos refugiados a volver a Irak\\nhttps://t.co/d5UAUKcO63 https://t.co/hEfqNiYguL",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/protest_6.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "The image caption describes a photo that shows a group of people at a protest or public gathering, with a prominent banner that reads 'RAPEFUGEES NOT WELCOME! Stay Away!'. This image does not support the text's description of refugees returning to Iraq. The image is focused on a protest against refugees, while the text suggests a different topic. The inconsistency between the text and the image indicates that misinformation is present."
+    },
+    {
+        "text": "“@IEarthPictures: Unbelievable Shot Of The 2012 Supermoon In Rio de Janeiro. http://t.co/0JIGcCL3q0” where the heck was I for this?",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/rio_moon_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is consistent with the text's description of a supermoon in Rio de Janeiro. The image shows a nighttime cityscape with a dramatically oversized moon in the background, which aligns with the text's mention of the 2012 Supermoon in Rio de Janeiro. The details in the image, such as the city lights, buildings, and mountainous silhouette, further support the description of a densely populated urban area. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Wow! RT @Gorgeousness_ Stunning RT @TheFactsBook: Lenticular clouds over Mount Fuji: http://t.co/UQEGGAR90t",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is consistent with the text's description of lenticular clouds over Mount Fuji. The image shows a mountain with unique cloud formations above it, resembling stacked layers, which are known as lenticular clouds. The description of the mountain being capped with snow and the foreground appearing to be a flat landscape aligns with the image. The explanation of lenticular clouds being mistaken for UFOs and their formation at high altitudes also matches the image. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @TotalFoot_: Les allemands sortent dans la rue pour crier \"l'Allemagne est avec la France\" ! https://t.co/l0VToR7RGN",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/protest_3.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The text describes Germans taking to the streets to shout 'Germany is with France!' The image caption describes a large gathering of people at night, likely a protest or public demonstration. The presence of banners and the dense crowd supports the description of a public demonstration. Therefore, there is consistency between the text and the image, suggesting no misinformation."
+    },
+    {
+        "text": "Little Syrian girl sells chewing gum on the street so she can feed herself... https://t.co/pGhagPBxHb",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/syrian_children_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image does not provide any evidence or information related to the text. It is a candid portrait of a young girl, and there is no indication of her selling chewing gum or being in a street environment. Therefore, there is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @axelletess: \"Respect us! We are not fair game, even when we are naked!!!\" Artist M.Moire in Cologne; via https://t.co/GWZdlxYUnd https:…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/immigrants_6.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image is consistent with the text's description of an artist in Cologne protesting for respect and body autonomy. The image shows a woman standing in a public space holding a sign, which aligns with the text's mention of the artist being naked. The presence of other individuals in the background, possibly security or police, supports the idea of a protest or demonstration. The topic of the picture is likely related to social issues, which is in line with the text's mention of being 'not fair game'. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "@Reuters Covered bodies are seen outside a restaurant following shooting in Paris. LIVE coverage: https://t.co/5wBYdcmbic",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_8.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a nighttime scene outside a venue named 'LE CARILLON' with emergency responders present, which is consistent with the text's description of a shooting incident in Paris. The presence of emergency responders supports the statement about a critical incident requiring their presence. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @Ron_Hutchcraft: Muslim Gang-Rape Marathons Continue Across Europe: Where’s the Press? Please Share This!!!\\nhttps://t.co/5BchDqYetJ http…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/immigrants_2.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "The image caption describes a collage of four separate photos, none of which are related to the content of the text. The photos depict various scenes unrelated to the topic of Muslim gang-rape marathons in Europe. Therefore, there is a clear inconsistency between the text and the image, suggesting the presence of misinformation."
+    },
+    {
+        "text": "Terror grips #Paris in night of attacks; hostages being held in theater, police say https://t.co/5X9tXq1ceS https://t.co/t362lEPjxx",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_19.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a city street at night with emergency responders and civilians present. This is consistent with the text's description of a night of attacks in Paris, where hostages are being held in a theater. The presence of emergency vehicles and a cordoned-off area supports the statement about a public safety incident. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @ClimateJette: #Earth in her cradle of clouds as seen from the #hubble telescope https://t.co/JgjM5VheAv",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/hubble_telescope_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image does not provide any evidence or complement the text. It is a separate image that depicts a surreal and artistic representation of the Earth. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @lesinrocks: Malgré le deuil et la tristesse, il faut continuer à jouer\\n https://t.co/ACF6dth1LK par @AzzedineFall https://t.co/VyyXs9te…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_4.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a live music performance with a musician playing the electric guitar on stage and an audience in the foreground. The image is consistent with the text's description of a photo taken at the start of a concert in Paris. The audience's enthusiastic response, with many people raising their hands and holding up mobile phones, supports the statement about the joy and excitement of live music. The image provides evidence for the content of the text and there is no evident inconsistency that would suggest misinformation."
+    },
+    {
+        "text": "\"@ThatsEarth: Unbelievable Shot Of The Supermoon In Rio de Janeiro http://t.co/OqdHuJkMQu\"@PaulyC8 that's a better moon for your background!",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/rio_moon_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is a photo that depicts a nighttime cityscape with a dramatically oversized moon in the background. There are no characters visible in this picture. The city is illuminated with numerous lights, suggesting a densely populated urban area. The buildings vary in height, with some high-rise structures standing out. In the distance, a mountainous silhouette can be seen, and atop one of the peaks, there appears to be a statue, which is a common feature in some famous cities. The oversized moon creates a surreal and dramatic effect, dominating the sky and suggesting a theme of fantasy or an artistic manipulation of a typical city view. The image caption does not provide any contradictory information or suggest any misinformation. Therefore, the text and the image are consistent, indicating that no misinformation is present."
+    },
+    {
+        "text": "@TheGrizzleGrams @carvalheucilene @LO2BSH @TuTulsa @Crispi66 @mainzina @AdamsFantasy Lenticular clouds over Mt Fuji . http://t.co/1ZwVddUujq",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image description accurately describes the content of the image, which shows a mountain with lenticular clouds above it. The description provides details about the unique cloud formations, their saucer-like shape, and their formation at high altitudes. The image aligns with the description by showing the mountain with the lenticular clouds. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Paris Terrorist attack &amp; prophecy. (photo of Bataclan crowd selfie pre-attack). Read more. \\nhttps://t.co/s0FBUHQivS https://t.co/Ksnz4rtuNN",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_5.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a concert venue filled with people who appear to be enjoying a performance, which is consistent with the text's description of a photo taken at the start of a concert in Paris. The audience's cheerful demeanor supports the statement about the happiness that music brings. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "PHOTO: These two women were wounded in explosions at #Brussels' airport https://t.co/03NuESAyHW https://t.co/OHlRBXdM3c",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/brussels_explosions_5.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image description provides a detailed account of the photo, describing two women who appear to be injured and distressed in the aftermath of an incident. The description aligns with the text's mention of two women wounded in explosions at Brussels' airport. The image supports the information provided in the text and there is no evident inconsistency that would suggest misinformation."
+    },
+    {
+        "text": "bluepueblo: Lenticular Clouds, Mount Fuji, Japan photo via permsiri https://t.co/5cdKsE9GtR https://t.co/VUx1YpbWkL",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image description accurately describes the content of the image, which shows a mountain with lenticular clouds above it. The description provides details about the unique cloud formations, their saucer-like shape, and their formation at high altitudes. The image aligns with the text's description of lenticular clouds above Mount Fuji in Japan. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "Wow “@ThatsEarth:Unbelievable Shot Of 2012 Supermoon In Rio de Janeiro. http://t.co/4kv4SB8RY0”.\\n        Now that's Awesome...for sure..”",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/rio_moon_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is a photo that depicts a nighttime cityscape with a dramatically oversized moon in the background. There are no characters visible in this picture. The city is illuminated with numerous lights, suggesting a densely populated urban area. The buildings vary in height, with some high-rise structures standing out. In the distance, a mountainous silhouette can be seen, and atop one of the peaks, there appears to be a statue, which is a common feature in some famous cities. The oversized moon creates a surreal and dramatic effect, dominating the sky and suggesting a theme of fantasy or an artistic manipulation of a typical city view. The image caption accurately describes the content of the image and there is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @FEMEN_Movement: Milo Moire performed naked in front of Cologne cathedral #sextremism #womenrights #riot  https://t.co/Vr6BYvlBE3 https:…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/immigrants_8.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image depicts a woman standing in front of a large Gothic cathedral, holding a sign and engaging in a form of protest or activism. The other individuals in the background appear to be passersby or onlookers, and there is a security or police officer visible as well. The cathedral in the background indicates that this event is taking place in a city with historical significance. The image is consistent with the text's description of Milo Moire performing naked in front of Cologne cathedral as a form of protest or activism. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @elmundoes: Las denuncias en Colonia ascienden ya a 379, el 40 % por agresiones sexuales https://t.co/PlRVbQU1sq https://t.co/Q7jYPNElnE",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/protest_6.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "The image caption describes a photo of a protest or public gathering with a prominent banner that reads 'RAPEFUGEES NOT WELCOME! Stay Away!'. The caption suggests that the image is related to a protest against refugees. However, the input text does not mention anything about a protest or refugees. The text only talks about the number of complaints in Cologne related to sexual assaults. There is a clear inconsistency between the text and the image, indicating the presence of misinformation."
+    },
+    {
+        "text": "RT @TotalFoot_: Les allemands sortent dans la rue pour crier \"l'Allemagne est avec la France\" ! https://t.co/l0VToR7RGN",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/protest_3.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The text describes Germans taking to the streets to shout 'Germany is with France!' The image caption describes a large gathering of people at night, likely a protest or public demonstration. The presence of banners and the dense crowd supports the description of a public demonstration. Therefore, there is consistency between the text and the image, suggesting no misinformation."
+    },
+    {
+        "text": "Covered bodies are seen outside a restaurant following shooting in Paris. LIVE coverage:  https://t.co/4fyPA8VJ1K https://t.co/Nha7fbbiEb",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_8.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a nighttime scene outside a venue named 'LE CARILLON' with emergency responders present, which is consistent with the text's description of covered bodies seen outside a restaurant following a shooting in Paris. The presence of emergency responders supports the statement about an emergency or critical incident. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "On This Day 8th December 1980\\nJohn Lennon was murdered\\nPic John Lennon 'Jammin' with Che Guevara #JohnLennon https://t.co/DrbdkarwWQ",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/john_guevara_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image does not provide any evidence or information that contradicts the text. The text mentions the murder of John Lennon on December 8th, 1980, while the image description describes a photo of two individuals engaged in a musical activity. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "el Che Guevara y John Lennon tocando la guitarra juntos..la foto del siglo..mira @FitoPaezMusica https://t.co/WP8flxfXzS",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/john_guevara_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "The image caption describes a photo depicting two characters engaged in a musical activity. However, the input text does not mention anything about Che Guevara and John Lennon playing the guitar together. This inconsistency suggests that misinformation may be present."
+    },
+    {
+        "text": "You can't tell me God isn't real. “@TheFactsBook: Lenticular clouds over Mount Fuji: http://t.co/baksDCklLh”",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is a photo of a mountain with lenticular clouds above it, which is consistent with the text's description of lenticular clouds over Mount Fuji. The image accurately represents the unique cloud formations and the mountain in the background. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "“@TopEarthPix: Unbelievable Shot Of The 2012 Supermoon In Rio de Janeiro. http://t.co/siBKGlqiIm” hahahahahaha",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/rio_moon_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is consistent with the text's description of a photo of the 2012 Supermoon in Rio de Janeiro. The image shows a nighttime cityscape with a dramatically oversized moon in the background, which matches the text's mention of a Supermoon. The description of the cityscape, including the buildings, lights, and mountainous silhouette, also aligns with the image. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "#BreakingNews https://t.co/HQkI0ZLHD8 Photo: People inside Stade de France after attacks reported in Paris; repor… https://t.co/5n4hUsewLy",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_9.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a large stadium filled with numerous people gathered on the field, which is consistent with the text's description of people inside Stade de France after attacks reported in Paris. The dispersed crowd suggests some form of post-event activity, such as a celebration or a public gathering. The background of the image matches the description of the stadium's seating areas being mostly empty. The lighting in the image also aligns with the statement that the event took place in the evening or at night. Overall, there is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @ABC: LATEST: 'Ongoing situation' in Paris; as many as 60 hostages being held https://t.co/aSq8pKt0rz https://t.co/abg0LXZnSD",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_15.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "The image caption describes a nighttime street scene with several individuals, which is not consistent with the text's description of an ongoing situation in Paris with hostages being held. The image does not provide any evidence or support for the text's claim. Therefore, there is an evident inconsistency between the text and the image, suggesting misinformation."
+    },
+    {
+        "text": "“@TheFactsBook: Lenticular clouds over Mount Fuji: http://t.co/1D1zUpOpri” @NicoletteWomack just in case you already miss meteorology. 😁😆",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is consistent with the text's description of lenticular clouds over Mount Fuji. The image shows a mountain with unique cloud formations above it, resembling stacked layers, which are known as lenticular clouds. The description of the image matches the text's explanation of lenticular clouds and their characteristics. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "David Bowie as Tilda Swinton. Swinton as Bowie. The stars look very different today #DavidBowie #RIPBowie #art https://t.co/OJtXNJsrdi",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/bowie_david_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes a photo featuring two characters, a woman and a man, who are dressed in stylish attire and appear to be posing for a fashion shoot or acting in a scene. The description does not contradict the text, which mentions David Bowie and Tilda Swinton. The image does not provide any evidence of misinformation, as it aligns with the topic of art and fashion mentioned in the text."
+    },
+    {
+        "text": "Thank you Eiffel Tower for your thoughtful tribute to the victims of the bomb attack on innocents in Lahore,Pakistan https://t.co/OWq7IZthWW",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/pakistan_explosion_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is a photo of the Eiffel Tower at night, which is consistent with the text's mention of the Eiffel Tower. The description of the image matches the iconic symbol of Paris and the unique lighting suggests a special event or tourist attraction. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "“@TheFactsBook: Lenticular clouds over Mount Fuji: http://t.co/JtTrmutq9D” to drift down this mountain and see this 👌",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image is a photo of a mountain with lenticular clouds above it, which is consistent with the text's description of lenticular clouds over Mount Fuji. The image accurately represents the unique cloud formations and the mountain in the background. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "itele: Attaques multiples à #Paris &gt; au moins 18 morts (préfecture de police) https://t.co/xCLkzs7Q9M",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_14.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "The image description does not match the text. The text mentions multiple attacks in Paris with at least 18 deaths, while the image description talks about a nighttime scene on an urban street with a police car and individuals gathered. There is no evident consistency between the text and the image, suggesting misinformation."
+    },
+    {
+        "text": "That book George Bush was reading with those kids when the first plane went in was upside down. #NeverForget911 http://t.co/HyXIn3TOWM",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/bush_book_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image caption describes a photo depicting a young girl and an adult male engaged in an educational activity or a reading session. The background includes patriotic symbols and text related to the U.S. Constitution, suggesting a school or civic event focused on education and patriotism. The image caption is consistent with the text's description of George Bush reading with kids during the 9/11 incident. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "\"@MagnifcentEarth: The incredibly rare Black Lion, only a few of these exist https://t.co/5z2rhCBhyh\"",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/black_lion_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image shows a lion with a black mane and coat, which is consistent with the text's description of a rare black lion. The lion appears calm and at ease, suggesting that it is resting or sunbathing. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @rakshit_chopra: \"@andpscott: Confused fans have flooded the pitch here in #Paris https://t.co/PUluvZeJyK\"@Rama21989 @AnanthRaghavan @aa…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_6.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a large crowd of people gathered on a football field, which is consistent with the text's description of confused fans flooding the pitch in Paris. The image provides evidence of a significant event that has led to a mass convergence on the pitch, possibly celebrating a victory or participating in a significant event. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @DVATW: Rape by third world immigrants does not seem to bother Germany. But PROTESTING about it does. https://t.co/OUya7F5pVw",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/protest_6.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "The image caption describes a protest against refugees with a strong and controversial message conveyed by the banner. However, the input text mentions nothing about a protest or refugees. Instead, it talks about rape by third world immigrants and the lack of concern in Germany. There is a clear inconsistency between the text and the image, suggesting that misinformation is present."
+    },
+    {
+        "text": "RT @Reuters: Covered bodies are seen outside a restaurant following shooting in Paris. LIVE coverage:  https://t.co/PLhowjzzcX https://t.co…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_8.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image shows a nighttime scene outside a venue named 'LE CARILLON' with emergency responders present. The image is consistent with the text's description of covered bodies outside a restaurant following a shooting in Paris. The presence of emergency responders supports the statement about a critical incident requiring their presence. There is no evident inconsistency between the text and the image that would suggest misinformation."
+    },
+    {
+        "text": "RT @ernimol: @JoostNiemoller Dit schijnt een foto te zijn van het concert vlak voordat ze binnen kwamen https://t.co/GS18xU7rro",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image shows a concert venue filled with people who appear to be enjoying a performance, which is consistent with the text's description of a photo taken at the start of a concert in Paris. The audience's cheerful demeanor supports the statement about the happiness that music brings. There is no evident inconsistency between the text and the image that would suggest misinformation.\",\n    \"external knowledge\": \"\""
+    },
+    {
+        "text": "RT @dark_shark: Words cannot express: RIP David Bowie https://t.co/g40zLWl3qq https://t.co/R94E6LMw9C",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/bowie_david_4.jpg",
+        "label": 0,
+        "prediction": 0,
+        "explain": "The image caption describes a portrait of a man with a serious expression, which is consistent with the text's description of a photo. The image does not provide any evidence or contradict the text, so there is no evident inconsistency that would suggest misinformation."
+    },
+    {
+        "text": "RT @ernimol: @JoostNiemoller Dit schijnt een foto te zijn van het concert vlak voordat ze binnen kwamen https://t.co/GS18xU7rro",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image shows a concert venue filled with people who appear to be enjoying a performance, which is consistent with the text's description of a photo taken at the start of a concert in Paris. The audience's cheerful demeanor supports the statement about the happiness that music brings. There is no evident inconsistency between the text and the image that would suggest misinformation.\",\n    \"external knowledge\": \"\""
+    },
+    {
+        "text": "Gabriele_Corno : Lenticular clouds over Fuji #Japan #Fuji https://t.co/7W2cN1lRtq (via Tw… https://t.co/K99jtbMU6h) https://t.co/1ayasqQVLQ",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+        "label": 1,
+        "prediction": 0,
+        "explain": "The image description accurately describes the content of the image, which shows a mountain with lenticular clouds above it. The description provides details about the unique cloud formations, their saucer-like shape, and their formation at high altitudes. The image aligns with the text's description of lenticular clouds over Fuji, supporting the statement made in the text. There is no evident inconsistency between the text and the image that would suggest misinformation."
     }
 ]

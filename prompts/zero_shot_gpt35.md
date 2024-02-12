@@ -1,7 +1,7 @@
 You are given a piece of **Input Text** and an image caption. Your task is to predict whether misinformation is present. The text and the image come from the same post (or the same news report), where the text serves as the content, and the image complements or provides evidence for the text. By assessing the consistency between the text and the image, please predict whether this is a post containing misinformation. Please follow the Rules below:
 
 Rules:
-Generate a JSON object with three properties: 'label', 'explanation' and 'external knowlegde'. 
+Generate a JSON object with two properties: 'label', 'explanation'. 
 The return value of 'label' property should be selected from ["Real", "Fake"].
 "Real" indicates that no misinformation is detected. 
 "Fake" indicates that misinformation is detected. 
