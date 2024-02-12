@@ -2,7 +2,7 @@ import json
 from lemma_component import LemmaComponent
 from toolLearning import evidence_retreival
 from config import data_root, out_root, definition_path
-from utils import save
+from utils import save, process_multilines_output
 
 # mode ('direct' or 'cot' or 'cot+kg' or 'cot+fact' or 'lemma')
 #### EXPLAINATION ####
@@ -26,7 +26,7 @@ zs_flag = True
 intuition = True
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'twitter'
+data_name = 'test'
 
 # input data file name
 if data_name == 'twitter':
@@ -49,6 +49,9 @@ elif data_name == 'weibo21':
     use_online_image = False
 elif data_name == 'pheme':
     input_file = data_root + 'PHEME/PHEME_reshuffled.json'
+    use_online_image = True
+elif data_name == 'test':
+    input_file = data_root + 'exampleinput.json'
     use_online_image = True
 else:
     raise ValueError('Invalid data name')
@@ -104,25 +107,30 @@ question_gen_module = LemmaComponent(prompt='question_gen.md', name='question_ge
 modify_reasoning_module = LemmaComponent(prompt='reason_modify.md', name='modify_reasoning', model='gpt4v',
                                          using_cache=True,
                                          online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
-                                         post_process=lambda x: (x.split('\n')[-1], x))
+                                         post_process=process_multilines_output)
 
 for i, item in enumerate(data):
     current_index += 1
     print('Processing index {}/{}'.format(current_index, total_data_size))
+
+    # Get input data
     url = item["image_url"]
     text = item["original_post"]
     label = item["label"]
 
+    # Direct prediction
     zero_shot = zero_shot_module(TEXT=text, image=url)
     if zero_shot is None:
         continue
 
-    zero_shot_label = 0 if zero_shot['label'].lower() in "Real".lower() else 1
+    zero_shot_label = 0 if "real" in zero_shot['label'].lower() else 1
     zero_shot_explain = zero_shot['explanation']
-    # zero_shot_external = 0 if zero_shot['external knowledge'].lower() in "No".lower() else 1
+
+
+    # Decide whether external knowledge is needed to further examine the input sample
     decision_external = external_knowledge_module(REASONING = zero_shot_explain, TEXT = text, image=url)
-    
-    zero_shot_external = 0 if decision_external['external knowledge'].lower() in "No".lower() else 1
+    zero_shot_external = 0 if "no" in decision_external['external knowledge'].lower()  else 1
+
     print("######################WHY")
     print("Zero-shot Prediction:", zero_shot_label)
     print(decision_external['explanation'])
@@ -130,11 +138,10 @@ for i, item in enumerate(data):
     tool_learning_text = None
 
     if zero_shot_external == 1:
-        # kg = kg_gen_module(TEXT=text, image=url)
-        # print("KG")
-        
-        question_gen = question_gen_module(TEXT=text, PREDICTION=zero_shot_label, REASONING=zero_shot_explain,
-                                           image=url)
+        question_gen = question_gen_module(TEXT=text, 
+                                            PREDICTION=zero_shot_label, 
+                                            REASONING=zero_shot_explain,
+                                            image=url)
         if question_gen is None:
             continue
         title, questions = question_gen['title'], question_gen['questions']
@@ -146,15 +153,13 @@ for i, item in enumerate(data):
             continue
         final_result = modify_reasoning_module(TEXT=text,
                                                ORIGINAL_REASONING=zero_shot_explain,
-                                            #    Question1=questions[0],
-                                            #    Question2=questions[1],
                                                TOOLLEARNING=tool_learning_text,
                                                DEFINITION=open(definition_path, 'r').read(),
                                                image=url)
         if final_result is None:
             continue
-        else:
-            modified_label, modified_reasoning = final_result
+        modified_label = final_result["label"]
+        modified_reasoning =  final_result["explanation"]
 
         for cat in ["True", "Satire/Parody", "Misleading Content", "Imposter Content", "False Connection",
                     "Manipulated Content", "Unverified"]:

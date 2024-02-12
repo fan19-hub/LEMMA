@@ -1,32 +1,32 @@
 Labels:
-[1, 0, 0]
+[1]
 Zero-shot:
-[1, 1, 0]
+[1]
 Predictions:
-[1, 0, 0]
-Current Index:2
-Total items: 3
-Total correct: 3
+[1]
+Current Index:0
+Total items: 1
+Total correct: 1
 Total incorrect: 0
 Total Accuracy: 1.0
-Zero-shot correct: 2
-Zero-shot incorrect: 1
-Zero-shot Accuracy: 0.6666666666666666
-Total modified: 1
+Zero-shot correct: 1
+Zero-shot incorrect: 0
+Zero-shot Accuracy: 1.0
+Total modified: 0
 	| 0 -> 1: 0
 		| Correct: 0
 		| Incorrect : 0
-	| 1-> 0: 1
-		| Correct: 1
+	| 1-> 0: 0
+		| Correct: 0
 		| Incorrect : 0
-Total unmodified: 2
-Total modified correct: 1
+Total unmodified: 1
+Total modified correct: 0
 Total modified incorrect: 0
 lemma section
 Labels:
-[1, 0, 0]
+[1]
 Predictions:
-[1, 0, 0]
+[1]
 
 Accuracy: 1.0
 
@@ -34,43 +34,43 @@ Rumor Section:
 True positives: 1
 False positives: 0
 False negatives: 0
-True negatives: 2
+True negatives: 0
 Precision: 1.0
-Recall: 0.3333333333333333
-F1 Score: 0.5
+Recall: 1.0
+F1 Score: 1.0
 
 Non-rumor Section:
-True positives: 2
+True positives: 0
 False positives: 0
 False negatives: 0
 True negatives: 1
-Precision: 1.0
-Recall: 0.6666666666666666
-F1 Score: 0.8
+Precision: 0
+Recall: 0.0
+F1 Score: 0
 
 zero shot section
 Labels:
-[1, 0, 0]
+[1]
 Predictions:
-[1, 1, 0]
+[1]
 
-Accuracy: 0.6666666666666666
+Accuracy: 1.0
 
 Rumor Section:
 True positives: 1
-False positives: 1
+False positives: 0
 False negatives: 0
-True negatives: 1
-Precision: 0.5
-Recall: 0.5
-F1 Score: 0.5
+True negatives: 0
+Precision: 1.0
+Recall: 1.0
+F1 Score: 1.0
 
 Non-rumor Section:
-True positives: 1
+True positives: 0
 False positives: 0
-False negatives: 1
+False negatives: 0
 True negatives: 1
-Precision: 1.0
-Recall: 0.5
-F1 Score: 0.6666666666666666
+Precision: 0
+Recall: 0.0
+F1 Score: 0
 

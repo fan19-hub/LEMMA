@@ -12,22 +12,16 @@ from duckduckgo_search.exceptions import DuckDuckGoSearchException
 import openai
 from openai import OpenAI
 
-from config import prompts_root,imgbed_root
+from config import prompts_root,imgbed_root,OPENAI_KEY
 from utils import predict_region
 
 
 
 # Setup OpenAI API
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = OPENAI_KEY
 client = OpenAI()
 
 untrusted_sources={"www.facebook.com","m.facebook.com","www.reddit.com","www.weibo.com","twitter.com","www.tiktok.com","www.instagram.com","www.youtube.com","www.pinterest.com","www.linkedin.com","www.tumblr.com","www.douban.com","www.taobao.com","www.jd.com","www.amazon.com","www.ebay.com","www.aliexpress.com","www.bilibili.com","www.netflix.com","www.hulu.com","www.imdb.com","www.dailymotion.com","www.douyin.com","steamcommunity.com","m.ixigua.com"}
-
-# requests_html session
-# session = HTMLSession()
-
-# html2text process 
-# html2text_process= html2text.HTML2Text()
 
 
 def soure_filter(results):
