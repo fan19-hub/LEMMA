@@ -9,6 +9,7 @@ import openai
 import requests
 from openai import OpenAI
 from config import data_root, out_root, prompts_root, cache_root, imgbed_root, OPENAI_KEY
+import json
 
 client = OpenAI()
 with open(prompts_root + "img_caption.md", "r") as f:
@@ -132,7 +133,7 @@ def metric(labels, pred_labels):
         tn = sum((l == 0 and p == 0) for l, p in zip(truth, pred))
 
         precision = tp / (tp + fp) if tp + fp > 0 else 0
-        recall = tp / (tp + tn) if tp + tn > 0 else 0
+        recall = tp / (tp + fn) if tp + fn > 0 else 0
         f1 = 2 * precision * recall / (precision + recall) if precision + recall > 0 else 0
         return tp, fp, fn, tn, precision, recall, f1
 
@@ -366,5 +367,16 @@ if __name__ == '__main__':
     # stats('out/weibo_lemma_base_kg_final_output_50_chinese.json')
     # stats('out/weibo_lemma_base_kg_final_output_50_3.json')
     # stats('out/fakereddit_lemma_base_kg_final_output_50_3.json')
-    stats('out/fakereddit_lemma_base_kg_final_output_full.json')
-    wrong('out/fakereddit_lemma_base_kg_final_output_full.json')
+    # stats('out/fakereddit_lemma_base_kg_final_output_full.json')
+    # wrong('out/fakereddit_lemma_base_kg_final_output_full.json')
+    # stats('out/twitter_cot_gpt4_output.json')
+
+    path = 'out/twitter_cot_gpt4_output.json'
+    with open(path, 'r') as f:
+        data = json.load(f)
+
+    labels = [items['label'] for items in data]
+    preds = [items['prediction'] for items in data]
+
+    print(metric(labels, preds))
+

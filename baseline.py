@@ -27,7 +27,7 @@ zs_flag = True
 intuition = True
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'twitter'
+data_name = 'fakeddit'
 
 # input data file name
 if data_name == 'twitter':
@@ -79,7 +79,8 @@ if resume:
         for char in lines[5]:
             if char.isdigit():
                 pred_labels.append(int(char))
-        current_index = int(lines[6].split(':')[1].strip())
+    
+        current_index = int(lines[4].split(':')[1].strip())
     with open(output_result, 'r', encoding='utf-8') as f:
         all_results = json.load(f)
     total_data_size = len(data)
