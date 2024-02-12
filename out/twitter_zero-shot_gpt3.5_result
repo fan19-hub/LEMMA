@@ -1,0 +1,57 @@
+Labels:
+[1, 0]
+Predictions:
+[1, 1]
+Current Index:1
+lemma section
+Labels:
+[1, 0]
+Predictions:
+[1, 1]
+
+Accuracy: 0.5
+
+Rumor Section:
+True positives: 1
+False positives: 1
+False negatives: 0
+True negatives: 0
+Precision: 0.5
+Recall: 1.0
+F1 Score: 0.6666666666666666
+
+Non-rumor Section:
+True positives: 0
+False positives: 0
+False negatives: 1
+True negatives: 1
+Precision: 0
+Recall: 0.0
+F1 Score: 0
+
+zero shot section
+Labels:
+[1, 0]
+Predictions:
+[1, 1]
+
+Accuracy: 0.5
+
+Rumor Section:
+True positives: 1
+False positives: 1
+False negatives: 0
+True negatives: 0
+Precision: 0.5
+Recall: 1.0
+F1 Score: 0.6666666666666666
+
+Non-rumor Section:
+True positives: 0
+False positives: 0
+False negatives: 1
+True negatives: 1
+Precision: 0
+Recall: 0.0
+F1 Score: 0
+

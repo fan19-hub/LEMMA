@@ -1,0 +1,16 @@
+[
+    {
+        "text": "Husband Gave His Unfaithful Ex-Wife Half Of Everything He Owned - Literally https://t.co/9Ot0mQAcQ3… https://t.co/EXXQb1b708\"",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/half_everything_1.jpg",
+        "label": 1,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image caption describes two separate photos, one showing a green car partially submerged in water and the other showing a half-closed laptop on a wooden surface. The image caption is consistent with the text, which does not mention anything about unexpected situations or objects placed in unusual positions. Therefore, there is no evident inconsistency between the text and the image that would suggest misinformation.\""
+    },
+    {
+        "text": "RT @msantoro1978: Imagens de 2015: o Bataclan (Paris) momentos antes do atentado do Estado Islâmico. https://t.co/GQieBt424X",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_5.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Real\",\n    \"explanation\": \"The image shows a concert venue filled with people who appear to be enjoying a performance, which is consistent with the text's description of a photo taken at the start of a concert in Paris. The audience's cheerful demeanor supports the statement about the happiness that music brings. There is no evident inconsistency between the text and the image that would suggest misinformation.\",\n    \"external knowledge\": \"\""
+    }
+]

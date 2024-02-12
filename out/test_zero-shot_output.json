@@ -1,0 +1,9 @@
+[
+    {
+        "text": "RT @pepvilar: 18 muertos en #Paris @Le_Figaro: 🔴 Au moins 18 morts, selon les forces de l'ordre. https://t.co/4JYtElhlo7 https://t.co/mxd0i…",
+        "image_url": "twitter/Mediaeval2016_TestSet_Images/attacks_paris_18.jpg",
+        "label": 0,
+        "prediction": 1,
+        "explain": "{\n    \"label\": \"Fake\",\n    \"explanation\": \"The image does not support the text's description of a photo taken at the start of a concert in Paris. The image depicts an emergency scene at night on a city street with police officers and emergency vehicles, which is inconsistent with the text's description of a concert venue filled with people enjoying a performance. The image does not provide any evidence or complement the text, suggesting a possible misinformation.\""
+    }
+]

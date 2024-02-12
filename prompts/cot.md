@@ -3,7 +3,9 @@ You are given a piece of **Input Text** and an image. Your task is to predict wh
 # Rules:
 1. Start your reasoning with an evaluation based on the sentence 'Let's think step by step'.
 2. Output your complete reasoning in the subsequent lines.
-3. In the final line, use a single binary value (0 or 1) to indicate whether misinformation exists. 0 for no misinformation. 1 for the presence of misinformation. Please don't output any other words except for the binary label
+3. In the final line, use a single word to indicate whether misinformation exists, which should be selected from ["Real", "Fake"].
+"Real" indicates that no misinformation is detected. 
+"Fake" indicates that misinformation is detected. 
 
 # Input Text:
 

@@ -8,10 +8,23 @@ from langdetect import detect
 import openai
 import requests
 from openai import OpenAI
-from config import data_root, out_root, OPENAI_KEY
+from config import data_root, out_root, prompts_root, cache_root, imgbed_root, OPENAI_KEY
+
+client = OpenAI()
+with open(prompts_root + "img_caption.md", "r") as f:
+    image_caption_prompt = f.read()
+    
+with open(cache_root + "img_caption.json","r") as f:
+    image_caption_cache = json.loads(f.read())
+
+def process_multilines_output(x):
+    lines=x.split("\n")
+    label=lines[-1].strip().lower()
+    explanation="\n".join(lines[:-1]) if len(lines)>1 else ""
+    return {"label":label,"explanation":explanation}
+
 
 def onlineImg_process(prompt, url, model="gpt-4-vision-preview", max_tokens=1000, temperature=0.1):
-    client = OpenAI()
     response = client.chat.completions.create(
         model=model,
         messages=[
@@ -77,8 +90,7 @@ def offlineImg_process(prompt, image_path, model="gpt-4-vision-preview", max_tok
 
 
 def gpt_no_image(prompt, model="gpt-3.5-turbo", max_tokens=1000, temperature=0.1):
-    client = OpenAI()
-
+    
     response = client.chat.completions.create(
         model=model,
         messages=[
@@ -89,7 +101,29 @@ def gpt_no_image(prompt, model="gpt-3.5-turbo", max_tokens=1000, temperature=0.1
     )
     return response.choices[0].message.content
 
-
+def image_caption(source, is_url=True):
+    global image_caption_cache, image_caption_prompt
+    if source=="" or source is None:
+        return ""
+    elif source in image_caption_cache:
+        return image_caption_cache[source]
+    else:
+        # Get the image caption
+        try:
+            if is_url:
+                if "http" not in source:
+                    image_path = imgbed_root + source
+                caption= onlineImg_process(image_caption_prompt, image_path, max_tokens=1000)
+            else:
+                caption= offlineImg_process(image_caption_prompt, image_path, max_tokens=1000)
+            image_caption_cache[source]=caption
+        except:
+            return ""
+        with open(cache_root+"img_caption.json","w") as f:
+            f.write(json.dumps(image_caption_cache))
+        return caption
+    
+        # prompt=prompt.format(CAPTION)
 def metric(labels, pred_labels):
     def confusion_matrix(truth, pred):
         tp = sum((l == 1 and p == 1) for l, p in zip(truth, pred))
@@ -310,6 +344,18 @@ def save(labels, pred_labels, zero_shot_labels, current_index, all_results, outp
     write_metric_result(output_score, evaluation_result, 'a', prefix='zero shot section')
 
 
+def save_baseline(labels, pred_labels, current_index, all_results, output_result, output_score):
+    with open(output_result, 'w', encoding='utf-8') as f:
+        json.dump(all_results, f, ensure_ascii=False, indent=4)
+    with open(output_score, 'w', encoding='utf-8') as f:
+        f.write('Labels:\n{}\nPredictions:\n{}\nCurrent Index:{}\n'.format(labels, pred_labels, current_index))
+
+    evaluation_result = metric(labels, pred_labels)
+    write_metric_result(output_score, evaluation_result, 'a', prefix='lemma section')
+
+    evaluation_result = metric(labels, pred_labels)
+    write_metric_result(output_score, evaluation_result, 'a', prefix='zero shot section')
+    
 if __name__ == '__main__':
     # stats('out/fakereddit_lemma_base_kg_final_output_50.json')
     # stats('out/fakereddit_lemma_test_kg_final_output_50_8.json')
