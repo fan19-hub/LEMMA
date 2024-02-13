@@ -11,14 +11,14 @@ from utils import save, save_baseline, process_multilines_output, image_caption
 # cot+kg: use chain of thought method and knowledge graph based reasoning
 # cot+fact: use chain of thought method and fact check
 # lemma: our method
-mode = 'cot'
-model = "gpt4"
+mode = 'zero-shot'
+model = "gpt3.5"
 
 # print the result
 view = True
 
 # automatic resume
-resume = False
+resume = True
 
 # zero-shot conditional result
 zs_flag = True
@@ -27,7 +27,7 @@ zs_flag = True
 intuition = True
 
 # dataset (twitter or weibo or fakereddit or ticnn)
-data_name = 'fakeddit'
+data_name = 'fakereddit'
 
 # input data file name
 if data_name == 'twitter':
@@ -71,12 +71,8 @@ if resume:
         for char in lines[1]:
             if char.isdigit():
                 labels.append(int(char))
-        zero_shot_labels = []
-        for char in lines[3]:
-            if char.isdigit():
-                zero_shot_labels.append(int(char))
         pred_labels = []
-        for char in lines[5]:
+        for char in lines[3]:
             if char.isdigit():
                 pred_labels.append(int(char))
     
@@ -98,11 +94,11 @@ else:
 
 if model=="gpt4":
     if mode=="zero-shot":
-        baseline_module = LemmaComponent(prompt='zero_shot_gpt35.md', name='zero_shot', model=model, using_cache=False,
+        baseline_module = LemmaComponent(prompt='zero_shot_caption.md', name='zero_shot_caption', model=model, using_cache=False,
                                         online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                                         post_process=lambda x: json.loads(x))                       
     elif mode=="cot":
-        baseline_module = LemmaComponent(prompt='cot_gpt35.md', name='cot', model=model, using_cache=False,
+        baseline_module = LemmaComponent(prompt='cot_caption.md', name='cot_caption', model=model, using_cache=False,
                 online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                 post_process=process_multilines_output)
     else:
@@ -111,18 +107,27 @@ if model=="gpt4":
     
 elif model=="gpt3.5":
     if mode=="zero-shot":
-        baseline_module = LemmaComponent(prompt='zero_shot_gpt35.md', name='zero-shot_gpt35', model=model, using_cache=True,
+        baseline_module = LemmaComponent(prompt='zero_shot_caption.md', name='zero-shot_caption', model=model, using_cache=True,
                 online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                 post_process=lambda x: json.loads(x))
     elif mode=="cot":
-        baseline_module = LemmaComponent(prompt='cot_gpt35.md', name='cot_gpt35', model=model, using_cache=True,
+        baseline_module = LemmaComponent(prompt='cot_caption.md', name='cot_caption', model=model, using_cache=True,
                 online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                 post_process=process_multilines_output)
     else:
         raise Exception(f"Invalid mode: {mode}")
+
+elif model=="gpt4v":
+    if mode=="one-hop":
+        baseline_module = LemmaComponent(prompt='one_hop.md', name='one_hop', model=model, using_cache=False,
+                online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
+                post_process=process_multilines_output)
+    if mode=="zero-shot":
+        baseline_module = LemmaComponent(prompt='zero_shot.md', name='zero_shot', model=model, using_cache=False,
+                online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
+                post_process=lambda x: json.loads(x))
 else:
     raise Exception(f"Invalid Language model: {model}")
-
 
 
 for i, item in enumerate(data):
@@ -141,11 +146,17 @@ for i, item in enumerate(data):
         caption =  image_caption(url)
         if caption=="": continue
         response = baseline_module(TEXT=text, CAPTION=caption, image=url)
-    else:
+    elif model=="gpt4v":
         response = baseline_module(TEXT=text, image=url)
     if response is None:
         continue
-    prediction = 0 if "real" in response['label'].lower() else 1
+    if "real" in response['label'].lower():
+        prediction=0
+    elif "fake" in response['label'].lower():
+        prediction=1
+    else:
+        print("Unknown label:", response['label'])
+        continue
     explanation = response['explanation']
 
 
