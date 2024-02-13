@@ -2,7 +2,6 @@ You are given a piece of news/post. You are then provided a list of webpages ret
 
 ### Example:
 
-
 **News/Post:**
 news/post text
 
