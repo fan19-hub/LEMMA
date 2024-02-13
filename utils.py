@@ -112,6 +112,7 @@ def image_caption(source, is_url=True):
         # Get the image caption
         try:
             if is_url:
+                image_path=source
                 if "http" not in source:
                     image_path = imgbed_root + source
                 caption= onlineImg_process(image_caption_prompt, image_path, max_tokens=1000)
