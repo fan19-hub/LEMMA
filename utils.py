@@ -1,15 +1,12 @@
-import base64
-import io
-import json
-import os
-import sys
 
-from langdetect import detect
-import openai
+import io
+import sys
+import json
+import base64
 import requests
 from openai import OpenAI
-from config import data_root, out_root, prompts_root, cache_root, imgbed_root, OPENAI_KEY
-import json
+from langdetect import detect
+from configs import data_root, out_root, prompts_root, cache_root, imgbed_root, OPENAI_KEY
 
 client = OpenAI()
 with open(prompts_root + "img_caption.md", "r") as f:

@@ -1,7 +1,6 @@
 import json
-from config import prompts_root, imgbed_root, cache_root
+from configs import prompts_root, imgbed_root, cache_root
 from utils import onlineImg_process, offlineImg_process, gpt_no_image
-
 
 class LemmaComponent:
     def __init__(self, prompt, name, model='gpt4v', using_cache=False, cache_name='', online_image=True, max_retry=5,
