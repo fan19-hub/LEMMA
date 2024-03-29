@@ -130,7 +130,7 @@ for i, item in enumerate(data):
     direct_external = 0 if "no" in decision_external['external knowledge'].lower()  else 1
 
     print("######################WHY")
-    print("Zero-shot Prediction:", direct_label)
+    print("Direct Prediction:", direct_label)
     print(decision_external['explanation'])
     print("######################")
     tool_learning_text = None

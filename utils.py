@@ -224,7 +224,7 @@ def stats(data_path):
     for item in data:
         labels.append(item['label'])
         predictions.append(item['prediction'])
-        zero_shot_predictions.append(item['direct'])
+        zero_shot_predictions.append(item['Zero-shot'])
         if item['label'] == item['direct']:
             if item['prediction'] != item['label']:
                 total_incorrect += 1
@@ -368,8 +368,9 @@ if __name__ == '__main__':
     # stats('out/fakereddit_lemma_base_kg_final_output_full.json')
     # wrong('out/fakereddit_lemma_base_kg_final_output_full.json')
     # stats('out/twitter_cot_gpt4_output.json')
+    # stats('out/fakereddit_zero-shot_instructblip_output.json')
 
-    path = 'out/twitter_cot_gpt4_output.json'
+    path = 'out/fakereddit_zero-shot_instructblip_output.json'
     with open(path, 'r') as f:
         data = json.load(f)
 

@@ -1,5 +1,8 @@
 import json
+import sys
+sys.path.append('./')
 from lemma_component import LemmaComponent
+from BLIP import InstructBLIP
 from configs import data_root, out_root, definition_path
 from utils import save, save_baseline, process_multilines_output, image_caption
 
@@ -10,8 +13,9 @@ from utils import save, save_baseline, process_multilines_output, image_caption
 # cot+kg: use chain of thought method and knowledge graph based reasoning
 # cot+fact: use chain of thought method and fact check
 # lemma: our method
-mode = 'zero-shot'
-model = "gpt3.5"
+
+mode="cot"
+model = "instructblip"
 
 # print the result
 view = True
@@ -125,14 +129,19 @@ elif model=="gpt4v":
         baseline_module = LemmaComponent(prompt='direct.md', name='direct', model=model, using_cache=False,
                 online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                 post_process=lambda x: json.loads(x))
+
+elif model=="instructblip":
+    if mode=="zero-shot":
+        baseline_module=InstructBLIP(prompt='direct_blip.md', name='direct_blip', min_len=80, max_len=300,beam_size=5,len_penalty=1,repetition_penalty=3,top_p=0.9 )
+    if mode=="cot":
+        baseline_module=InstructBLIP(prompt='cot_blip.md', name='direct_blip', min_len=80, max_len=300,beam_size=5,len_penalty=1,repetition_penalty=3,top_p=0.9 )
+
 else:
     raise Exception(f"Invalid Language model: {model}")
 
 
 for i, item in enumerate(data):
     current_index += 1
-    if current_index>200:
-        break
     print('Processing index {}/{}'.format(current_index, total_data_size))
 
     # Get input data
@@ -145,17 +154,18 @@ for i, item in enumerate(data):
         caption =  image_caption(url)
         if caption=="": continue
         response = baseline_module(TEXT=text, CAPTION=caption, image=url)
-    elif model=="gpt4v":
+    elif model=="gpt4v" or model=="instructblip":
         response = baseline_module(TEXT=text, image=url)
     if response is None:
         continue
+        
     if "real" in response['label'].lower():
-        prediction=0
+        prediction = 0
     elif "fake" in response['label'].lower():
-        prediction=1
+        prediction = 1
     else:
-        print("Unknown label:", response['label'])
-        continue
+        prediction = 0
+        print("unkown label")
     explanation = response['explanation']
 
 
