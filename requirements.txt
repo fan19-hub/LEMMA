@@ -1,5 +1,6 @@
 openai==1.4.0
-duckduckgo-search==4.2.0
+duckduckgo-search==5.2.1
 newspaper3k==0.2.8
 langdetect==1.0.9
+curl_cffi==0.6.2
 argparse

@@ -224,7 +224,7 @@ def stats(data_path):
     for item in data:
         labels.append(item['label'])
         predictions.append(item['prediction'])
-        zero_shot_predictions.append(item['Zero-shot'])
+        zero_shot_predictions.append(item['direct'])
         if item['label'] == item['direct']:
             if item['prediction'] != item['label']:
                 total_incorrect += 1

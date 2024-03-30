@@ -44,7 +44,7 @@ $env:OPENAI_API_KEY = "<Your own API Key>"
 #### Example Run
 Please put your data in data/example_input.json, and run this command
 ```
-python lemma.py --input_file_name example_input.json --use_online_image --resume
+python lemma.py --input_file_name example_input.json --use_online_image
 ```
 
 # <a name="dataset"></a>Dataset
