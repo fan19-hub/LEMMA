@@ -23,12 +23,26 @@ This is the offical repository for <a href="https://arxiv.org/abs/2402.11943">LE
 
 
 # Get Started
-#### Install
+#### Install Dependency
 
 ```shell
 pip install -r requirements.txt
 ```
+
+#### OpenAI API Key
+Please register for an API Key on https://platform.openai.com/api-keys
+Then set up the environment variable
+For Linux, run:
+```shell
+export OPENAI_API_KEY=<Your own API Key>
+```
+For Windows, run:
+```bash
+$env:OPENAI_API_KEY = "<Your own API Key>"
+```
+
 #### Example Run
+Please put your data in data/example_input.json, and run this command
 ```
 python lemma.py --input_file_name example_input.json --use_online_image --resume
 ```
