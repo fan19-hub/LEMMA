@@ -14,7 +14,7 @@ from utils import save, save_baseline, process_multilines_output, image_caption
 # cot+fact: use chain of thought method and fact check
 # lemma: our method
 
-mode="zero-shot"
+mode="cot"
 model = "instructblip"
 
 # print the result
@@ -126,10 +126,8 @@ elif model=="gpt4v":
 
 elif model=="instructblip":
     if mode=="zero-shot":
-        # In direct_blip.md, we delete the example. Because instructblip will mess up if an example is in prompt
         baseline_module=InstructBLIP(prompt='direct_blip.md', name='direct_blip', min_len=80, max_len=300,beam_size=5,len_penalty=1,repetition_penalty=3,top_p=0.9 )
     if mode=="cot":
-        # instructblip insists on outputing fake/real first, and then explanation, which means predicition is outputed without any reasoning in the context. So we let instructblip output reasoning only, and use gpt to summarize its reasoning and draw a conclusion.
         baseline_module=InstructBLIP(prompt='cot_blip.md', name='direct_blip', min_len=80, max_len=300,beam_size=5,len_penalty=1,repetition_penalty=3,top_p=0.9 )
 
 else:

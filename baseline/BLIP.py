@@ -21,21 +21,25 @@ class InstructBLIP:
     def extra_post_process(self,output):
         max_tokens=1
         temperature=0.1
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "user", "content": output},
-                {"role": "system", "content": 'do user think the post contains misinformation? Your answer should be a single word from [yes, no].'}
-            ],
-            max_tokens=max_tokens,
-            temperature=temperature
-        )
+        try:
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "user", "content": output},
+                    {"role": "system", "content": 'do user think the post contains misinformation? Your answer should be a single word from [yes, no].'}
+                ],
+                max_tokens=max_tokens,
+                temperature=temperature
+            )
+        except:
+            return "unkown"
         r=response.choices[0].message.content
         if "yes" in r:
             return "fake"
-        elif "not" in r:
+        elif "no" in r:
             return "real"
         else:
+            print("Warning: inproper answer",r)
             return r
 
     def __call__(self, *args, **kwargs):
@@ -61,7 +65,8 @@ class InstructBLIP:
                 "gfodor/instructblip:ca869b56b2a3b1cdf591c353deb3fa1a94b9c35fde477ef6ca1d248af56f9c84",
                 input=input
             ).lower()
-        except:
+        except Exception as e:
+            print(f"Error for instructBLIP {e}")
             return None
 
         output_dict={}
