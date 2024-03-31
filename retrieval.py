@@ -205,12 +205,22 @@ def get_evidence(text, title, questions, max_len=2000):
             except:
                 all_search_results[query]=[result]
 
+    print("Original Search Results:")
+    print(all_search_results)
+
     # Topic Relevance Filter
     enhanced_text=f"[title]:{title}\n{text}"
     all_search_results = topic_relevance_filter(enhanced_text, all_search_results, top_k, query_set)
-    
+
+    print("Filtered Search Results:")
+    print(all_search_results)
+
     # Evidence Extraction
     evidences=evidence_extraction(all_search_results[title], enhanced_text)
+
+    print("Evidence Extraction Results:")
+    print(evidences)
+    
     all_search_results[title]=evidences
     return json.dumps([value for value in all_search_results.values()])
 

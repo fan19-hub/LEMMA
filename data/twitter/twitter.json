@@ -882,21 +882,30 @@
     "label": 1
   },
   {
+    "post_id": "632264741000466432",
+    "original_post": "Earth Art? \\nCloud Art?? \\nOut of this World Art!\\nFantastic pic\\n\\n\u201c@Gabriele_Corno: Lenticular clouds over Fuji #japan http://t.co/SG0udOMjZV\u201d",
+    "user_id": "31416780",
+    "username": "mountain_womyn",
+    "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
+    "timestamp": "Fri Aug 14 18:57:15 +0000 2015",
+    "label": 1
+  },
+  {
+    "post_id": "665325284921581568",
+    "original_post": "RT @djvjgrrl: Now: Germans take to the streets chanting \"Germany Stands With You France\" #Paris #PrayForParis #fusillade https://t.co/I1FT9\u2026",
+    "user_id": "1131877430",
+    "username": "jackwood",
+    "image_url": "twitter/Mediaeval2016_TestSet_Images/protest_3.jpg",
+    "timestamp": "Sat Nov 14 00:28:03 +0000 2015",
+    "label": 1
+  },
+  {
     "post_id": "391199314845786113",
     "original_post": "@jeffgill24 Here's An Actual Picture Of President Bush, During 9-11 Attacks. Reading A Book UPSIDE DOWN. #FoxNews http://t.co/0LJX1TK4tK",
     "user_id": "634676291",
     "username": "DrTomMartinPhD",
     "image_url": "twitter/Mediaeval2016_TestSet_Images/bush_book_1.jpg",
     "timestamp": "Fri Oct 18 13:49:19 +0000 2013",
-    "label": 1
-  },
-  {
-    "post_id": "651984078099472384",
-    "original_post": "Lenticular Clouds over Mt Fuji  \\n  \\n#photography #cloud #travel  \\n#weather #hiking #wanderlust #photo http://t.co/ZsGrfveF2F",
-    "user_id": "316752833",
-    "username": "B_Ubiquitous",
-    "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
-    "timestamp": "Thu Oct 08 04:54:52 +0000 2015",
     "label": 1
   },
   {
@@ -1113,15 +1122,6 @@
     "username": "Nam_myoho_law",
     "image_url": "twitter/Mediaeval2016_TestSet_Images/pakistan_explosion_1.jpg",
     "timestamp": "Sun Mar 27 23:29:50 +0000 2016",
-    "label": 1
-  },
-  {
-    "post_id": "632264741000466432",
-    "original_post": "Earth Art? \\nCloud Art?? \\nOut of this World Art!\\nFantastic pic\\n\\n\u201c@Gabriele_Corno: Lenticular clouds over Fuji #japan http://t.co/SG0udOMjZV\u201d",
-    "user_id": "31416780",
-    "username": "mountain_womyn",
-    "image_url": "twitter/Mediaeval2016_TestSet_Images/fuji_lenticular_1.jpg",
-    "timestamp": "Fri Aug 14 18:57:15 +0000 2015",
     "label": 1
   },
   {
@@ -6136,15 +6136,6 @@
     "image_url": "twitter/Mediaeval2016_TestSet_Images/refugees_16.jpg",
     "timestamp": "Wed Jan 27 22:03:50 +0000 2016",
     "label": 0
-  },
-  {
-    "post_id": "665325284921581568",
-    "original_post": "RT @djvjgrrl: Now: Germans take to the streets chanting \"Germany Stands With You France\" #Paris #PrayForParis #fusillade https://t.co/I1FT9\u2026",
-    "user_id": "1131877430",
-    "username": "jackwood",
-    "image_url": "twitter/Mediaeval2016_TestSet_Images/protest_3.jpg",
-    "timestamp": "Sat Nov 14 00:28:03 +0000 2015",
-    "label": 1
   },
   {
     "post_id": "688154363051642882",

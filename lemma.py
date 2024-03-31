@@ -81,6 +81,8 @@ for i, item in enumerate(data):
 
     # Direct Prediction
     direct = direct_module(TEXT=text, image=url)
+    print(direct)
+    
     if direct is None: continue
     direct_pred = 0 if "real" in direct['label'].lower() else 1
     direct_explain = direct['explanation']
@@ -90,7 +92,7 @@ for i, item in enumerate(data):
     direct_external = 0 if "no" in decision_external['external knowledge'].lower() else 1 
 
     print("######################")
-    print("Direct Prediction:", direct_pred)
+    print("Need External Knowledge:", direct_external)
     print(decision_external['explanation'])
     print("######################")
 
@@ -101,6 +103,7 @@ for i, item in enumerate(data):
                                             PREDICTION=direct_pred, 
                                             REASONING=direct_explain,
                                             image=url)
+        
         if question_gen is None: continue
         title, questions = question_gen['title'], question_gen['questions']
 
@@ -158,10 +161,10 @@ for i, item in enumerate(data):
         'direct_explain': direct_explain,
     })
 
-    print('\nLabel:', label, ', Prediction:', final_pred, ', Direct:', direct_pred)
+    print('\nLabel:', label, ', Refined Prediction:', final_pred, ', Direct:', direct_pred)
     print('Refined Explain:', final_explain)
 
     save(labels, final_preds, direct_labels, current_index, logger, output_result, output_score)
-
+    
 if __name__ == '__main__':
     pass
