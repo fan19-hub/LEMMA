@@ -61,7 +61,7 @@ python lemma.py --input_file_name ./twitter/twitter.json --use_online_image
 
 To assess the performance of LEMMA, we mainly evaluate its performance on two representative datasets in the field.
 - ***Twitter*** (Ma et al., 2017) collects multimedia tweets from Twitter platform. The posts in the dataset contain textual tweets, image/video attachments, and additional social contextual information. For our task, we filtered out only image-text pairs as testing samples. <a href="https://github.com/fan19-hub/LEMMA/blob/main/data/twitter/twitter.json">Twitter dataset</a> is available for downloading.
-- ***Fakeddit*** (Nakamura et al., 2019) is designed for fine-grained fake news detection. The dataset is curated from multiple subreddits of the Reddit plat form where each post includes textual sentences, images, and social context information. The 2-way categorization for this dataset establishes whether the news is real or false. <a href="https://github.com/fan19-hub/LEMMA/blob/main/data/fakereddit/FAKEDDIT.json">Fakeddit dataset</a> is available for downloading.
+- ***Fakeddit*** (Nakamura et al., 2019) is designed for fine-grained fake news detection. The dataset is curated from multiple subreddits of the Reddit plat form where each post includes textual sentences, images, and social context information. The 2-way categorization for this dataset establishes whether the news is real or false. <a href="https://github.com/fan19-hub/LEMMA/blob/main/data/fakeddit/FAKEDDIT.json">Fakeddit dataset</a> is available for downloading.
 
 # Baselines
 
