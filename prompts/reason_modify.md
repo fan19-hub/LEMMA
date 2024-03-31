@@ -13,7 +13,7 @@ The main effect of external knowledge is to check the factuality of the context 
 
 Begin of external resources:
 
-{TOOLLEARNING}
+{EXTERNAL}
 
 End of external resources.
 

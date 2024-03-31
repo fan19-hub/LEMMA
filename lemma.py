@@ -120,7 +120,7 @@ for i, item in enumerate(data):
         rumor_types=["true", "satire/parody", "misleading content", "imposter content", "false connection","manipulated content", "unverified"]
         refine_result = refine_prediction_module(TEXT=text,
                                                ORIGINAL_REASONING=direct_explain,
-                                               TOOLLEARNING=retrieved_text,
+                                               EXTERNAL=retrieved_text,
                                                DEFINITION=open(definition_path, 'r').read(),
                                                image=url)
         
