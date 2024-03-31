@@ -154,8 +154,7 @@ for i, item in enumerate(data):
                                                TOOLLEARNING=tool_learning_text,
                                                DEFINITION=open(definition_path, 'r').read(),
                                                image=url)
-        if final_result is None:
-            continue
+        if final_result is None: continue
         modified_label = final_result["label"]
         modified_reasoning =  final_result["explanation"]
 

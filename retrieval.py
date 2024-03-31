@@ -20,8 +20,7 @@ from configs import prompts_root,OPENAI_KEY
 openai.api_key = OPENAI_KEY
 client = OpenAI()
 
-untrusted_sources={"www.facebook.com","m.facebook.com","www.reddit.com","www.weibo.com","twitter.com","www.tiktok.com","www.instagram.com","www.youtube.com","www.pinterest.com","www.linkedin.com","www.tumblr.com","www.douban.com","www.taobao.com","www.jd.com","www.amazon.com","www.ebay.com","www.aliexpress.com","www.bilibili.com","www.netflix.com","www.hulu.com","www.imdb.com","www.dailymotion.com","www.douyin.com","steamcommunity.com","m.ixigua.com"}
-
+untrusted_sources={"www.facebook.com","m.facebook.com","www.reddit.com","www.weibo.com","twitter.com","www.tiktok.com","www.douyin.com","www.instagram.com","www.pinterest.com","www.taobao.com","www.jd.com","www.amazon.com","www.ebay.com","www.imdb.com","www.douban.com","steamcommunity.com","m.ixigua.com","www.bilibili.com","www.netflix.com",}
 
 def soure_filter(results):
     global untrusted_sources
@@ -66,7 +65,7 @@ def topic_relevance_filter(text, all_results, top_k, query_set, cutoff_index=150
     try:
         relevance_labels=json.loads(response)
     except:
-        print("Tool learning Warning: Invalid response from topic_relevance_filter. Remain unchanged.")
+        # print("Tool learning Warning: Invalid response from topic_relevance_filter. Remain unchanged.")
         return results
     
     # Wash the string keys to int, and remove the non-integer keys
@@ -125,8 +124,7 @@ def scraper(url, max_len=2000):
 def text_search(query, query_type="title", top_k=5):
     # Prefix
     region = predict_region(query)
-    if detect(query) == 'zh-cn': prefix = '谣言 '
-    else: prefix = 'fake news '
+    prefix = 'fake news '
     if query_type =='title':
         query = prefix + query
 
@@ -145,7 +143,7 @@ def text_search(query, query_type="title", top_k=5):
         return []
 
     # Source Filter
-    # results = soure_filter(results)
+    results = soure_filter(results)
     return results[:top_k]
 
 
@@ -213,16 +211,15 @@ def get_evidence(text, title, questions, max_len=2000):
     # Evidence Extraction
     evidences=evidence_extraction(all_search_results[title], enhanced_text)
     all_search_results[title]=evidences
-    return json.dumps(all_search_results, ensure_ascii=False)
+    return json.dumps([value for value in all_search_results.values()])
 
 
 
 # Unit test:
-
-if __name__ =="__main__":
-    text="'cash backing to remake scotland a wastefree economy the cash is from the scottish institute for remanufacture supported by the government to create a wastefree circular economy remanufacturing is a process that takes old but highvalue products and restores them to an asnew condition'"
-    title="Scotland's Investment in Waste-Free Circular Economy"
-    questions=['Scottish Institute for Remanufacture government funding', 'Success stories of remanufacturing in Scotland']
-    get_evidence(text, title, questions)    
-#     # scraper("https://www.bbc.com/news/world-us-canada-68244352", 2000)
+# if __name__ =="__main__":
+#     text="'cash backing to remake scotland a wastefree economy the cash is from the scottish institute for remanufacture supported by the government to create a wastefree circular economy remanufacturing is a process that takes old but highvalue products and restores them to an asnew condition'"
+#     title="Scotland's Investment in Waste-Free Circular Economy"
+#     questions=['Scottish Institute for Remanufacture government funding', 'Success stories of remanufacturing in Scotland']
+#     get_evidence(text, title, questions)    
+#     scraper("https://www.bbc.com/news/world-us-canada-68244352", 2000)
 
