@@ -41,6 +41,11 @@ For Windows, run:
 $env:OPENAI_API_KEY = "<Your own API Key>"
 ```
 
+#### Make output directory
+```
+mkdir out
+```
+
 #### Example Run
 Please put your data in data/example_input.json, and run this command
 ```
