@@ -55,7 +55,7 @@ else:
 
 
 # LEMMA Components Initialization
-direct_module = LemmaComponent(prompt='direct.md', name='Direct', model='gpt4v', using_cache=args.use_cache,
+direct_module = LemmaComponent(prompt='lemma_direct.md', name='Direct', model='gpt4v', using_cache=args.use_cache,
                                   online_image=args.use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                                   post_process=lambda x: json.loads(x))
 external_knowledge_module = LemmaComponent(prompt='external_knowledge.md', name='external_knowledge',       
@@ -159,7 +159,7 @@ for i, item in enumerate(data):
     })
 
     print('\nLabel:', label, ', Prediction:', final_pred, ', Direct:', direct_pred)
-    print('Refined Explain:', refined_explain)
+    print('Refined Explain:', final_explain)
 
     save(labels, final_preds, direct_labels, current_index, logger, output_result, output_score)
 

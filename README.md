@@ -47,6 +47,11 @@ Please put your data in data/example_input.json, and run this command
 python lemma.py --input_file_name example_input.json --use_online_image
 ```
 
+If you want to run Twitter Dataset, run the following command
+```
+python lemma.py --input_file_name ./twitter/twitter.json --use_online_image
+```
+
 # <a name="dataset"></a>Dataset
 
 To assess the performance of LEMMA, we mainly evaluate its performance on two representative datasets in the field.

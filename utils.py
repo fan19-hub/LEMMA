@@ -9,11 +9,6 @@ from langdetect import detect
 from configs import data_root, out_root, prompts_root, cache_root, imgbed_root, OPENAI_KEY
 
 client = OpenAI()
-with open(prompts_root + "img_caption.md", "r") as f:
-    image_caption_prompt = f.read()
-    
-with open(cache_root + "img_caption.json","r") as f:
-    image_caption_cache = json.loads(f.read())
 
 def process_multilines_output(x):
     lines=x.split("\n")
@@ -100,7 +95,13 @@ def gpt_no_image(prompt, model="gpt-3.5-turbo", max_tokens=1000, temperature=0.1
     return response.choices[0].message.content
 
 def image_caption(source, is_url=True):
-    global image_caption_cache, image_caption_prompt
+
+    with open(prompts_root + "img_caption.md", "r") as f:
+        image_caption_prompt = f.read()
+        
+    with open(cache_root + "img_caption.json","r") as f:
+        image_caption_cache = json.loads(f.read())
+
     if source=="" or source is None:
         return ""
     elif source in image_caption_cache:

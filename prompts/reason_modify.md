@@ -1,4 +1,4 @@
-Now we'll provide new references for you. Remember the image of news has already provided.
+Now we'll provide new references for you. Remember the image of news has already been provided.
 
 And the following are new references:
 
@@ -9,7 +9,7 @@ Here is the original text of the news:
 
 ##### Second reference: External knowledge and facts.
 Here are provided external news/articles/post/wikis that are related to the provided news topics. You can trust the authenticity of these resources. 
-The main of effect of external knowledge is to check the factuality of the context and check whether there is a sardonlism existing in image.
+The main effect of external knowledge is to check the factuality of the context and check whether there is a sardonicism existing in the image.
 
 Begin of external resources:
 

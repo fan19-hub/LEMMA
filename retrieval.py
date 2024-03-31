@@ -42,6 +42,7 @@ def topic_relevance_filter(text, all_results, top_k, query_set, cutoff_index=150
         results= all_results[query]
         for i,result in enumerate(results):
             id = qid*top_k + i        # we can use id//top_k to determine which query it belongs later
+       
             result['body']=result['body'][:cutoff_index]
             all_results_flatterned.append({id:result})
 
