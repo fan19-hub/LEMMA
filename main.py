@@ -5,15 +5,13 @@ from configs import data_root, out_root, definition_path
 from utils import save, process_multilines_output, perror
 import traceback
 
-# automa
-# ic resume
 resume = True
 
 using_cache = True
 
 use_online_image = True
 
-start_index, end_index = 0,100000000
+start_index, end_index = 0,300
 
 # dataset (twitter or weibo or fakereddit or ticnn)
 data_name = 'twitter'
@@ -164,19 +162,21 @@ for i, item in enumerate(data):
             final_pred = 1
         print('Refined Prediction:', refined_pred)
         final_explain = refined_explain
+        retrieved_text = retrieved_text + visual_retrieved_text
 
     else:
         final_pred = direct_pred
         final_explain = direct_explain
 
     # Logging
+    
     labels.append(label)
     direct_labels.append(direct_pred)
     final_preds.append(final_pred)
     logger.append({
         'text': text,
         'image_url': url,
-        'tool_learning_text': retrieved_text+visual_retrieved_text,
+        'tool_learning_text': retrieved_text,
         'label': label,
         'prediction': final_pred,
         'explain': final_explain,
