@@ -14,6 +14,23 @@ from openai import OpenAI
 
 from utils import predict_region
 from configs import prompts_root,OPENAI_KEY
+from urllib.parse import urlparse
+
+import pyautogui
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service as ChromeService
+from configs import imgbed_root
+import os
+chrome_driver_path = 'chromedriver.exe'
+
+# Find the chromederver suitable for your chrome version here: https://googlechromelabs.github.io/chrome-for-testing/#stable
+
+# Initialize the Chrome webdriver and open the URL
+options = webdriver.ChromeOptions()
+options.add_experimental_option('excludeSwitches', ['enable-logging'])
+# service = ChromeService(executable_path=chrome_driver_path)
+driver = webdriver.Chrome()
 
 
 # Setup OpenAI API
@@ -42,19 +59,18 @@ def topic_relevance_filter(text, all_results, top_k, query_set, cutoff_index=150
         results= all_results[query]
         for i,result in enumerate(results):
             id = qid*top_k + i        # we can use id//top_k to determine which query it belongs later
-       
             result['body']=result['body'][:cutoff_index]
             all_results_flatterned.append({id:result})
 
     # Prompt formation
-    text=text[:cutoff_index]
+    text=text[:cutoff_index+50]
     with open(prompts_root+'topic_relevance_filter.md', 'r', encoding='utf-8') as f: 
         prompt=f.read()
     prompt=prompt.format(TEXT=text, SEARCH_RESULT=json.dumps(all_results_flatterned, ensure_ascii=False, indent=4))
 
     # GPT Query
     completion = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4-turbo",
         messages=[
             {"role": "user", "content": prompt}
         ],
@@ -81,15 +97,14 @@ def topic_relevance_filter(text, all_results, top_k, query_set, cutoff_index=150
         
     # Filter the results and restructure the results
     all_filtered_results = {}  
+    for query in query_set:
+        all_filtered_results[query]=[]
     for temp in all_results_flatterned:
         id, result = list(temp.items())[0]
         if id in relevance_labels and relevance_labels[id]==True:
             qid=id//top_k               # use id//top_k to determine which query it belongs
             query=query_set[qid]
-            try:
-                all_filtered_results[query].append(result)
-            except:
-                all_filtered_results[query]=[result]
+            all_filtered_results[query].append(result)
     return all_filtered_results
 
 
@@ -149,21 +164,25 @@ def text_search(query, query_type="title", top_k=5):
 
 
 
-def evidence_extraction(search_results, query, pre_max_len=2000, after_max_len=250):
-    full_text_results = []
-    for search_result in search_results:
+def evidence_extraction(search_results, query, pre_max_len=2000, after_max_len=250, max_items = 3):
+    documents = {}
+    headers = {}
+    for id, search_result in enumerate(search_results):
         title = search_result['title']
         link = search_result['href']
+        body = search_result["body"]
         full_text = scraper(link,pre_max_len)
-        full_text = f"[title]: {title}\n"+full_text
-        full_text_results.append(full_text)
-    with open("full_text_results.json", 'w', encoding='utf-8') as f: 
-        f.write(json.dumps(full_text_results, ensure_ascii=False, indent=4))
-    
+        if len(full_text)<30:
+            documents[str(id)] = body
+        else:  
+            documents[str(id)] = full_text
+        #  Source: {urlparse(link).hostname}
+        headers[str(id)] = f"Title: {title}."
+
     # Prompt formation
     with open(prompts_root+'evidence_extraction.md', 'r', encoding='utf-8') as f: 
         prompt=f.read()
-    prompt=prompt.format(EVIDENCE = json.dumps(full_text_results), TEXT = query)
+    prompt=prompt.format(EVIDENCE = json.dumps(documents), TEXT = query)
     
     # GPT Query
     completion = client.chat.completions.create(
@@ -174,16 +193,21 @@ def evidence_extraction(search_results, query, pre_max_len=2000, after_max_len=2
         temperature=0.1
     )
     response = completion.choices[0].message.content
+
+    evidences = []
     try:
-        evidences=json.loads(response)
-        evidences=list(evidences.values())[0]
+        extracted_results=json.loads(response)
+        for id, extracted_result in extracted_results.items():
+            if extracted_result != "":
+                evidence = headers[str(id)] + extracted_result 
+                evidences.append(evidence)
     except:
         print("Tool learning Warning: Invalid response from evidence_extraction. Remain unchanged.")
-        evidences=full_text_results
-    with open("evidences.json", 'w', encoding='utf-8') as f:
-        f.write(json.dumps(evidences, ensure_ascii=False, indent=4))
+        evidences = list(documents.values())
+    # with open("logging/evidences.json", 'w', encoding='utf-8') as f:
+    #     f.write(json.dumps(evidences, ensure_ascii=False, indent=4))
     evidences=[evidence[:after_max_len] for evidence in evidences if len(evidence)>0]
-    return evidences
+    return evidences[:max_items]
     
 
 def get_evidence(text, title, questions, max_len=2000):
@@ -192,6 +216,7 @@ def get_evidence(text, title, questions, max_len=2000):
     query_set = [title] + questions
     get_query_type = ['title'] + ['question']*len(questions)
     all_search_results = {}
+    titles_seen = set()
     for qid, query in enumerate(query_set): 
         # Query Type
         q_type=get_query_type[qid]
@@ -200,37 +225,115 @@ def get_evidence(text, title, questions, max_len=2000):
 
         # Results Formatting
         for result in results:
+            if result['title'] in titles_seen: continue
+            else: titles_seen.add(result['title'])
             try:
                 all_search_results[query].append(result)
             except:
                 all_search_results[query]=[result]
 
-    print("Original Search Results:")
-    print(all_search_results)
+    # logging
+    search_log = {"original_post":text, "title":title, "questions":questions, "original_search_results":all_search_results}
 
     # Topic Relevance Filter
-    enhanced_text=f"[title]:{title}\n{text}"
+    enhanced_text =f"Title: {title}. \n {text}"
     all_search_results = topic_relevance_filter(enhanced_text, all_search_results, top_k, query_set)
-
-    print("Filtered Search Results:")
-    print(all_search_results)
-
+    search_log["relevant_search_results"]=all_search_results
     # Evidence Extraction
-    evidences=evidence_extraction(all_search_results[title], enhanced_text)
+    all_search_results[title]=evidence_extraction(all_search_results[title], enhanced_text)
 
-    print("Evidence Extraction Results:")
-    print(evidences)
-    
-    all_search_results[title]=evidences
-    return json.dumps([value for value in all_search_results.values()])
+    # Formatting
+    retrieved_dict = {f"Infomation might relate to '{title}'":json.dumps(all_search_results[title])}
+    all_search_results.pop(title,None)
+    for question, evidences in all_search_results.items():
+        info_list = [] 
+        for evidence in evidences[:2]:
+            # Source: {urlparse(evidence['href']).hostname}
+            info_list.append(f"Title: {evidence['title']}.\n {evidence['body']}")
+        retrieved_dict[f"Infomation might relate to '{question}'"] = info_list
 
+    # logging
+    search_log["retrieved_text"] = retrieved_dict
+    with open("logging/search_results.json", 'a', encoding='utf-8') as f: 
+        f.write(json.dumps(search_log, ensure_ascii=False, indent=4))
+
+    return json.dumps(retrieved_dict)
+
+
+def visual_search(source, original_post, is_url=True, max_items = 5):
+    # Google Image Search Page
+    try:
+        driver.get('https://www.google.com/imghp')
+    except:
+        try:
+            driver.quit()
+        except:
+            pass
+        driver = webdriver.Chrome()
+        driver.get('https://www.google.com/imghp')
+    sleep(1)  
+    button = driver.find_element(By.CSS_SELECTOR, "div.nDcEnd")
+    button.click()
+    sleep(1) 
+
+    # Get the image
+    if is_url:
+        # use the image url
+        if "http" not in source: 
+            source=imgbed_root+source
+        driver.find_element(By.CSS_SELECTOR, "input.cB9M7").send_keys(source)
+        search_button=driver.find_element(By.CSS_SELECTOR, "div.Qwbd3")
+        search_button.click()       
+    else:
+        # upload the image
+        image_path=os.path.abspath(source) 
+        pyautogui.typewrite(image_path)
+        sleep(3)  
+        pyautogui.press('enter')
+        pyautogui.press('enter')
+        sleep(5)  
+        driver.find_element_by_name('file').send_keys(r"D:\test\xuexi\test\14.png")
+        upload_button = driver.find_element(By.CSS_SELECTOR, "div.ZeVBtc>span")
+        upload_button.click()
+
+    sleep(1)
+    # image serach result page
+    exact_search=driver.find_element(By.CSS_SELECTOR, "div.ICt2Q")
+    exact_search.click()
+    sleep(2)
+
+    # exact search result page
+    results=driver.find_elements(By.CSS_SELECTOR, "li>a")
+    search_results=[]
+    for result in results:
+        link = result.get_attribute('href')
+        if "google.com" in link:
+            continue
+        title = result.get_attribute('aria-label')
+        if title !="":
+            # "source":urlparse(link).hostname
+            search_result= "Title: " + title.replace("来源","Source")
+            search_results.append(search_result)
+    if search_results==[]:
+        driver.quit()
+        return "Nothing found"
+    retrieved_text = "Image occurs in: " + json.dumps(search_results[:max_items],ensure_ascii=False)
+    search_log={original_post: retrieved_text}
+    with open("logging/visual_search_results.json", 'a', encoding='utf-8') as f: 
+        f.write(json.dumps(search_log, ensure_ascii=False, indent=4))
+
+    return retrieved_text
+
+def driver_quit():
+    driver.quit()
 
 
 # Unit test:
-# if __name__ =="__main__":
-#     text="'cash backing to remake scotland a wastefree economy the cash is from the scottish institute for remanufacture supported by the government to create a wastefree circular economy remanufacturing is a process that takes old but highvalue products and restores them to an asnew condition'"
-#     title="Scotland's Investment in Waste-Free Circular Economy"
-#     questions=['Scottish Institute for Remanufacture government funding', 'Success stories of remanufacturing in Scotland']
-#     get_evidence(text, title, questions)    
-#     scraper("https://www.bbc.com/news/world-us-canada-68244352", 2000)
-
+if __name__ =="__main__":
+    pass
+    # text="'cash backing to remake scotland a wastefree economy the cash is from the scottish institute for remanufacture supported by the government to create a wastefree circular economy remanufacturing is a process that takes old but highvalue products and restores them to an asnew condition'"
+    # title="Scotland's Investment in Waste-Free Circular Economy"
+    # questions=['Scottish Institute for Remanufacture government funding', 'Success stories of remanufacturing in Scotland']
+    # get_evidence(text, title, questions)    
+    # scraper("https://www.bbc.com/news/worl-us-canada-68244352", 2000)
+    visual_search("twitter/Mediaeval2016_TestSet_Images/syrian_children_1.jpg","Syrian Girl who sells gum")

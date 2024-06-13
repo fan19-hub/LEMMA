@@ -1,35 +1,18 @@
-You are given a piece of news/post. You are then provided a list of webpages retrieved from the Internet. For each webpage, please quote or summarize the text fragments that are relevant to the news/post. Return the quoted/summarized text as a new string. If the entire evidence is irrelevant to the news/post, please return an empty string. Try your best to only include the relevant fragment instead of returning the whole thing back. At the same time, do not waste any valuable information.
+You are given a Query. You are then given a dictionary called Documents, whose key is the document ID and value is the documen retrieved from the Internet. For each document, 
+- if some segments are relevant to any key information in Query, quote them.
+- if the whole page is relevant to Query, summarize it comprehensively and concisely
+- if it is irrelevant to Query, return empty string
+Please output a new dictionary, whose key is still document ID and value is the document segments relevant to the Query. Try to only include the relevant part instead of returning the whole thing back.But do not be too strict.
 
-### Example:
-
-**News/Post:**
-news/post text
-
-**Webpages:**
-
-[
-    "relevant webpage 1",
-    "irrelevant webpage 2",
-    "relevant webpage 3"
-]
-
-**Output:**
-{{
-    "results": [
-                "text in webpage 1 that is relevant to the news/post",
-                "",
-                "summary of content in webpage 3 that is relevant to the news/post"
-                ]
-}}
+### Example output format
+{{"0":"Funding has been awarded to nine pioneering projects to help Scottish remanufacturing businesses make the most efficient use of material. The Scottish", "1":"New Institute of Remanufacture to drive Scotland's circular economy","2": "'The Scottish Government defines a circular economy as a system in which “resources are kept in use for as long as possible” – in other words, recycling.","3":"Our circular economy strategy to build a strong economy, protect our resources and support the environment."}}
 
 ### Your turn
 
-**News/Post:**
-
+**Query**
 {TEXT}
 
-**Webpages:**
-
+**Documents**
 {EVIDENCE}
 
 **Output: (Don't output anything else except for the JSON object. Don't add Markdown syntax like ```json):**

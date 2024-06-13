@@ -10,6 +10,10 @@ from configs import data_root, out_root, prompts_root, cache_root, imgbed_root, 
 
 client = OpenAI()
 
+
+def perror(str):
+    print("\033[91m"+str+"\033[0m")
+    
 def process_multilines_output(x):
     lines=x.split("\n")
     label=lines[-1].strip().lower()

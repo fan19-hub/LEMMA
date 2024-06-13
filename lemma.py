@@ -66,7 +66,7 @@ question_gen_module = LemmaComponent(prompt='question_gen.md', name='question_ge
                                      online_image=args.use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                                      post_process=lambda x: json.loads(x))
 refine_prediction_module = LemmaComponent(prompt='reason_modify.md', name='modify_reasoning', model='gpt4v',
-                                         using_cache=args.use_cache,
+                                         using_cache=False,
                                          online_image=args.use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                                          post_process=process_multilines_output)
 # Test
@@ -133,9 +133,9 @@ for i, item in enumerate(data):
             if rumor_type.lower() in refined_pred.lower():
                 refined_pred = rumor_type
                 break
-        if refined_pred == 'True':
+        if refined_pred == 'true':
             final_pred = 0
-        elif refined_pred == 'Unverified':
+        elif refined_pred == 'unverified':
             final_pred = direct_pred   # If model is not sure, go back to direct prediction
         else:
             final_pred = 1
@@ -166,5 +166,4 @@ for i, item in enumerate(data):
 
     save(labels, final_preds, direct_labels, current_index, logger, output_result, output_score)
     
-if __name__ == '__main__':
-    pass
+

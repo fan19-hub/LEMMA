@@ -5,13 +5,24 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python Debugger: Current File",
+            "name": "Python: Current File",
             "type": "debugpy",
             "request": "launch",
             "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python: Main",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "main.py",
             "console": "integratedTerminal",
-            "args": ["--input_file_name","example_input.json", "--use_online_image","--use_cache"]
+            "args": [
+                "--input_file_name",
+                "example_input.json",
+                "--use_online_image"
+            ],
+            "justMyCode": false
         }
     ]
 }
-
