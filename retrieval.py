@@ -1,45 +1,36 @@
-
 import re
+import os
 import json
-
 from time import sleep
 
 from newspaper import Article
-from langdetect import detect
 from duckduckgo_search import DDGS
 from duckduckgo_search.exceptions import DuckDuckGoSearchException
 
 import openai
 from openai import OpenAI
 
-from utils import predict_region
-from configs import prompts_root,OPENAI_KEY
+from utils import predict_region, pwarn
+from configs import prompts_root,OPENAI_KEY, out_root, imgbed_root
 from urllib.parse import urlparse
 
 import pyautogui
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service as ChromeService
-from configs import imgbed_root
-import os
-chrome_driver_path = 'chromedriver.exe'
 
-# Find the chromederver suitable for your chrome version here: https://googlechromelabs.github.io/chrome-for-testing/#stable
-
-# Initialize the Chrome webdriver and open the URL
-options = webdriver.ChromeOptions()
+# Initialize the Chrome webdriver
+# check online docs for selenium if any error is thrown here
+options = webdriver.ChromeOptions()     # Find the chromederver suitable for your chrome version here: https://googlechromelabs.github.io/chrome-for-testing/#stable, put it under the same directory as this script
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
-# service = ChromeService(executable_path=chrome_driver_path)
 driver = webdriver.Chrome()
-
 
 # Setup OpenAI API
 openai.api_key = OPENAI_KEY
 client = OpenAI()
 
-untrusted_sources={"www.facebook.com","m.facebook.com","www.reddit.com","www.weibo.com","twitter.com","www.tiktok.com","www.douyin.com","www.instagram.com","www.pinterest.com","www.taobao.com","www.jd.com","www.amazon.com","www.ebay.com","www.imdb.com","www.douban.com","steamcommunity.com","m.ixigua.com","www.bilibili.com","www.netflix.com",}
+untrusted_sources={"www.reddit.com","www.weibo.com","twitter.com","www.tiktok.com","www.douyin.com","www.instagram.com","www.taobao.com","www.jd.com","www.amazon.com","www.ebay.com","www.imdb.com","www.douban.com","steamcommunity.com","m.ixigua.com","www.bilibili.com","www.netflix.com",}
 
-def soure_filter(results):
+def source_filter(results):
     global untrusted_sources
     if results == None or results == []:
         return []
@@ -49,7 +40,6 @@ def soure_filter(results):
         if domain in untrusted_sources:   
             results.remove(result)
     return results
-
 
 
 def topic_relevance_filter(text, all_results, top_k, query_set, cutoff_index=150):
@@ -82,7 +72,7 @@ def topic_relevance_filter(text, all_results, top_k, query_set, cutoff_index=150
     try:
         relevance_labels=json.loads(response)
     except:
-        # print("Tool learning Warning: Invalid response from topic_relevance_filter. Remain unchanged.")
+        pwarn("Tool learning Warning: Invalid response from topic_relevance_filter. Remain unchanged.")
         return results
     
     # Wash the string keys to int, and remove the non-integer keys
@@ -115,18 +105,18 @@ def scraper(url, max_len=2000):
     try:
         article = Article(url)
     except Exception as e:
-        print(f"Tool learning Warning: scraper failed on {url}. {e}")
+        pwarn(f"Tool learning Warning: scraper failed on {url}. {e}")
         return ""
     try: article.download()
     except Exception as e:
         sleep(10)
         try: article.download()
         except:
-            print(f"Tool learning Warning: scraper failed on {url}. {e}")
+            pwarn(f"Tool learning Warning: scraper failed on {url}. {e}")
             return ""
     try: article.parse()
     except Exception as e:
-        print(f"Tool learning Warning: scraper failed on {url}. {e}")
+        pwarn(f"Tool learning Warning: scraper failed on {url}. {e}")
         return ""
 
     publish_date=article.publish_date
@@ -153,13 +143,13 @@ def text_search(query, query_type="title", top_k=5):
                             safesearch='off', 
                             max_results=max_results))
     except DuckDuckGoSearchException as e:
-        print(e)
+        pwarn(f"Tool learning Warning: DuckDuckGo search failed on {query}. {e}")
         return []
     if not results: 
         return []
 
     # Source Filter
-    results = soure_filter(results)
+    results = source_filter(results)
     return results[:top_k]
 
 
@@ -202,10 +192,8 @@ def evidence_extraction(search_results, query, pre_max_len=2000, after_max_len=2
                 evidence = headers[str(id)] + extracted_result 
                 evidences.append(evidence)
     except:
-        print("Tool learning Warning: Invalid response from evidence_extraction. Remain unchanged.")
+        pwarn("Tool learning Warning: Invalid response from evidence_extraction. Remain unchanged.")
         evidences = list(documents.values())
-    # with open("logging/evidences.json", 'w', encoding='utf-8') as f:
-    #     f.write(json.dumps(evidences, ensure_ascii=False, indent=4))
     evidences=[evidence[:after_max_len] for evidence in evidences if len(evidence)>0]
     return evidences[:max_items]
     
@@ -254,9 +242,8 @@ def get_evidence(text, title, questions, max_len=2000):
 
     # logging
     search_log["retrieved_text"] = retrieved_dict
-    with open("logging/search_results.json", 'a', encoding='utf-8') as f: 
+    with open(out_root + "search_results.jsonl", 'a', encoding='utf-8') as f: 
         f.write(json.dumps(search_log, ensure_ascii=False, indent=4))
-
     return json.dumps(retrieved_dict)
 
 
@@ -265,10 +252,8 @@ def visual_search(source, original_post, is_url=True, max_items = 5):
     try:
         driver.get('https://www.google.com/imghp')
     except:
-        try:
-            driver.quit()
-        except:
-            pass
+        try: driver.quit()
+        except: pass
         driver = webdriver.Chrome()
         driver.get('https://www.google.com/imghp')
     sleep(1)  
@@ -297,12 +282,12 @@ def visual_search(source, original_post, is_url=True, max_items = 5):
         upload_button.click()
 
     sleep(1)
-    # image serach result page
+    # image_serach result page
     exact_search=driver.find_element(By.CSS_SELECTOR, "div.ICt2Q")
     exact_search.click()
     sleep(2)
 
-    # exact search result page
+    # exact_search result page
     results=driver.find_elements(By.CSS_SELECTOR, "li>a")
     search_results=[]
     for result in results:
@@ -310,30 +295,31 @@ def visual_search(source, original_post, is_url=True, max_items = 5):
         if "google.com" in link:
             continue
         title = result.get_attribute('aria-label')
+        search_results.append({"title":title, "href":link})
+    search_results = source_filter(search_results)
+    return_list = []
+    for search_result in search_results:
+        title = search_result['title']
         if title !="":
             # "source":urlparse(link).hostname
-            search_result= "Title: " + title.replace("来源","Source")
-            search_results.append(search_result)
-    if search_results==[]:
+            return_list.append("Title: " + title.replace("来源","Source"))
+    if return_list==[]:
         driver.quit()
         return "Nothing found"
-    retrieved_text = "Image occurs in: " + json.dumps(search_results[:max_items],ensure_ascii=False)
-    search_log={original_post: retrieved_text}
-    with open("logging/visual_search_results.json", 'a', encoding='utf-8') as f: 
-        f.write(json.dumps(search_log, ensure_ascii=False, indent=4))
-
+    retrieved_text = "Image occurs in: " + json.dumps(return_list[:max_items],ensure_ascii=False)
     return retrieved_text
 
 def driver_quit():
+    global driver
     driver.quit()
 
 
-# Unit test:
+# Unit test: 
 if __name__ =="__main__":
     pass
     # text="'cash backing to remake scotland a wastefree economy the cash is from the scottish institute for remanufacture supported by the government to create a wastefree circular economy remanufacturing is a process that takes old but highvalue products and restores them to an asnew condition'"
     # title="Scotland's Investment in Waste-Free Circular Economy"
     # questions=['Scottish Institute for Remanufacture government funding', 'Success stories of remanufacturing in Scotland']
     # get_evidence(text, title, questions)    
-    # scraper("https://www.bbc.com/news/worl-us-canada-68244352", 2000)
-    visual_search("twitter/Mediaeval2016_TestSet_Images/syrian_children_1.jpg","Syrian Girl who sells gum")
+    # scraper("https://www.bbc.com/news/articles/c2j3ldl1mepo", 2000)
+    # visual_search("data/twitter/Mediaeval2016_TestSet_Images/syrian_children_1.jpg","Syrian Girl who sells gum")

@@ -13,4 +13,5 @@ Input Text:
 
 {TEXT}
 
+You should use your sense wisely. Be brave to judge if you feels that it is fake.
 Your Response:

@@ -4,12 +4,6 @@ The text of this news is:
 
 {TEXT}
 
-Your original prediction is {PREDICTION}. (0 for no misinformation, 1 for presence of misinformation, 'None' for no original prediction)
-
-Your original reasoning based on that prediction is:
-
-{REASONING}
-
 External sources can better help you make the judgement. Please come up with a title for this news first, then list two questions/phrases/sentences that you would like to search on a public search engine, such as Google. Carefully design your question so that it can return the most helpful results for making your final prediction and reasoning. Please use English to generate your title and questions. 
 
 Text Input example 1:

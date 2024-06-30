@@ -6,13 +6,16 @@ import base64
 import requests
 from openai import OpenAI
 from langdetect import detect
-from configs import data_root, out_root, prompts_root, cache_root, imgbed_root, OPENAI_KEY
+from configs import out_root, prompts_root, cache_root, imgbed_root, OPENAI_KEY
 
 client = OpenAI()
 
 
 def perror(str):
     print("\033[91m"+str+"\033[0m")
+
+def pwarn(str):
+    print("\033[33m"+str+"\033[0m")
     
 def process_multilines_output(x):
     lines=x.split("\n")
@@ -47,7 +50,7 @@ def onlineImg_process(prompt, url, model="gpt-4-vision-preview", max_tokens=1000
 def offlineImg_process(prompt, image_path, model="gpt-4-vision-preview", max_tokens=1000, temperature=0.1):
     # Encode function
     def encode_image(image_path):
-        with open(data_root + image_path, "rb") as image_file:
+        with open(image_path, "rb") as image_file:
             return base64.b64encode(image_file.read()).decode('utf-8')
 
     # Getting the base64 string
@@ -305,34 +308,6 @@ def predict_region(s):
         return 'us-en'
 
 
-def wrong(filepath):
-    with open(filepath, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    wrong1to0 = []
-    wrong0to1 = []
-    correct = []
-    for item in data:
-        if item['direct'] != item['prediction']:
-            if item['prediction'] == item['label']:
-                correct.append(item)
-            elif item["prediction"] == 0:
-                wrong1to0.append(item)
-            else:
-                wrong0to1.append(item)
-    outpath = out_root + 'wrong1to0.json'
-    with open(outpath, 'w', encoding='utf-8') as f:
-        json.dump(wrong1to0, f)
-    print(f'wrong1to0 saved to {outpath}')
-    outpath = out_root + 'wrong0to1.json'
-    with open(outpath, 'w', encoding='utf-8') as f:
-        json.dump(wrong0to1, f)
-    print(f'wrong0to1 saved to {outpath}')
-    outpath = out_root + 'correct.json'
-    with open(outpath, 'w', encoding='utf-8') as f:
-        json.dump(correct, f)
-    print(f'correct saved to {outpath}')
-
-
 def save(labels, pred_labels, zero_shot_labels, current_index, all_results, output_result, output_score):
     with open(output_result, 'w', encoding='utf-8') as f:
         json.dump(all_results, f, ensure_ascii=False, indent=4)
@@ -361,26 +336,13 @@ def save_baseline(labels, pred_labels, current_index, all_results, output_result
     write_metric_result(output_score, evaluation_result, 'a', prefix='zero shot section')
     
 if __name__ == '__main__':
-    # stats('out/fakereddit_lemma_base_kg_final_output_50.json')
-    # stats('out/fakereddit_lemma_test_kg_final_output_50_8.json')
-    # stats('out/twitter_lemma_test_kg_final_output_50_3.json')
-    # stats('out/twitter_lemma_base_kg_final_output_50_2.json')
-    # stats('out/twitter_lemma_base_kg_final_output_50_13.json')
-    # stats('out/weibo_lemma_base_kg_final_output_50_2.json')
-    # stats('out/weibo_lemma_base_kg_final_output_50_chinese.json')
-    # stats('out/weibo_lemma_base_kg_final_output_50_3.json')
-    # stats('out/fakereddit_lemma_base_kg_final_output_50_3.json')
-    # stats('out/fakereddit_lemma_base_kg_final_output_full.json')
-    # wrong('out/fakereddit_lemma_base_kg_final_output_full.json')
-    # stats('out/twitter_cot_gpt4_output.json')
-    # stats('out/fakereddit_zero-shot_instructblip_output.json')
-
-    path = 'out/fakereddit_zero-shot_instructblip_output.json'
-    with open(path, 'r') as f:
+    path = 'out/lemma_twitter_output.json'
+    with open(path, 'r', encoding = "utf-8") as f:
         data = json.load(f)
 
     labels = [items['label'] for items in data]
     preds = [items['prediction'] for items in data]
 
     print(metric(labels, preds))
+    print(stats(path))
 

@@ -1,43 +1,49 @@
+import os
 import json
 from lemma_component import LemmaComponent
 from retrieval import get_evidence, visual_search, driver_quit
-from configs import data_root, out_root, definition_path
+from configs import out_root, definition_path
 from utils import save, process_multilines_output, perror
 import traceback
 
+# Config
 resume = True
-
-using_cache = True
-
-use_online_image = True
-
-start_index, end_index = 0,300
-
-# dataset (twitter or weibo or fakereddit or ticnn)
+using_cache = False
 data_name = 'twitter'
+start_index, end_index = 0, 1000
 
-# input data file name
+
+# Input file name
 if data_name == 'twitter':
-    input_file = data_root + 'twitter/twitter.json'
+    input_file = "data/twitter/twitter.json"
     use_online_image = True
 elif data_name == 'fakeddit':
-    input_file = data_root + 'fakeddit/FAKEDDIT.json'
+    input_file = "data/fakeddit/FAKEDDIT.json"
     use_online_image = True
 elif data_name == 'example':
-    input_file = data_root + 'example_input.json'
+    input_file = "data/example_input.json"
     use_online_image = True
 else:
     raise ValueError('Invalid data name')
 
-# output file names
+with open(input_file, encoding='utf-8') as f:
+    data = json.load(f)
+
+
+# Output file names
 output_score = out_root + "lemma_" + data_name + "_score"
 output_result = out_root + "lemma_" + data_name + "_output.json"
+if not os.path.exists(out_root):
+    os.makedirs(out_root)   
 
-with open(input_file, encoding='utf-8') as file:
-    data = json.load(file)
-
-# resume
-if resume:
+# Resume
+labels = []
+direct_labels = []
+final_preds = []
+total_data_size = len(data)
+current_index = -1
+logger = []
+if resume and os.path.exists(output_score):
     with open(output_score, 'r', encoding='utf-8') as f:
         lines = f.readlines()
         labels = []
@@ -57,31 +63,31 @@ if resume:
         logger = json.load(f)
     total_data_size = len(data)
     data = data[current_index + 1:]
-    print('Resuming from index:', current_index, ', Next index:', current_index + 1)
-else:
-    labels = []
-    direct_labels = []
-    final_preds = []
-    total_data_size = len(data)
+if current_index==-1:
     print('Starting from index 0')
-    current_index = -1
-    logger = []
+else:
+    print('Resuming from index:', current_index, ', Next index:', current_index + 1)
 
 
-direct_module = LemmaComponent(prompt='lemma_direct.md', name='Direct', model='gpt4v', using_cache=using_cache,
+# LEMMA Components Initialization
+direct_module = LemmaComponent(prompt='lemma_direct.md', name='Direct', 
+                                model='gpt4v', using_cache=using_cache,
                                   online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                                   post_process=lambda x: json.loads(x))
 external_knowledge_module = LemmaComponent(prompt='external_knowledge.md', name='external_knowledge',       
                                   model='gpt4v', using_cache=using_cache,
                                   online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                                   post_process=lambda x: json.loads(x))
-question_gen_module = LemmaComponent(prompt='question_gen.md', name='question_gen', model='gpt4v', using_cache=using_cache,
+question_gen_module = LemmaComponent(prompt='question_gen.md', name='question_gen', 
+                                     model='gpt4v', using_cache=using_cache,
                                      online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                                      post_process=lambda x: json.loads(x))
-refine_prediction_module = LemmaComponent(prompt='reason_modify.md', name='modify_reasoning', model='gpt4v',
-                                         using_cache=False,
+refine_prediction_module = LemmaComponent(prompt='refined_prediction.md', name='modify_reasoning', 
+                                          model='gpt4v',using_cache=False,
                                          online_image=use_online_image, max_retry=3, max_tokens=1000, temperature=0.1,
                                          post_process=process_multilines_output)
+
+# Test
 for i, item in enumerate(data):
     current_index += 1
     if current_index<start_index:
@@ -103,6 +109,7 @@ for i, item in enumerate(data):
     direct_pred = 0 if "real" in direct['label'].lower() else 1
     direct_explain = direct['explanation']
 
+    # External Knowledge
     # Decide whether external knowledge is needed to further examine the input sample
     decision_external = external_knowledge_module(REASONING = direct_explain, TEXT = text, image=url)
     direct_external = 0 if "no" in decision_external['external knowledge'].lower() else 1 
@@ -113,7 +120,7 @@ for i, item in enumerate(data):
 
     retrieved_text = None
     if direct_external == 1:
-        # Question-Title (Search Phrase) Generation
+        # Query Generation
         question_gen = question_gen_module(TEXT=text, 
                                             PREDICTION=direct_pred, 
                                             REASONING=direct_explain,
@@ -122,8 +129,8 @@ for i, item in enumerate(data):
         if question_gen is None: continue
         title, questions = question_gen['title'], question_gen['questions']
 
+        # Evidence Retrieval
         print("Lemma Component Evidence Retrieval: Starting...")
-        # Retrieve external evidence from Web
         try:
             retrieved_text = get_evidence(text, title, questions)
         except Exception as e:
@@ -136,7 +143,7 @@ for i, item in enumerate(data):
             perror(traceback.format_exc())
             visual_retrieved_text = ""
 
-        # Refine Prediction
+        # Refined Prediction
         rumor_types=["true", "satire/parody", "misleading content", "text image contradiction", "manipulated content", "unverified"]
         refine_result = refine_prediction_module(TEXT=text,
                                                ORIGINAL_REASONING=direct_explain,
@@ -145,7 +152,7 @@ for i, item in enumerate(data):
                                                DEFINITION=open(definition_path, 'r').read(),
                                                image=url)
         
-        # result postprocessing
+        # Result Postprocessing
         if refine_result is None: continue
         refined_pred = refine_result["label"]
         refined_explain =  refine_result
@@ -153,7 +160,7 @@ for i, item in enumerate(data):
         for rumor_type in rumor_types:
             if rumor_type.lower() in refined_pred.lower():
                 refined_pred = rumor_type
-                break
+                break  
         if refined_pred == 'true':
             final_pred = 0
         elif refined_pred == 'unverified':
@@ -169,7 +176,6 @@ for i, item in enumerate(data):
         final_explain = direct_explain
 
     # Logging
-    
     labels.append(label)
     direct_labels.append(direct_pred)
     final_preds.append(final_pred)
