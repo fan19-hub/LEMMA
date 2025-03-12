@@ -8,8 +8,14 @@
             "name": "Python: Main",
             "type": "debugpy",
             "request": "launch",
-            "program": "main.py",
-            "console": "integratedTerminal"
+            "program": "lemma.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--input_file_name",
+                "data/example_input.json",
+                "--use_cache"
+            ],
+            "justMyCode": false
         },
         {
             "name": "Python: Current File",
@@ -17,11 +23,6 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "args": [
-                "--input_file_name",
-                "data/example_input.json",
-                "--use_cache"
-            ],
             "justMyCode": false
         }
     ]

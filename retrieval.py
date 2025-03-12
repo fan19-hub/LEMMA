@@ -266,10 +266,11 @@ def human_verification():
     for i in range(five_minutes):
         # Remind the user to complete the reCAPTCHA every 30 seconds
         if i%30==0:
-            print("\n\nACTION REQUIRED!!!\nPlease complete the reCAPTCHA human verification on the browser in 5 minutes. After you complete it, the program will automatically resume......\n\n")
+            print("\n\nACTION REQUIRED!!!\nPlease complete the reCAPTCHA human verification on the browser in 5 minutes. After you complete it, the program will automatically resume......\n")
         # Check if the verfication is successful
         current_url = driver.current_url 
         if not current_url.startswith('https://www.google.com/sorry/'):
+            print("\n\nProgram resumed......\n")
             return
         sleep(1)  
     raise TimeoutError("Human verification is not completed in 5 minutes. Program terminated. Please try again.")
