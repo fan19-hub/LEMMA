@@ -30,6 +30,7 @@ pip install -r requirements.txt
 
 #### Chrome Driver
 Open your chrome and check its version here: <a> chrome://settings/help </a>
+
 Find the chromederver suitable for your chrome version here: https://googlechromelabs.github.io/chrome-for-testing/#stable, put it under the root directory of this project
 
 #### OpenAI API Key
