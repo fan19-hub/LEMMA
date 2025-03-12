@@ -1,6 +1,6 @@
 openai==1.33.0
 duckduckgo-search==6.1.5
-selenium==2.53.6
+selenium==4.29.0
 newspaper3k==0.2.8
 langdetect==1.0.9
 curl_cffi==0.6.2

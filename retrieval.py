@@ -21,14 +21,16 @@ from selenium.webdriver.common.by import By
 # Initialize the Chrome webdriver
 # check online docs for selenium if any error is thrown here
 options = webdriver.ChromeOptions()     # Find the chromederver suitable for your chrome version here: https://googlechromelabs.github.io/chrome-for-testing/#stable, put it under the same directory as this script
-options.add_experimental_option('excludeSwitches', ['enable-logging'])
-driver = webdriver.Chrome()
+options.add_argument("--lang=en")
+driver = webdriver.Chrome(options=options)
 
 # Setup OpenAI API
 openai.api_key = OPENAI_KEY
 client = OpenAI()
 
 untrusted_sources={"www.reddit.com","www.weibo.com","twitter.com","www.tiktok.com","www.douyin.com","www.instagram.com","www.taobao.com","www.jd.com","www.amazon.com","www.ebay.com","www.imdb.com","www.douban.com","steamcommunity.com","m.ixigua.com","www.bilibili.com","www.netflix.com",}
+
+is_first_call = True
 
 def source_filter(results):
     global untrusted_sources
@@ -246,15 +248,45 @@ def get_evidence(text, title, questions, max_len=2000):
         f.write(json.dumps(search_log, ensure_ascii=False, indent=4))
     return json.dumps(retrieved_dict)
 
+def human_verification():
+    global driver, is_first_call
+    is_first_call = False
+    # Google Image Search Page
+    try:
+        driver.get('https://www.google.com/search?q=chrome')
+    except:
+        try: driver.quit()
+        except: pass
+        driver = webdriver.Chrome(options=options)
+        driver.get('https://www.google.com/search?q=chrome')
+
+    # You should manually complete the reCAPTCHA human verification on the browser
+    # After you complete it, the program will automatically resume
+    five_minutes = 300
+    for i in range(five_minutes):
+        # Remind the user to complete the reCAPTCHA every 30 seconds
+        if i%30==0:
+            print("\n\nACTION REQUIRED!!!\nPlease complete the reCAPTCHA human verification on the browser in 5 minutes. After you complete it, the program will automatically resume......\n\n")
+        # Check if the verfication is successful
+        current_url = driver.current_url 
+        if not current_url.startswith('https://www.google.com/sorry/'):
+            return
+        sleep(1)  
+    raise TimeoutError("Human verification is not completed in 5 minutes. Program terminated. Please try again.")
+
+    
 
 def visual_search(source, original_post, is_url=True, max_items = 5):
+    global driver, is_first_call
+    if is_first_call:
+        human_verification()
     # Google Image Search Page
     try:
         driver.get('https://www.google.com/imghp')
     except:
         try: driver.quit()
         except: pass
-        driver = webdriver.Chrome()
+        driver = webdriver.Chrome(options=options)
         driver.get('https://www.google.com/imghp')
     sleep(1)  
     button = driver.find_element(By.CSS_SELECTOR, "div.nDcEnd")
@@ -280,21 +312,25 @@ def visual_search(source, original_post, is_url=True, max_items = 5):
         driver.find_element_by_name('file').send_keys(r"D:\test\xuexi\test\14.png")
         upload_button = driver.find_element(By.CSS_SELECTOR, "div.ZeVBtc>span")
         upload_button.click()
-
-    sleep(1)
-    # image_serach result page
-    exact_search=driver.find_element(By.CSS_SELECTOR, "div.ICt2Q")
-    exact_search.click()
     sleep(2)
 
+    # image_serach result page
+    # We locate this block by the text "Exact matches". Do not worry that you are using another language for your PC, or Chrome. We set the language used by the driver to English in the begining of this script: options.add_argument("--lang=en")
+    list_div = driver.find_elements(By.XPATH, "//a[.//*[contains(text(), 'Exact matches')]]")
+    exact_search_page_url = list_div[0].get_attribute('href')
+
     # exact_search result page
-    results=driver.find_elements(By.CSS_SELECTOR, "li>a")
+    driver.get(exact_search_page_url)
+    sleep(2)
+    search_div = driver.find_element(By.CSS_SELECTOR, "div#search")  
+    results = search_div.find_elements(By.TAG_NAME, "a")
+    
     search_results=[]
     for result in results:
         link = result.get_attribute('href')
         if "google.com" in link:
             continue
-        title = result.get_attribute('aria-label')
+        title = result.text
         search_results.append({"title":title, "href":link})
     search_results = source_filter(search_results)
     return_list = []
@@ -322,4 +358,4 @@ if __name__ =="__main__":
     # questions=['Scottish Institute for Remanufacture government funding', 'Success stories of remanufacturing in Scotland']
     # get_evidence(text, title, questions)    
     # scraper("https://www.bbc.com/news/articles/c2j3ldl1mepo", 2000)
-    # visual_search("data/twitter/Mediaeval2016_TestSet_Images/syrian_children_1.jpg","Syrian Girl who sells gum")
+    print(visual_search("data/twitter/Mediaeval2016_TestSet_Images/syrian_children_1.jpg","Syrian Girl who sells gum"))
