@@ -24,7 +24,7 @@ def process_multilines_output(x):
     return {"label":label,"explanation":explanation}
 
 
-def onlineImg_process(prompt, url, model="gpt-4-vision-preview", max_tokens=1000, temperature=0.1):
+def onlineImg_process(prompt, url, model="gpt-4o", max_tokens=1000, temperature=0.1):
     response = client.chat.completions.create(
         model=model,
         messages=[
