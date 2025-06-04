@@ -1,3 +1,4 @@
+import re
 import os
 import json
 import argparse
@@ -59,6 +60,24 @@ if current_index==-1:
 else:
     print('Resuming from index:', current_index, ', Next index:', current_index + 1)
 
+def parse_json_markdown(json_string: str) -> dict:
+    # Try to find JSON string within first and last triple backticks
+    match = re.search(r"""```       # match first occuring triple backticks
+                          (?:json)? # zero or one match of string json in non-capturing group
+                          (.*)```   # greedy match to last triple backticks""", json_string, flags=re.DOTALL|re.VERBOSE)
+
+    # If no match found, assume the entire string is a JSON string
+    if match is None:
+        json_str = json_string
+    else:
+        # If match found, use the content within the backticks
+        json_str = match.group(1)
+
+    # Strip whitespace and newlines from the start and end
+    json_str = json_str.strip()
+
+    return json_str 
+
 
 # LEMMA Components Initialization
 direct_module = LemmaComponent(prompt='lemma_direct.md', name='Direct', model='gpt4v', using_cache=args.use_cache,
@@ -67,7 +86,7 @@ direct_module = LemmaComponent(prompt='lemma_direct.md', name='Direct', model='g
 external_knowledge_module = LemmaComponent(prompt='external_knowledge.md', name='external_knowledge',       
                                   model='gpt4v', using_cache=args.use_cache,
                                   online_image=not args.use_offline_image, max_retry=3, max_tokens=1000, temperature=0.1,
-                                  post_process=lambda x: json.loads(x))
+                                  post_process=lambda x: json.loads(parse_json_markdown(x)))
 question_gen_module = LemmaComponent(prompt='question_gen.md', name='question_gen', model='gpt4v', using_cache=args.use_cache,
                                      online_image=not args.use_offline_image, max_retry=3, max_tokens=1000, temperature=0.1,
                                      post_process=lambda x: json.loads(x))

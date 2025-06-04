@@ -3,7 +3,7 @@ from configs import prompts_root, imgbed_root, cache_root
 from utils import onlineImg_process, offlineImg_process, gpt_no_image
 
 class LemmaComponent:
-    def __init__(self, prompt, name, model='gpt4v', using_cache=False, cache_name='', online_image=True, max_retry=5,
+    def __init__(self, prompt, name, model='gpt4-o', using_cache=False, cache_name='', online_image=True, max_retry=5,
                  max_tokens=1000, temperature=0.1, post_process=None):
         self.name = name
         self.model = model
@@ -59,7 +59,7 @@ class LemmaComponent:
                     result = gpt_no_image(prompt, model='gpt-3.5-turbo', max_tokens=self.max_tokens,
                                           temperature=self.temperature)
                 elif self.model == 'gpt4':
-                    result = gpt_no_image(prompt, model='gpt-4-1106-preview', max_tokens=self.max_tokens,
+                    result = gpt_no_image(prompt, model='gpt-4o', max_tokens=self.max_tokens,
                                           temperature=self.temperature)
                 else:
                     raise ValueError(f'Unknown model {self.model}')
